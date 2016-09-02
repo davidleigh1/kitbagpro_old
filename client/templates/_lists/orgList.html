@@ -1,0 +1,28 @@
+<template name="orgList">
+
+<!-- TODO: Rename this to orgList or something more meaningful -->
+
+	<div class="screen-wrapper objList orgList orgList">
+		<!-- Page Heading -->
+		{{> pageHeader
+			pageTitle = "Organisation List"
+			pageSubtitle = ""
+			faIcon = "fa-building"
+			}}
+
+		<!-- Filtered list of organizations -->
+		{{> listFilter
+			obj="org"
+			Obj="Org"
+			full="organisation"
+			Full="Organisation"
+			}}
+
+		<ul class="listOfObjects">
+			{{#each objectsFiltered "Orgs"}}
+				{{> orgLine}}
+			{{/each}}
+		</ul>
+	</div>
+
+</template>

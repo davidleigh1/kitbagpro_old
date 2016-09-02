@@ -1,0 +1,36 @@
+<template name="userLine">
+	<div class="userline userentry {{#if isCurrentUser}}currentUser{{/if}} ">
+		<span class="userlistProfileName">
+			{{#unless userProfileName}}
+				<span class="resNote">N/A</span>
+			{{else}}
+				{{userProfileName}}
+			{{/unless}}
+		</span>
+		<span class="userlistUsername">
+			{{#unless username}}
+				<span class="resNote">N/A</span>
+			{{else}}
+				{{username}}
+			{{/unless}}
+		</span>
+		<span class="userlistId">{{_id}} {{#if isCurrentUser}} [Current User]{{/if}}</span>
+		<span class="userlistEmail">
+			{{#unless userEmail}}
+				<span class="resNote">N/A</span>
+			{{else}}
+				{{userEmail}}
+			{{/unless}}
+		</span>
+		<span class="userlistService">
+			{{#unless userGetService 'serviceName'}}
+				<span class="resNote">None</span>
+			{{else}}
+				{{userGetService 'serviceName'}} ({{userGetService 'serviceUsername'}})
+			{{/unless}}
+		</span>
+		<span class="userlistCreatedAt">{{formatDate createdAt}}</span>
+		<span class="userlistSuperAdmin">{{isSuperAdmin}}</span>
+	</div>
+
+</template>

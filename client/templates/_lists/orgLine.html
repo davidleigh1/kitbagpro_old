@@ -1,0 +1,46 @@
+<template name="orgLine">
+	<!--li class="{{#if checked}}checked{{/if}}"-->
+	<li data-orgtitle="{{toLower orgTitle}}" data-created="{{createdAt}}">
+		<!-- input type="checkbox" checked="{{checked}}" class="toggle-checked" disabled="{{#unless isOwner}}disabled{{/unless}}"-->
+		<span class="text">
+			{{#if orgTitle}}
+				<a href="/orgView/{{orgId}}">{{highlight orgTitle}}</a>
+			{{else}}
+				<i>Organisation name not found (OrgID: {{_id}})</i>
+			{{/if}}
+		</span>
+
+		<div class="controlWrapper">
+			{{#if isOwner}}
+				<button class="toggle-private">
+					{{#if private}}
+						Private
+					{{else}}
+						Public
+					{{/if}}
+				</button>
+			{{/if}}
+			<button class="delete" data-org="{{orgId}}">Delete</button>
+			<button class="edit" data-org="{{orgId}}">Edit</button>
+			<button class="showDetail" data-org="{{orgId}}">Org Details</button>
+		</div>
+		<!-- {{> orgView }} -->
+
+	</li>
+
+
+</template>
+
+
+
+<!--
+createdAt : Wed Mar 16 2016 02:08:27 GMT+0200 (Jerusalem Standard Time)
+orgContactEmail : "contactus@icrc.org"
+orgContactPerson : "Redman Crossy"
+orgDesc : "The official mission statement says that: "The International Committee of the Red Cross (ICRC) is an impartial, neutral, and independent organization whose exclusively humanitarian mission is to protect the lives and dignity of victims of war and internal violence and to provide them with assistance."
+orgImgLarge : "https://www.icrc.org/sites/default/themes/icrc_theme/images/who-we-are/mandate-and-mission.jpg"
+orgImgSmall : "https://www.icrc.org/sites/default/themes/icrc_theme/images/en/icon-128.png"
+orgTitle : "International Red Cross"
+orgUrl : "https://www.icrc.org"
+owner : "v3TTtttNdEZZQP6TL"
+ -->

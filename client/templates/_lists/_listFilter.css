@@ -1,0 +1,7 @@
+.filterHighlight {
+    font-weight: bold;
+    border: 1px dotted #5A5A5A;
+    border-radius: 3px;
+    text-decoration: none;
+    background-color: aliceblue;
+}

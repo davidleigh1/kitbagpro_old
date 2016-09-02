@@ -1,0 +1,27 @@
+<template name="listFilter">
+	<div class="listFilterControl">
+		<!-- All Users / My Users Filter (Admin Only) -->
+		<div class="{{obj}}ListFilter listFilter">
+			<label for="all{{Obj}}s"><input type="radio" name="{{obj}}ListFilter" id="all{{Obj}}s" value="all{{Obj}}s" checked><span class="adminOnly">All {{Obj}}s</span></label>
+			<label for="my{{Obj}}s"><input type="radio" name="{{obj}}ListFilter" id="my{{Obj}}s" value="my{{Obj}}s">My {{Obj}}s</label>
+		</div>
+
+		<!-- List Sorter -->
+		{{> listSorter}}
+
+		<!-- Freetext entry -->
+		<input type="text" name="{{obj}}ListFilter" class="filterField filterInput" data-submit="false" placeholder="Type here to filter {{full}}s" value="{{filter}}">
+	</div>
+</template>
+
+<!--
+
+Use as follows - please note the string should be singular and with appropriate capitalization!
+{{> listFilter
+obj="org"
+Obj="Org"
+full="organisation"
+Full="Organisation"
+}}
+
+-->

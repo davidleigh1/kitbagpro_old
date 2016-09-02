@@ -1,0 +1,17 @@
+<template name="mainLayout">
+	<div id="wrapper">
+		{{> navigation}}
+		<!-- Main content -->
+        <div id="page-wrapper">
+            <div class="container-fluid">
+				{{> yield}}
+			</div>
+			<!-- /.container-fluid -->
+		</div>
+		<!-- /#page-wrapper -->
+
+		{{> footer}}
+	</div>
+	<!-- /#wrapper -->
+</template>
+

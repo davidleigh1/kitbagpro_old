@@ -1,0 +1,28 @@
+Usage: meteor list
+
+Lists the packages that you have explicitly added to your project.
+This will not list transitive dependencies.
+
+c:\Users\David\Google Drive\localhost\meteor\kitbag>meteor list
+accounts-facebook     1.0.6  Login service for Facebook accounts
+accounts-github       1.0.6  Login service for Github accounts
+accounts-google       1.0.6  Login service for Google accounts
+accounts-password     1.1.4  Password support for accounts
+accounts-twitter      1.0.6  Login service for Twitter accounts
+accounts-ui           1.1.6  Simple templates to add login widgets to an app
+blaze-html-templates  1.0.1  Compile HTML templates into reactive UI with Meteor Blaze
+ecmascript            0.1.6* Compiler plugin that supports ES2015+ in all .js files
+es5-shim              4.1.14  Shims and polyfills to improve ECMAScript 5 support
+jquery                1.11.4  Manipulate the DOM using CSS selectors
+meteor-base           1.0.1  Packages that every Meteor app needs
+mobile-experience     1.0.1  Packages for a great mobile user experience
+mongo                 1.1.3  Adaptor for using MongoDB and Minimongo over DDP
+mquandalle:stylus     1.1.1  Expressive, dynamic, robust CSS
+session               1.1.1  Session variable
+standard-minifiers    1.0.2  Standard minifiers used with Meteor apps by default.
+tracker               1.0.9  Dependency tracker to allow reactive callbacks
+
+
+* New versions of these packages are available! Run 'meteor update' to try to update those packages to their latest
+  versions. If your packages cannot be updated further, try typing `meteor add <package>@<newVersion>` to see more
+  information.

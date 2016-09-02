@@ -1,0 +1,31 @@
+<template name="listSorter">
+	<!-- TODO: On mobile, the dropdown should be underlined link. See Stackoverflow mobile.  -->
+			<!--
+			<select class="listSorter" name="ListSorter">
+				<option value="none">Unsorted</option>
+				<option value="title_asc">Alphabetic &darr;</option>
+				<option value="title_desc">Alphabetic &uarr;</option>
+				<option value="created_asc">Created Date &darr;</option>
+				<option value="created_desc">Created Date &uarr;</option>
+				<option value="updated_new_first" disabled>Last Updated &darr;</option>
+				<option value="updated_old_first" disabled>Last Updated &uarr;</option>
+			</select>
+			-->
+
+	<div class="{{obj}}ListSorter listSorter">
+		<label for="my{{Obj}}s">Sort {{Obj}}s by:
+			<select class="listSort" name="{{obj}}ListSorter">
+				<option value="none">Unsorted</option>
+				<option value="orgtitle_asc">Alphabetic &darr;</option>
+				<option value="orgtitle_desc">Alphabetic &uarr;</option>
+				<!-- TODO: Add last created date  -->
+				<option value="created_desc">Created Date &darr;</option>
+				<option value="created_asc">Created Date &uarr;</option>
+				<!-- TODO: Add last modified date  -->
+				<option value="updated_asc" disabled>Last Updated &darr;</option>
+				<option value="updated_desc" disabled>Last Updated &uarr;</option>
+			</select>
+		</label>
+	</div>
+
+</template>

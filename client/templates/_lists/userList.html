@@ -1,0 +1,34 @@
+<template name="userList">
+
+	<div class="screen-wrapper objList users">
+	<!-- TODO: Make this userList visable to superAdmins only -->
+		<!-- Page Heading -->
+		{{> pageHeader
+			pageTitle = "User List"
+			pageSubtitle = ""
+			faIcon = "fa-users"
+			}}
+
+		<!-- Filtered list of user -->
+		{{> listFilter
+			obj="user"
+			Obj="User"
+			full="user"
+			Full="User"
+			}}
+
+		<div class="userline header">
+			<span class="userlistProfileName">ProfileName</span>
+			<span class="userlistUsername">Username</span>
+			<span class="userlistId">Id</span>
+			<span class="userlistEmail">Email</span>
+			<span class="userlistService">Service</span>
+			<span class="userlistCreatedAt">CreatedAt</span>
+			<span class="userlistSuperAdmin">Type</span>
+		</div>
+		{{#each users}}
+			{{> userLine}}
+		{{/each}}
+	</div>
+
+</template>
