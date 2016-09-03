@@ -7,7 +7,7 @@ Template.orgAddEdit.onRendered(function(){
 	var aoe = (typeof addOrEdit != "undefined") ? addOrEdit : "dunno";
 	var torg = (typeof thisOrg == "object") ? thisOrg.orgId : 'dunno';
 	var ttitle = (typeof thisOrg == "object") ? thisOrg.orgTitle : 'dunno';
-	var a = "Rendered!\nRoute: "+Router.current().route.getName()+"\naddOrEdit: "+aoe+"\norgId: "+torg+"\norgTitle: "+ttitle;
+	var a = "Rendered!\nRoute: "+FlowRouter.current().route.getName()+"\naddOrEdit: "+aoe+"\norgId: "+torg+"\norgTitle: "+ttitle;
 	console.log(a);
 	editOrg(thisOrg,"add-edit-org");
 	// alert(a);
@@ -184,14 +184,14 @@ Template.orgAddEdit.onRendered(function(){
 			$(".add-edit-org")[0].reset();
 			// $(".orgAddEdit").hide();
 			// Prevent the default page refresh which occurs when clicking submit
-			Router.go("/orgView/"+formObj.orgId);
+			FlowRouter.go("/orgView/"+formObj.orgId);
 			return false;
 		},
 		'click button.cancel': function(event) {
 			event.preventDefault();
 			$(".add-edit-org")[0].reset();
 			// $(".orgAddEdit").hide();
-			Router.go("/orgView/"+formObj.orgId);
+			FlowRouter.go("/orgView/"+formObj.orgId);
 			// Prevent the default page refresh which occurs when clicking submit
 			return false;
 		}

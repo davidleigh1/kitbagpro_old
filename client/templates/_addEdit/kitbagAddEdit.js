@@ -64,7 +64,7 @@ if (Meteor.isClient) {
 			// Clear the input field which is not required when using non-CSS UI
 			$(".add-edit-kitbag")[0].reset();
 			// Close form
-			Router.go('/kitbag/'+kbFormObj.kitbagId);
+			FlowRouter.go('/kitbag/'+kbFormObj.kitbagId);
 			// $(".kitbagAddEdit").hide();
 			// Prevent the default page refresh which occurs when clicking submit
 			// return false;

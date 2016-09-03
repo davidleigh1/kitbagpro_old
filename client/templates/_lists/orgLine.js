@@ -33,7 +33,7 @@ if (Meteor.isClient) {
 			// console.log(et);
 			// $( et.parentElement.parentElement ).children( '.orgDetails' ).toggle();
 			var o = $(event.target).data("org");
-			Router.go("/orgView/"+o);
+			FlowRouter.go("/orgView/"+o);
 			// $(".objView-"+o).toggle();
 		},
 		'click .edit': function(event) {
@@ -45,7 +45,7 @@ if (Meteor.isClient) {
 			// $('.orgAddEdit').toggle();
 			// var findOne = {orgId:event.target.dataset.org};
 			// var formId = "add-edit-org";
-			Router.go("/org/"+event.target.dataset.org);
+			FlowRouter.go("/org/"+event.target.dataset.org);
 			// editOrg(findOne,formId);
 		},
 		'click .toggle-checked': function(event) {

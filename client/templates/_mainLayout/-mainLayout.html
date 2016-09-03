@@ -1,16 +1,18 @@
 <template name="mainLayout">
 	<div id="wrapper">
-		{{> navigation}}
+		<!-- {{> navigation}} -->
+		{{>Template.dynamic template=mainNav}}
 		<!-- Main content -->
         <div id="page-wrapper">
             <div class="container-fluid">
-				{{> yield}}
+				{{>Template.dynamic template=mainContent}}
 			</div>
 			<!-- /.container-fluid -->
 		</div>
 		<!-- /#page-wrapper -->
 
-		{{> footer}}
+		<!-- {{> footer}} -->
+		{{>Template.dynamic template=mainFooter}}
 	</div>
 	<!-- /#wrapper -->
 </template>

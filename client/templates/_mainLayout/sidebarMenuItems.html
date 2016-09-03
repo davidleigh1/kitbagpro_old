@@ -5,10 +5,10 @@
 <div class="collapse navbar-collapse navbar-ex1-collapse" id="#navbar-ex1-collapse">
 	<ul class="nav navbar-nav side-nav">
 		<li class="{{ activeIfTemplateIs 'startScreen' }}">
-			<a href="{{pathFor route='home'}}"><i class="fa fa-fw fa-youtube-play"></i> Start</a>
+			<a href="/"><i class="fa fa-fw fa-youtube-play"></i> Start</a>
 		</li>
 		<li class="{{ activeIfTemplateIs 'sbAdmin' }}">
-			<a href="{{pathFor route='sbAdmin'}}"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+			<a href="/sbAdmin"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
 		</li>
 
 		<!-- <li class="menu-option active button_kitbagList" data-toggle=".kitbagList"> -->
@@ -25,7 +25,7 @@
 		</li>
 		<!-- <li class="menu-option active button_newOrg" data-toggle=".orgAddEdit"> -->
 		<li class="{{ activeIfTemplateIs 'orgAddEdit' }}">
-			<a href="{{pathFor route='newOrg'}}"><i class="fa fa-fw fa-plus-circle"></i> Add Organisation</a>
+			<a href="/newOrg"><i class="fa fa-fw fa-plus-circle"></i> Add Organisation</a>
 		</li>
 		<!-- <li class="menu-option active button_settings" data-toggle=".settings"> -->
 		<li class="{{ activeIfTemplateIs 'settings' }}">
@@ -34,7 +34,7 @@
 		{{#if currentUser}}
 			<!-- <li class="menu-option active button_users adminOnly" data-toggle=".users"> -->
 			<li class="{{ activeIfTemplateIs 'users' }}">
-				<a href="{{pathFor route='users'}}"><i class="fa fa-fw fa-users"></i> Browse Users <br><small>(Admins Only)</small></a>
+				<a href="/users"><i class="fa fa-fw fa-users"></i> Browse Users <br><small>(Admins Only)</small></a>
 			</li>
 		{{/if}}
 

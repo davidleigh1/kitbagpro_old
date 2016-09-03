@@ -10,10 +10,11 @@
 
 Template.sidebarMenuItems.helpers({
 	activeIfTemplateIs: function (template) {
-		var currentRoute = Router.current();
+		/*var currentRoute = FlowRouter.current();*/
+		var currentRoute = FlowRouter.getRouteName();
 		//console.log("currentRoute: ",template,currentRoute.lookupTemplate());
 		return currentRoute &&
-			template.toLowerCase() === currentRoute.lookupTemplate().toLowerCase() ? 'active' : '';
+			template.toLowerCase() === currentRoute.toLowerCase() ? 'active' : '';
 	}
 });
 
