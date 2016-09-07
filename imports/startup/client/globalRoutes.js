@@ -1,3 +1,7 @@
+// # set up all routes in the app
+// Official advice is a single route.js but have split into two instead
+// https://guide.meteor.com/structure.html
+
 /* GLOBAL ROUTE RULES */
 
 // FlowRouter.triggers.enter( [ enterFunction ] );

@@ -25,3 +25,4 @@ kadira:flow-router		# Carefully Designed Client Side Router for Meteor
 kadira:blaze-layout		# Layout Manager for Blaze (works well with FlowRouter)
 accounts-ui				# Simple templates to add login widgets to an app
 accounts-password		# Password support for accounts
+zimme:active-route

@@ -1,3 +1,40 @@
+// # set up all routes in the app
+
+// Start with requirements
+import { FlowRouter } from 'meteor/kadira:flow-router';
+import { BlazeLayout } from 'meteor/kadira:blaze-layout';
+// import meteor add zimme:active-route (https://github.com/zimme/meteor-active-route)
+/*  TODO: is this the package we use??
+import { AccountsTemplates } from 'meteor/useraccounts:core';
+*/
+
+
+// Import to load these templates
+// import '../../ui/';
+import '../../ui/layouts/mainLayout.html';
+import '../../ui/pages/startScreen/startScreen.html';
+import '../../ui/components/mainLayout/footer.html';
+import '../../ui/components/mainLayout/headerMenuItems.html';
+import '../../ui/components/mainLayout/navbarHeader.html';
+import '../../ui/components/mainLayout/navigation.html';
+import '../../ui/components/mainLayout/sidebarMenuItems.html';
+// import '../../ui/components/mainLayout/headerMenuItems.html';
+import '../../ui/components/menus/menu.html';
+import '../../ui/components/menus/userMenu.html';
+/*
+import '../../ui/layouts/app-body.js';
+import '../../ui/pages/root-redirector.js';
+import '../../ui/pages/lists-show-page.js';
+import '../../ui/pages/app-not-found.js';
+
+// Import to override accounts templates
+import '../../ui/accounts/accounts-templates.js';
+
+*/
+// Below here are the route definitions
+
+
+
 /*Router.configure({
 	// Defining here application-wide layouts.
 	// Here we can define a header and a footer that will appear on every page of the application

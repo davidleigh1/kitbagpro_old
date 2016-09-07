@@ -1,1 +1,0 @@
-// Variables available for use in SERVER scope only

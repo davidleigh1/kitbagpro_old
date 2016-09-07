@@ -4,36 +4,36 @@
 <!-- These collapse to the responsive navigation menu on small screens -->
 <div class="collapse navbar-collapse navbar-ex1-collapse" id="#navbar-ex1-collapse">
 	<ul class="nav navbar-nav side-nav">
-		<li class="{{ activeIfTemplateIs 'startScreen' }}">
+		<li class="{{ isActiveRoute 'startScreen' }}">
 			<a href="/"><i class="fa fa-fw fa-youtube-play"></i> Start</a>
 		</li>
-		<li class="{{ activeIfTemplateIs 'sbAdmin' }}">
+		<li class="{{ isActiveRoute 'sbAdmin' }}">
 			<a href="/sbAdmin"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
 		</li>
 
 		<!-- <li class="menu-option active button_kitbagList" data-toggle=".kitbagList"> -->
-		<li class="{{ activeIfTemplateIs 'kitbagList' }}">
+		<li class="{{ isActiveRoute 'kitbagList' }}">
 			<a href="/kitbagList"><i class="fa fa-fw fa-suitcase"></i> Browse Kitbags</a>
 		</li>
 		<!-- <li class="menu-option active button_newKitbag" data-toggle=".kitbagAddEdit"> -->
-		<li class="{{ activeIfTemplateIs 'kitbagAddEdit' }}">
+		<li class="{{ isActiveRoute 'kitbagAddEdit' }}">
 			<a href="/kitbagAddEdit"><i class="fa fa-fw fa-plus-circle"></i> Add Kitbag</a>
 		</li>
 		<!-- <li class="menu-option active button_orgList superAdmin" data-toggle=".orgList"> -->
-		<li class="{{ activeIfTemplateIs 'orgList' }}">
+		<li class="{{ isActiveRoute 'orgList' }}">
 			<a href="/orgList"><i class="fa fa-fw fa-building"></i> Browse Organisations</a>
 		</li>
 		<!-- <li class="menu-option active button_newOrg" data-toggle=".orgAddEdit"> -->
-		<li class="{{ activeIfTemplateIs 'orgAddEdit' }}">
+		<li class="{{ isActiveRoute 'orgAddEdit' }}">
 			<a href="/newOrg"><i class="fa fa-fw fa-plus-circle"></i> Add Organisation</a>
 		</li>
 		<!-- <li class="menu-option active button_settings" data-toggle=".settings"> -->
-		<li class="{{ activeIfTemplateIs 'settings' }}">
+		<li class="{{ isActiveRoute 'settings' }}">
 			<a href="/settings"><i class="fa fa-fw fa-cogs"></i> User Settings</a>
 		</li>
 		{{#if currentUser}}
 			<!-- <li class="menu-option active button_users adminOnly" data-toggle=".users"> -->
-			<li class="{{ activeIfTemplateIs 'users' }}">
+			<li class="{{ isActiveRoute 'users' }}">
 				<a href="/users"><i class="fa fa-fw fa-users"></i> Browse Users <br><small>(Admins Only)</small></a>
 			</li>
 		{{/if}}
@@ -43,25 +43,25 @@
 			<ul id="demo" class="collapse">
 
 				<!-- SB-Admin Template Menu Items -->
-				<li class="{{ activeIfTemplateIs 'charts' }}">
+				<li class="{{ isActiveRoute 'charts' }}">
 					<a href="/charts"><i class="fa fa-fw fa-bar-chart-o"></i> Charts</a>
 				</li>
-				<li class="{{ activeIfTemplateIs 'tables' }}">
+				<li class="{{ isActiveRoute 'tables' }}">
 					<a href="/tables"><i class="fa fa-fw fa-table"></i> Tables</a>
 				</li>
-				<li class="{{ activeIfTemplateIs 'forms' }}">
+				<li class="{{ isActiveRoute 'forms' }}">
 					<a href="/forms"><i class="fa fa-fw fa-edit"></i> Forms</a>
 				</li>
-				<li class="{{ activeIfTemplateIs 'bootstrapElements' }}">
+				<li class="{{ isActiveRoute 'bootstrapElements' }}">
 					<a href="/bootstrapElements"><i class="fa fa-fw fa-desktop"></i> Bootstrap Elements</a>
 				</li>
-				<li class="{{ activeIfTemplateIs 'bootstrapGrid' }}">
+				<li class="{{ isActiveRoute 'bootstrapGrid' }}">
 					<a href="/bootstrapGrid"><i class="fa fa-fw fa-wrench"></i> Bootstrap Grid</a>
 				</li>
-				<li class="{{ activeIfTemplateIs 'blankPage' }}">
+				<li class="{{ isActiveRoute 'blankPage' }}">
 					<a href="/blankPage"><i class="fa fa-fw fa-file"></i> Blank Page</a>
 				</li>
-				<li class="{{ activeIfTemplateIs 'indexRTL' }}">
+				<li class="{{ isActiveRoute 'indexRTL' }}">
 					<a href="/indexRTL"><i class="fa fa-fw fa-dashboard"></i> עברית</a>
 				</li>
 			</ul>

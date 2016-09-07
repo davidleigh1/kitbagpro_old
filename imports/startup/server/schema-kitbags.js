@@ -1,7 +1,10 @@
+/*
 MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
 MyCollections.Kitbags = new Mongo.Collection("kitbags");
 
 MyCollections.listKitbagStatuses = ["Active","Unlisted","Trashed"];
+
+*/
 
 /*
 Orgs2.allow({
