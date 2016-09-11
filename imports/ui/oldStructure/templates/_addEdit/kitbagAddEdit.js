@@ -35,7 +35,7 @@ if (Meteor.isClient) {
 
 
 			// Create and autopopulate the ID field for the getObjFromForm function to read
-			$("#kitbagId").val("kb_"+GlobalHelpers.idGenerator());
+			$("#kitbagId").val( GlobalHelpers.idGenerator("kb_") );
 
 			// Get kitbag details from form
 			var kbFormObj = getObjFromForm("add-edit-kitbag","add");

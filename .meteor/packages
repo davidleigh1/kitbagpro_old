@@ -25,4 +25,9 @@ kadira:flow-router		# Carefully Designed Client Side Router for Meteor
 kadira:blaze-layout		# Layout Manager for Blaze (works well with FlowRouter)
 accounts-ui				# Simple templates to add login widgets to an app
 accounts-password		# Password support for accounts
-zimme:active-route
+zimme:active-route		# Assists in tracking the currently active route (used with FlowRouter)
+msavin:mongol			# In-app development GUI/Editor for local MongoDB
+accounts-facebook		# Oauth User Integration with Facebook
+accounts-twitter		# Oauth User Integration with Twitter
+accounts-github			# Oauth User Integration with Github
+accounts-google			# Oauth User Integration with Google

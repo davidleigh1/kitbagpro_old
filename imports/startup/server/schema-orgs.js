@@ -1,3 +1,6 @@
+console.log("RUNNING OrgSchema");
+
+
 /*
 MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
 MyCollections.Orgs = new Mongo.Collection("orgs");

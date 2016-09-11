@@ -1,3 +1,4 @@
+console.log("RUNNING /imports/startup/client/index.js");
 /* Imports are included in all new Meteor Projects... since 1.3? */
 
 import { Template } from 'meteor/templating';
@@ -5,17 +6,20 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 /* import './main.html'; */
 
-import './useraccounts-configuration.js';
 import './routes.js';
 
 /* configuration for collections */
 MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
 
-MyCollections.Kitbags = new Mongo.Collection("kitbags");
-MyCollections.Orgs    = new Mongo.Collection("orgs");
+console.log(">>>>> 'MyCollections' is defined here!");
 
-MyCollections.listKitbagStatuses = ["Active","Unlisted","Trashed"];
-MyCollections.listOrgStatuses    = ["Active","Unlisted","Deleted"];
+
+
+// MyCollections.Kitbags = new Mongo.Collection("kitbags");
+// MyCollections.Orgs    = new Mongo.Collection("orgs");
+
+// MyCollections.listKitbagStatuses = ["Active","Unlisted","Trashed"];
+// MyCollections.listOrgStatuses    = ["Active","Unlisted","Deleted"];
 
 
 
@@ -46,12 +50,14 @@ Template.hello.events({
 
 
 
-if (Meteor.isClient) {
+// if (Meteor.isClient) {
 
 	// console.log("Subscribing to collections");
+/*
 	Meteor.subscribe("orgs");
 	Meteor.subscribe("kitbags");
 	Meteor.subscribe("userList");
+*/
 
 
 	Meteor.startup(function() {
@@ -69,17 +75,63 @@ if (Meteor.isClient) {
 		})();
 	});
 
-
-
 	GlobalHelpers = {
 		// Random number generator for object IDs (to avoid using the Mongo doc Id)
 		// http://stackoverflow.com/questions/105034/
-		idGenerator: function(){
-			// console.log('Global idGenerator '+new Date());
+		// See: http://stackoverflow.com/questions/894860/ for ES6/ES2015, default parameters
+		idGenerator: function(prefix="", suffix="", reqLength=uniqueIds.uniqueIdLength){
+			// console.log('Global idGenerator ' , prefix , suffix , reqLength);
 			var S4 = function() {
 				return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
 			};
-			return (S4()+S4()+S4());
+			// return prefix+(S4()+S4()+S4());
+			var guid = ""; 
+			for (var i = Number( Math.ceil(reqLength/4) ) - 1; i >= 0; i--) {
+				guid += "" + S4();
+			}
+			// Count the characters in headers/footers and truncate random string to total length is met
+			var randomCharsNeeded = Number(reqLength) - prefix.length - suffix.length; 
+			guid = prefix + guid.substring(0,randomCharsNeeded) + suffix;
+			return guid;
+		},
+		isValidId: function (id,typeOfId) {
+
+			if ( FlowRouter.getQueryParam("force") == "true" ) {
+				console.log("isValidId('"+id+"','"+typeOfId+"') - Alert: Overridden");
+				return true;
+			}
+
+			if (!id || id == "" || !typeOfId || typeOfId == "") {
+				console.log("isValidId('"+id+"','"+typeOfId+"') - Error: Insufficient arguments provided");
+				return false;
+			}
+			// uniqueIds.orgPrefix      : "1221"
+			// uniqueIds.kbPrefix       : "2470"
+			// uniqueIds.userPrefix     : "5530"
+			// uniqueIds.uniqueIdLength : "16"
+
+			/* Check if string of ID is required length */
+			if ( id.toString().length != uniqueIds.uniqueIdLength ) {
+				console.log("isValidId('"+id+"','"+typeOfId+"') - Error: Value is incorrect length. - expected '"+uniqueIds.uniqueIdLength+"' chars but got '"+id.toString().length+"'");
+				return false;
+			}
+
+			/* Check if ID is a valid integer */
+			if ( /^\+?[0-9]+$/.test(id) == false ) {
+				console.log("isValidId('"+id+"','"+typeOfId+"') - Error: Value is not a valid number - might contain strings or spaces");
+				return false;
+			}
+
+			/* Check if ID has correct prefix and suffix */
+			var prefixToCheck = (typeOfId == "org") ? uniqueIds.orgPrefix :  (typeOfId == "kb" || typeOfId == "kitbag") ? uniqueIds.kbPrefix : (typeOfId == "user") ? uniqueIds.userPrefix : false;			// uniqueIds.orgPrefix      : "1221"
+			if ( prefixToCheck != id.substr( 0 , prefixToCheck.length ) ) {
+				console.log("isValidId('"+id+"','"+typeOfId+"') - Error: Value does not have a valid prefix - expected '"+prefixToCheck+"' but found '"+id.substr( 0 , prefixToCheck.length )+"'");
+				return false;
+			}
+
+			/* Otherwise - Mazal tov! */
+			return true;
+
 		},
 		// Takes an Organisation ID and responds with the value of the requested field for that organisation e.g. {{lookupOrg kitbagAssocOrg 'orgTitle'}}
 		lookupFieldFromOrg: function(orgId,requiredField){
@@ -126,8 +178,8 @@ if (Meteor.isClient) {
 
 	Template.registerHelper('formatDate', function(timestamp) {
 		// console.log(timestamp);
-		if (!timestamp){
-			return;
+		if (!timestamp || timestamp == "Unknown"){
+			return timestamp;
 		}
 		var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 		// TODO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
@@ -176,13 +228,13 @@ if (Meteor.isClient) {
 
 
 	Template.body.helpers({
-//		orgs: function () {
-//			if (Session.get('hideFinished')) {
-//				return Orgs.find({checked: {$ne: true}});
-//			} else {
-//				return Orgs.find();
-//			}
-//		},
+	//		orgs: function () {
+	//			if (Session.get('hideFinished')) {
+	//				return Orgs.find({checked: {$ne: true}});
+	//			} else {
+	//				return Orgs.find();
+	//			}
+	//		},
 		hideFinished: function () {
 			/* https://www.youtube.com/watch?v=7xl-U71_CpA&list=PLLnpHn493BHECNl9I8gwos-hEfFrer7TV&index=9 */
 			/* As he says in the video at around 9 minutes, adding the helper for hideFinished doesn't actually add any visible functionality beyond what you already see. In-fact, you can remove the handlebar for hideFinished from the checkbox and it will still work. He is simply adding the helper so the checked state of the checkbox is actually kept in sync. The filtering actually happens with the Session, so adding the helper doesn't accomplish anything extra functionality wise for this video, it's just a good practice.﻿ */
@@ -204,12 +256,8 @@ if (Meteor.isClient) {
 		// One of 'USERNAME_AND_EMAIL', 'USERNAME_AND_OPTIONAL_EMAIL', 'USERNAME_ONLY', or 'EMAIL_ONLY' (default).
 	});
 
-} //ends Meteor.isClient
+// } //ends Meteor.isClient
 
 //if (Meteor.isServer) {
 	/* Meteor isServer code relocated to '/server/main.js' file */
 //}
-
-Meteor.methods({
-	// Moved to /components/kitbags/kitbag.js
-});
