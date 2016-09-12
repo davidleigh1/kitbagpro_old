@@ -19,7 +19,10 @@ ecmascript@0.5.8              # Enable ECMAScript2015+ syntax in app code
 shell-server@0.2.1            # Server-side component of the `meteor shell` command
 
 
-aldeed:simple-schema
-aldeed:collection2
-kadira:flow-router
-kadira:blaze-layout
+aldeed:simple-schema	# Simple schema validation object with reactivity. Used by collection2 + autoform
+aldeed:collection2		# Automatic validation of insert and update operations on client + server
+kadira:flow-router		# Carefully Designed Client Side Router for Meteor
+kadira:blaze-layout		# Layout Manager for Blaze (works well with FlowRouter)
+accounts-ui				# Simple templates to add login widgets to an app
+accounts-password		# Password support for accounts
+zimme:active-route
