@@ -1,11 +1,17 @@
 // # import server startup through a single index entry point
 
-import { Meteor } from 'meteor/meteor';
+console.log("RUNNING server.index.js");
+
+
+// import { Meteor } from 'meteor/meteor';
 
 // This defines a starting set of data to be loaded if the app is loaded with an empty db.
-import '../imports/startup/server/fixtures.js';
-import '../imports/startup/server/schema-kitbags.js';
-import '../imports/startup/server/schema-orgs.js';
+// import '../imports/startup/server/fixtures.js';
+import './fixtures.js';
+// import '../imports/startup/server/schema-kitbags.js';
+// import './schema-kitbags.js';
+// import '../imports/startup/server/schema-orgs.js';
+// import './schema-orgs.js';
 
 /* 
 	// Not loaded... 
@@ -21,4 +27,6 @@ import '../imports/startup/server/schema-orgs.js';
 
 // This defines all the collections, publications and methods that the application provides
 // as an API to the client.
-import '../imports/api/api.js';
+//console.log('SKIPPING api.js');
+console.log("IMPORT register-api.js");
+import './register-api.js';

@@ -1,6 +1,13 @@
 // # fill the DB with example data on startup
+console.log("RUNNING server.fixtures.js");
 
-// See schema-kitbags.js
+import { Meteor } from 'meteor/meteor';
+
+
 // See schema-orgs.js
+// See schema-kitbags.js
 
-console.log("LOADED FIXTURES!");
+// import { Lists } from '../../api/lists/lists.js';
+// import { Todos } from '../../api/todos/todos.js';
+import { Kitbags } from '../../api/kitbags/kitbags.js';
+import { Orgs } from '../../api/orgs/orgs.js';

@@ -1,6 +1,9 @@
 // This defines all the collections, publications and methods that the application provides
 // as an API to the client.
 
+console.log("RUNNING api.js");
+
+/*
 Meteor.publish("orgs",function() {
 	console.log('Publishing orgs!');
 		return MyCollections["Orgs"].find({
@@ -12,7 +15,9 @@ Meteor.publish("orgs",function() {
 			]
 		});
 });
+*/
 
+/*
 Meteor.publish("kitbags",function() {
 	console.log('Publishing kitbags!');
 		return MyCollections["Kitbags"].find({
@@ -24,10 +29,13 @@ Meteor.publish("kitbags",function() {
 			]
 		});
 });
+*/
 
 
+	/*
 Meteor.methods({
 	/* -- KITBAG METHODS -- */
+/*
 	addKitbag: function(kitbagObj){
 		if(typeof kitbagObj != "object" || kitbagObj == false){
 			return "false";
@@ -96,7 +104,9 @@ Meteor.methods({
 			console.log("kitbagStatus set: ",MyCollections["Kitbags"].findOne(id));
 		}
 	},
+	*/
 	/* -- ORGANISATION METHODS -- */
+	/*
 	addOrg: function(orgObj){
 		console.log('fn Meteor.methods.addOrg()',orgObj);
 		if(typeof orgObj != "object" || orgObj == false){
@@ -156,3 +166,4 @@ Meteor.methods({
 		}
 	}
 });
+*/

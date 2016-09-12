@@ -1,3 +1,6 @@
+console.log("RUNNING KitbagSchema");
+
+
 /*
 MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
 MyCollections.Kitbags = new Mongo.Collection("kitbags");
