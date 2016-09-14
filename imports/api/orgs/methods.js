@@ -10,17 +10,17 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 import { Orgs } from './orgs.js';
 
 
-Meteor.publish("orgs",function() {
-	console.log('Publishing orgs!');
-		return MyCollections["Orgs"].find({
-			$or: [
-				// Or collection entry is NOT set to PRIVATE i.e. entry is PUBLIC
-				{ private: {$ne: true} },
-				// Or the owner of the entry is the current user -- regardless of the private setting
-				{ owner: this.userId }
-			]
-		});
-});
+// Meteor.publish("orgs",function() {
+// 	console.log('Publishing orgs!');
+// 		return MyCollections["Orgs"].find({
+// 			$or: [
+// 				// Or collection entry is NOT set to PRIVATE i.e. entry is PUBLIC
+// 				{ private: {$ne: true} },
+// 				// Or the owner of the entry is the current user -- regardless of the private setting
+// 				{ owner: this.userId }
+// 			]
+// 		});
+// });
 
 
 Meteor.methods({

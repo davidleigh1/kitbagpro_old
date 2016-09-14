@@ -2,8 +2,8 @@ if (Meteor.isClient) {
 
 	editOrgDetails = function (obj) {
 		console.log('editOrgDetails: ',obj.orgObj.orgId);
-		console.log("/org/"+obj.orgObj.orgId);
-		FlowRouter.go("/org/"+obj.orgObj.orgId);
+		console.log("/orgs/"+obj.orgObj.orgId+"/view");
+		FlowRouter.go("/orgs/"+obj.orgObj.orgId+"/view");
 	};
 
 // Template.orgHeader.helpers

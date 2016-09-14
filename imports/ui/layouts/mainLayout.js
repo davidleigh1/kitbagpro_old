@@ -12,7 +12,7 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 
 // import { insert } from '../../api/orgs/methods.js';
 
-import '../components/loading/loading.js';
+import '../../ui/components/loading/loading.js';
 
 import '../../ui/pages/startScreen/startScreen.html';
 import '../../ui/components/footer.html';
@@ -41,6 +41,7 @@ Meteor.startup(() => {
 		// Show the connection error box
 		showConnectionIssue.set(true);
 	}, CONNECTION_ISSUE_TIMEOUT);
+
 });
 
 
@@ -48,12 +49,32 @@ Template.mainLayout.onCreated(function mainLayoutOnCreated() {
 
 	console.log("----->> Added Subscriptions");
 
-	Meteor.subscribe("orgs");
+	// const handle = Meteor.subscribe("orgs", {
+	// 	onReady: function () { console.log("====>>>> onReady And the Items actually Arrive", arguments); },
+	// 	onError: function () { console.log("====>>>> onError", arguments); }
+	// });
+
+	const handle = Meteor.subscribe('orgs');
+	Tracker.autorun(() => {
+	  const isReady = handle.ready();
+	  var status =  isReady ? 'ready' : 'not ready';
+	  console.log("\nHandle for orgs is " + status + "\n\n");
+	})
+
+
+
+	// this.autorun(() => {
+	// 	this.subscribe('orgs');
+	// });
+
+
 	Meteor.subscribe("kitbags");
 	Meteor.subscribe("userList");
 
-	this.subscribe('orgs.public');
-	this.subscribe('orgs.private');
+	// this.subscribe('orgs.public');
+	// this.subscribe('orgs.private');
+
+	console.log( "MYCOLLECTIONS - AUTORUN: ", MyCollections["Orgs"].findOne({orgId: "122123eb85456a66"}) );
 
 	// this.state = new ReactiveDict();
 	// this.state.setDefault({

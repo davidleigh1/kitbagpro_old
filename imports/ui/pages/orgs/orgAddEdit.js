@@ -23,16 +23,16 @@ Template.orgAddEdit.onRendered(function(){
 
 	switch( avoe ) {
 		case "view":
-			console.log("Context VIEW - View Organisation Profile");
+			console.log("Context VIEW - View Organisation Profile for: "+oid);
 			editOrg( oid );
 			break;
 		case "edit":
-			console.log("Context EDIT - Update Organisation Profile");
+			console.log("Context EDIT - Update Organisation Profile for: "+oid);
 			editOrg( oid );
 			break;
 		case "add":
 			console.log("Context ADD - Register New Organisation");
-			return;
+			break;
 		default:
 			console.log("Context NOTFOUND - Register New Organisation");
 			return;
@@ -97,24 +97,27 @@ getObjFromForm = function(formId,addOrUpdate){
 	}
 };
 
-editOrg = function(thisOrg,formId){
+editOrg = function(thisOrgId,formId){
+
+	// alert("editOrg",thisOrgId,formId);
 
 	var formId = (typeof formId !== "undefined") ? formId : "add-edit-org";
 
-	console.log('fn getObjFromForm','orgId:'+thisOrg.orgId,'formId:'+formId);
+	console.log('fn getObjFromForm',' thisOrgId:'+thisOrgId,' formId:'+formId);
 
 	// MyCollections["Orgs"].findOne({orgId: ""+});
 
-	myOrg = thisOrg;
-	// myOrg = MyCollections["Orgs"].findOne({orgId: ""+orgId});
-	// console.log(myOrg);
+	// myOrg = thisOrg;
+	myOrg = MyCollections["Orgs"].findOne({orgId: ""+thisOrgId});
+	testOrg = MyCollections["Orgs"].findOne({orgId: "12210deb6402efb6"});
+	console.log(">>>>>>======>>>>>> myOrg: ", testOrg);
 
 
 	var formFields = document.getElementById(formId).elements;
-	// console.log(formFields);
+	console.log(formFields);
 
-	// console.log("Org found: ",myOrg);
-	// console.log("Form found: ",formFields);
+	console.log("Org found: ",myOrg);
+	console.log("Form found: ",formFields);
 
 	//formObj = {};
 
@@ -133,9 +136,9 @@ editOrg = function(thisOrg,formId){
 		} else {
 
 			// Skip undefined (rather than "undefined") responses which now return since we added the schema
-			console.log(e.name + " TYPE: " + typeof myOrg[e.name]);
+			// console.log(e.name + " TYPE: " + typeof myOrg[e.name]);
 			if (typeof myOrg[e.name] == "undefined"){
-				console.log("continue");
+				// console.log("continue");
 				continue;
 			}
 
@@ -157,28 +160,28 @@ Template.orgAddEdit.helpers({
 		var c = (!context) ? isAddViewOrEdit( FlowRouter.getRouteName() ) : context;
 		switch( c ) {
 			case "view":
-				return "View Organisation Profile";
+				return Spacebars.SafeString("View Organisation Profile");
 				break;
 			case "edit":
-				return "Update Organisation Profile";
+				return Spacebars.SafeString("Update Organisation Profile");
 				break;
 			case "add":
 			default:
-				return "Register New Organisation";
+				return Spacebars.SafeString("Register New Organisation");
 		}
 	},
 	getIcon: function(context){
 		var c = (!context) ? isAddViewOrEdit( FlowRouter.getRouteName() ) : context;
 		switch( c ) {
 			case "view":
-				return "fa fa-building";
+				return Spacebars.SafeString("fa fa-building");
 				break;
 			case "edit":
-				return "fa fa-pencil-square";
+				return Spacebars.SafeString("fa fa-pencil-square");
 				break;
 			case "add":
 			default:
-				return "fa fa-plus-square";
+				return Spacebars.SafeString("fa fa-plus-square");
 		}
 	},
 	listOrgStatuses: function () {
@@ -195,7 +198,7 @@ Template.orgAddEdit.helpers({
 Template.orgAddEdit.events({
 	//'submit .add-edit-org': function(event) {
 	'click button.submit': function(event) {
-		console.log('cside - clicked!');
+		// console.log('cside - clicked!');
 		// var orgTitle = event.target.orgTitle.value;
 		event.preventDefault();
 		// console.log('submit button!');
@@ -205,7 +208,7 @@ Template.orgAddEdit.events({
 
 		// CHECK TO SEE IF THIS FORM REQUIRES AN ADD OR AN UPDATE - CHECK FOR AN EXISTING ID
 		if ( $("#orgId").val() == false ) {
-			console.log('cside - orgID value not found!');
+			// console.log('cside - orgID value not found!');
 			// An OrgID was *not* found in the form so assume this is a new Org
 			$("#orgId").val( GlobalHelpers.idGenerator(uniqueIds.orgPrefix) );
 			formObj = getObjFromForm("add-edit-org","add");
@@ -213,23 +216,23 @@ Template.orgAddEdit.events({
 				console.log('cside - typeof formObj == object');
 				Meteor.call("addOrg", formObj );
 			} else {
-				console.log('ERROR: getObjFromForm() failed to provide formObj{}. DB insert action cancelled. Hint: Check getObjFromForm(); Missing orgTitle;  [error code: 924]');
+				// console.log('ERROR: getObjFromForm() failed to provide formObj{}. DB insert action cancelled. Hint: Check getObjFromForm(); Missing orgTitle;  [error code: 924]');
 			}
 			// outcome = Meteor.call("addOrg", getObjFromForm("add-edit-org","add") );
 		} else {
-			console.log('cside - true!');
+			// console.log('cside - true!');
 			// An OrgID *was* found in the form so assume this is an edit to an existing Org
 			// TODO - Catch a case where there is an ID in the form but it's not found in the DB.  This could happen as we have multiple users who could affect this object at any time.
 			formObj = getObjFromForm("add-edit-org","update");
 			if (typeof formObj == "object") {
 				Meteor.call("updateOrg", formObj );
 			} else {
-				console.log('ERROR: getObjFromForm() failed to provide formObj{}. DB update action cancelled. Hint: Check getObjFromForm(); Missing orgTitle;  [error code: 925]');
+				// console.log('ERROR: getObjFromForm() failed to provide formObj{}. DB update action cancelled. Hint: Check getObjFromForm(); Missing orgTitle;  [error code: 925]');
 			}
 			// outcome = Meteor.call("updateOrg", getObjFromForm("add-edit-org","update") );
 		}
 
-		console.log('cside - returned!');
+		// console.log('cside - returned!');
 
 		// Add to Collection
 		// TODO - delete outcome
@@ -242,14 +245,14 @@ Template.orgAddEdit.events({
 		// $(".orgAddEdit").hide();
 		// Prevent the default page refresh which occurs when clicking submit
 		/* TODO - Should we wait for the callback event to confirm org was created successfully? */
-		FlowRouter.go("/orgs/"+formObj.orgId, { _id: orgId });
+		//--- FlowRouter.go("/orgs/"+formObj.orgId+"/view", { _id: orgId });
 		return false;
 	},
 	'click button.cancel': function(event) {
 		event.preventDefault();
 		$(".add-edit-org")[0].reset();
 		// $(".orgAddEdit").hide();
-		FlowRouter.go("/orgView/"+formObj.orgId);
+		//--- FlowRouter.go("/orgs/"+formObj.orgId+"/view");
 		// Prevent the default page refresh which occurs when clicking submit
 		return false;
 	}

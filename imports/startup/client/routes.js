@@ -48,7 +48,6 @@ FlowRouter.route("/settings",				{name:"mySettings",		action: function(params, q
 
 /* ORGS */
 
-import '../../ui/pages/orgs/orgAddEdit.js';
 
 	/* GROUP - ORGS */
 	var orgsRoutes = FlowRouter.group({
@@ -59,6 +58,8 @@ import '../../ui/pages/orgs/orgAddEdit.js';
 		}]
 	});
 
+
+			import '../../ui/pages/orgs/orgAddEdit.js';
 			/* ORGS ADD */
 			orgsRoutes.route("/create", {
 				name:"orgAdd",
@@ -71,6 +72,7 @@ import '../../ui/pages/orgs/orgAddEdit.js';
 				}
 			});
 
+			import '../../ui/pages/orgs/orgList.js';
 			/* ORGS LIST */
 			orgsRoutes.route("/list", {
 				name:"orgList",
@@ -99,12 +101,13 @@ import '../../ui/pages/orgs/orgAddEdit.js';
 
 					/* Check to see if valid Org ID before redirecting to VIEW page */
 					/* NOTE - This doesn't check if ID is FOUND in DB, it only checks if ID has valid pattern */
-					if ( GlobalHelpers.isValidId( params._command ,"org") ) {
+					if ( GlobalHelpers.isValidId( params._command ,"org") || FlowRouter.getQueryParam("force") == "true" ) {
 						var newUrl = "/orgs/" + params._command + "/view";
 						FlowRouter.go(newUrl);
 					} else {
 						/* Go to 404 */
-						FlowRouter.go('/404?reqUrl='+FlowRouter.current().path);
+						// FlowRouter.go('/404?reqUrl='+FlowRouter.current().path+"&referrer="+document.referrer);
+						FlowRouter.go('/404');
 					}
 				},
 				triggersEnter: [function(context, redirect) {
@@ -184,7 +187,13 @@ FlowRouter.notFound = {
 		// 	mainFooter: "footer"
 		// });
 		console.log("REDIRECTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-		FlowRouter.go('/404?reqUrl='+FlowRouter.current().path);
+		// FlowRouter.redirect('/404?reqUrl='+FlowRouter.current().path+"&referrer="+document.referrer);
+		// FlowRouter.setQueryParams();
+		FlowRouter.go('/404',{},{ 
+			requestedUrl: FlowRouter.current().path,
+			referrerUrl: document.referrer
+		});
+
 	}
 };
 
@@ -256,7 +265,7 @@ FlowRouter.route("/review", {name:"Bag Check",action: function(params, queryPara
 FlowRouter.route("/review/history", {name:"Bag Check History",action: function(params, queryParams) { console.log("Route: Kitbag > Bag History (Bag Check History)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", mainNav: "navigation",mainFooter: "footer"});}});
 FlowRouter.route("/share", {name:"Share Bag Status",action: function(params, queryParams) { console.log("Route: Actions > Share Bag Status (Share Bag Status)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", mainNav: "navigation",mainFooter: "footer"});}});
 FlowRouter.route("/status/(me)", {name:"My Status",action: function(params, queryParams) { console.log("Route: Home > User Status (My Status)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", mainNav: "navigation",mainFooter: "footer"});}});
-FlowRouter.route("/status/org/(myprimary)", {name:"Org Status",action: function(params, queryParams) { console.log("Route: Home > Org Status (Org Status)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", mainNav: "navigation",mainFooter: "footer"});}});
+FlowRouter.route("/status/orgs/(myprimary)", {name:"Org Status",action: function(params, queryParams) { console.log("Route: Home > Org Status (Org Status)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", mainNav: "navigation",mainFooter: "footer"});}});
 FlowRouter.route("/status/system", {name:"System Status",action: function(params, queryParams) { console.log("Route: Home > System Status (System Status)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", mainNav: "navigation",mainFooter: "footer"});}});
 FlowRouter.route("/users/:_userId", {name:"User Profile View",action: function(params, queryParams) { console.log("Route: Users > N/A (User Profile View)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", mainNav: "navigation",mainFooter: "footer"});}});
 FlowRouter.route("/users/:_userId/edit", {name:"User Profile Edit",action: function(params, queryParams) { console.log("Route: Users > N/A (User Profile Edit)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", mainNav: "navigation",mainFooter: "footer"});}});
@@ -291,7 +300,7 @@ Router.route('/newOrg', function () {
 		}
 	});
 });
-Router.route('/org/:orgId', function () {
+Router.route('/orgs/:orgId', function () {
 	this.render('orgAddEdit', {
 		name: 'editOrg',
 		data: function () {

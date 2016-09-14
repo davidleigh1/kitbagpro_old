@@ -5,7 +5,13 @@
 		<!-- Main content -->
         <div id="page-wrapper">
             <div class="container-fluid">
-				{{>Template.dynamic template=mainContent}}
+
+				{{#if Template.subscriptionsReady}}
+					{{>Template.dynamic template=mainContent}}
+				{{else}}
+					{{>loading}}
+				{{/if}}
+
 			</div>
 			<!-- /.container-fluid -->
 		</div>

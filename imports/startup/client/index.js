@@ -13,8 +13,6 @@ MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections ==
 
 console.log(">>>>> 'MyCollections' is defined here!");
 
-
-
 // MyCollections.Kitbags = new Mongo.Collection("kitbags");
 // MyCollections.Orgs    = new Mongo.Collection("orgs");
 
@@ -96,6 +94,8 @@ Template.hello.events({
 		},
 		isValidId: function (id,typeOfId) {
 
+				// alert("Remove this function if not required!\nShould allow more flexible Org IDs")
+
 			if ( FlowRouter.getQueryParam("force") == "true" ) {
 				console.log("isValidId('"+id+"','"+typeOfId+"') - Alert: Overridden");
 				return true;
@@ -118,8 +118,8 @@ Template.hello.events({
 
 			/* Check if ID is a valid integer */
 			if ( /^\+?[0-9]+$/.test(id) == false ) {
-				console.log("isValidId('"+id+"','"+typeOfId+"') - Error: Value is not a valid number - might contain strings or spaces");
-				return false;
+				console.log("isValidId('"+id+"','"+typeOfId+"') - Warning: Value might not a valid '"+uniqueIds.uniqueIdLength+" ID'.  May contain letters or spaces");
+				// return false;
 			}
 
 			/* Check if ID has correct prefix and suffix */

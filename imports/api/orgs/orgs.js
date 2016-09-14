@@ -16,6 +16,7 @@ MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections ==
 MyCollections.Orgs    = new Mongo.Collection("orgs");
 MyCollections.listOrgStatuses    = ["Active","Unlisted","Deleted"];
 
+
 /*
 class TodosCollection extends Mongo.Collection {
 	insert(doc, callback) {
