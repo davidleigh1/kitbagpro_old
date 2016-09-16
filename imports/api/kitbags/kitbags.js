@@ -7,12 +7,17 @@ import { Mongo } from 'meteor/mongo';
 // import incompleteCountDenormalizer from './incompleteCountDenormalizer.js';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 // import { Kitbags } from '../kitbags/kitbags.js';
+import { Orgs } from '/imports/api/orgs/orgs.js';
 // import { Orgs } from '../orgs/orgs.js';
 
-console.log(">>>>> 'MyCollections.Kitbags' is defined here!");
+// console.log(">>>>> 'MyCollections.Kitbags' is defined here!");
+console.log(">>>>> 'Kitbags' is defined here!");
 
-MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
+// MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
 
-MyCollections.Kitbags = new Mongo.Collection("kitbags");
-MyCollections.listKitbagStatuses = ["Active","Unlisted","Trashed"];
+// export const MyCollections.Kitbags = new Mongo.Collection("kitbags");
+// MyCollections.listKitbagStatuses = ["Active","Unlisted","Trashed"];
+
+export const Kitbags            = new Mongo.Collection("kitbags");
+export const listKitbagStatuses = ["Active","Unlisted","Trashed"];
 

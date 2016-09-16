@@ -157,8 +157,31 @@ FlowRouter.route("/settings",				{name:"mySettings",		action: function(params, q
 
 
 /* PHASE ONE */
-FlowRouter.route("/bags/create/:_orgId",	{name:"kitbagAdd ",		action: function(params, queryParams) { console.log("Route: Kitbags > Create New Kitbag (Create New Kitbag )",	params, queryParams);BlazeLayout.render("mainLayout", 	{mainContent: "kitbagAddEdit",	mainNav: "navigation",		mainFooter: "footer"});}});
-FlowRouter.route("/bags/list",				{name:"kitbagList",		action: function(params, queryParams) { console.log("Route: Kitbags > Kitbag List (Kitbag List)", 				params, queryParams);BlazeLayout.render("mainLayout", 	{mainContent: "kitbagList",		mainNav: "navigation",		mainFooter: "footer"});}});
+import '../../ui/pages/kitbags/kitbagList.js';
+FlowRouter.route("/bags/list", {
+	name:"kitbagList",
+	action: function(params, queryParams) {
+		console.log("Route: Kitbags > Kitbag List (Kitbag List)", params, queryParams);
+		BlazeLayout.render("mainLayout", {
+			mainContent: "kitbagList",
+			mainNav: "navigation",
+			mainFooter: "footer"
+		});
+	}
+});
+import '../../ui/pages/kitbags/kitbagAddEdit.js';
+FlowRouter.route("/bags/create/:_orgId", {
+	name:"kitbagAdd ",
+	action: function(params, queryParams) {
+		console.log("Route: Kitbags > Create New Kitbag (Create New Kitbag )", params, queryParams);
+		BlazeLayout.render("mainLayout", {
+			mainContent: "kitbagAddEdit",
+			mainNav: "navigation",
+			mainFooter: "footer"
+		});
+	}
+});
+
 
 
 // the routeNotFound template is used for unknown routes and missing lists

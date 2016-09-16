@@ -33,7 +33,7 @@ let OrgSchema = new SimpleSchema({
 	},
 	"orgStatus": {
 		type: String,
-		allowedValues: MyCollections.listOrgStatuses,
+		allowedValues: listOrgStatuses,
 		optional: true,
 		defaultValue: "Active",
 		autoValue: function () {
@@ -105,4 +105,4 @@ let OrgSchema = new SimpleSchema({
 });
 
 // console.log(OrgSchema);
-MyCollections.Orgs.attachSchema( OrgSchema );
+Orgs.attachSchema( OrgSchema );

@@ -34,7 +34,7 @@ let KitbagSchema = new SimpleSchema({
 	},
 	"kitbagStatus": {
 		type: String,
-		allowedValues: MyCollections.listKitbagStatuses,
+		allowedValues: listKitbagStatuses,
 		optional: true,
 		defaultValue: "Active",
 		autoValue: function () {
@@ -110,4 +110,4 @@ let KitbagSchema = new SimpleSchema({
 });
 
 // console.log(KitbagSchema);
-MyCollections.Kitbags.attachSchema( KitbagSchema );
+Kitbags.attachSchema( KitbagSchema );

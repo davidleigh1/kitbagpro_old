@@ -1,8 +1,10 @@
 // # definition of this collection
 
+import { Orgs } from '/imports/api/orgs/orgs.js';
+
 Meteor.publish("orgs",function() {
-	console.log('Publishing orgs from server/publications.js!');
-		return MyCollections["Orgs"].find({
+	console.log('Publishing "orgs" from apis > orgs > server > publications.js!');
+		return Orgs.find({
 
 			/* TODO - Do we want to allow Server to publish all fields of the Org record? */
 

@@ -26,11 +26,11 @@
 				<!-- {{kitbagAssocOrg}} -->
 				{{#if lookupOrgTitle kitbagAssocOrg 'orgTitle'}}
 					<!-- TODO: Add org/123456 page for each organisation -->
-					<a href="/orgs/{{_id}}/view">
+					<a href="/orgs/{{kitbagAssocOrg}}/view">
 						{{lookupOrgTitle kitbagAssocOrg 'orgTitle'}}
 					</a>
 				{{else}}
-					<i>OrgName not found (OrgID: {{_id}})</i>
+					<i>Not found (orgID: {{kitbagAssocOrg}})</i>
 				{{/if}}
 			{{/unless}}
 		</div>
@@ -54,11 +54,11 @@
 			<!-- {{kitbagAssocOrg}} -->
 			{{#if lookupOrgTitle kitbagAssocOrg 'orgTitle'}}
 				<!-- TODO: Add org/123456 page for each organisation -->
-				<a href="/orgs/{{_id}}/view">
+				<a href="/orgs/{{kitbagAssocOrg}}/view">
 					{{lookupOrgTitle kitbagAssocOrg 'orgTitle'}}
 				</a>
 			{{else}}
-				<i>OrgName not found (OrgID: {{_id}})</i>
+				<i>Not found (orgID: {{kitbagAssocOrg}})</i>
 			{{/if}}
 		{{/unless}}
 	</td>

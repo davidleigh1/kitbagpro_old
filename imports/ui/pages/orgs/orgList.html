@@ -18,6 +18,13 @@
 			Full="Organisation"
 			}}
 
+<!-- 		{{#if this.subscriptionsReady}}
+	{{> listFilter }}
+{{else}}
+	{{> loading}}
+{{/if}} -->
+
+
 		<ul class="listOfObjects">
 			{{#each objectsFiltered "Orgs"}}
 				{{> orgLine}}
@@ -26,3 +33,9 @@
 	</div>
 
 </template>
+
+<!-- <template name="loading2">
+	<div>
+		L O A D I N G . . . .
+	</div>
+</template> -->

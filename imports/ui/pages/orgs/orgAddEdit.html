@@ -25,7 +25,7 @@
 				<label for="orgStatus">Status:</label>
 				<!-- <input type="text" name="orgStatus" data-submit="true" placeholder="Current status of this Org"> -->
 				<select class="statusSelectList" name="orgStatus" data-submit="true">
-					{{#each getSchemaVar "listOrgStatuses"}}
+					{{#each listOrgStatuses}}
 						<option value="{{this}}">{{this}}</option>
 					{{/each}}
 				</select>

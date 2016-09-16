@@ -7,11 +7,13 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 // import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 // import { _ } from 'meteor/underscore';
 
-import { Orgs } from './orgs.js';
+// import { Orgs } from './orgs.js';
+import { Orgs } from '/imports/api/orgs/orgs.js';
 
 
 // Meteor.publish("orgs",function() {
 // 	console.log('Publishing orgs!');
+// //    return MyCollections["Orgs"].find({
 // 		return MyCollections["Orgs"].find({
 // 			$or: [
 // 				// Or collection entry is NOT set to PRIVATE i.e. entry is PUBLIC
@@ -33,14 +35,16 @@ Meteor.methods({
 			// TODO: Was there a reason this was originally returning "false" and "true" (as strings);
 			return false;
 		}
-		var dbNewORG = MyCollections["Orgs"].insert(orgObj);
+    // var dbNewORG = MyCollections["Orgs"].insert(orgObj);
+		var dbNewORG = Orgs.insert(orgObj);
 		console.log('added Org: ',orgObj);
 		return dbNewORG;
 	},
 	updateOrg: function(updatedObj,checked){
 		console.log("fn updateOrg()");
 		// var res = MyCollections["Orgs"].findOne(id);
-		var dbOrg = MyCollections["Orgs"].findOne({orgId:updatedObj.orgId});
+    // var dbOrg = MyCollections["Orgs"].findOne({orgId:updatedObj.orgId});
+		var dbOrg = Orgs.findOne({orgId:updatedObj.orgId});
 		var editId = dbOrg._id;
 		console.log("OrgId to be updated: ",editId);
 		console.log("updatedObj: ",updatedObj);
@@ -51,7 +55,8 @@ Meteor.methods({
 			delete updatedObj._id;
 		}
 
-		MyCollections["Orgs"].update(editId, { $set: updatedObj});
+    // MyCollections["Orgs"].update(editId, { $set: updatedObj});
+		Orgs.update(editId, { $set: updatedObj});
 
 		// TODO: Add "LastUpdatedAt" and "LastUpdatedBy" fields - will be used for debugging and sorting
 
@@ -61,27 +66,32 @@ Meteor.methods({
 		//			console.log('ERROR: You are not authorized to update items owned by other users [error code: 347]');
 		//			return false;
 		//		}else{
+    // //      MyCollections["Orgs"].update(id, { $set: {checked: checked}});
 		//			MyCollections["Orgs"].update(id, { $set: {checked: checked}});
 		//		}
 	},
 	deleteOrg: function(id){
-		var res = MyCollections["Orgs"].findOne(id);
+    // var res = MyCollections["Orgs"].findOne(id);
+		var res = Orgs.findOne(id);
 
 		if (res.owner !== Meteor.userId()){
 			// throw new Meteor.Error('You are not authorized to delete items owned by other users (error code: 34.6)');
 			console.log('ERROR: You are not authorized to delete items owned by other users [error code: 34.6]');
 			return false;
 		}else{
-			MyCollections["Orgs"].remove(id);
+      // MyCollections["Orgs"].remove(id);
+			Orgs.remove(id);
 		}
 	},
 	setPrivateOrg: function(id,private){
-		var res = MyCollections["Orgs"].findOne(id);
+    // var res = MyCollections["Orgs"].findOne(id);
+		var res = Orgs.findOne(id);
 
 		if (res.owner !== Meteor.userId()){
 			throw new Meteor.Error('ERROR: You are not authorized to change privacy for items owned by other users [error code: 34.5]');
 		}else{
-			MyCollections["Orgs"].update(id, { $set: {private: private}});
+      // Kitbags.update(id, { $set: {private: private}});
+			Kitbags.update(id, { $set: {private: private}});
 		}
 	}
 

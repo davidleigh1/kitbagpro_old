@@ -6,15 +6,19 @@ import { Mongo } from 'meteor/mongo';
 
 // import incompleteCountDenormalizer from './incompleteCountDenormalizer.js';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
-import { Kitbags } from '../kitbags/kitbags.js';
+import { Kitbags } from '/imports/api/kitbags/kitbags.js';
 // import { Orgs } from '../orgs/orgs.js';
 
-console.log(">>>>> 'MyCollections.Orgs' is defined here!");
+// console.log(">>>>> 'MyCollections.Orgs' is defined here!");
+console.log(">>>>> 'Orgs' is defined here!");
 
-MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
+// MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
 
-MyCollections.Orgs    = new Mongo.Collection("orgs");
-MyCollections.listOrgStatuses    = ["Active","Unlisted","Deleted"];
+// export const MyCollections.Orgs    = new Mongo.Collection("orgs");
+// MyCollections.listOrgStatuses    = ["Active","Unlisted","Deleted"];
+
+export const Orgs            = new Mongo.Collection("orgs");
+export const listOrgStatuses = ["Active","Unlisted","Deleted"];
 
 
 /*

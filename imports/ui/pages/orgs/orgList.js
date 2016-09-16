@@ -1,6 +1,8 @@
 import './orgList.html';
 import './orgLine.js';
 
+import { Orgs } from '/imports/api/orgs/orgs.js';
+
 import '../../../ui/components/lists/listFilter.js';
 
 // objects = orgList = orgList
@@ -39,7 +41,7 @@ Template.orgList.helpers({
 			filterVar = ".*";
 		// return Persons.find({sort: {"name": "asc"}});
 		}
-		var docFound = MyCollections[CollectionName].find({
+		var docFound = Orgs.find({
 			orgTitle:{
 				$regex: new RegExp(filterVar, "i")
 			}

@@ -6,12 +6,57 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 /* import './main.html'; */
 
+import { Orgs } from '/imports/api/orgs/orgs.js';
+// import { listOrgStatuses } from '/imports/api/orgs/orgs.js';
+
+
 import './routes.js';
 
-/* configuration for collections */
-MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
 
-console.log(">>>>> 'MyCollections' is defined here!");
+Template.body.onRendered(function() {
+
+	const orgHandle = Meteor.subscribe('orgs');
+	Tracker.autorun(() => {
+		const isReady = orgHandle.ready();
+		var status =  isReady ? 'ready' : 'not ready';
+		console.log("**** Handle for orgs is " + status + "");
+		// if (status == "ready") { 
+		// 	allSubscriptionsReady("orgHandle"); 
+		// }
+	});
+
+	const kbHandle = Meteor.subscribe('kitbags');
+	Tracker.autorun(() => {
+		const isReady = kbHandle.ready();
+		var status =  isReady ? 'ready' : 'not ready';
+		console.log("**** Handle for kitbags is " + status + "");
+		// if (status == "ready") { 
+		// 	allSubscriptionsReady("kbHandle"); 
+		// }
+	});
+
+});
+
+// allSubscriptionsReady = function (handleName) {
+// 	console.log("\nallSubscriptionsReady:");
+// 	console.log("kbHandle.ready(): "+kbHandle.ready(),"orgHandle.ready(): "+orgHandle.ready());
+
+// 	if(kbHandle.ready() && orgHandle.ready()){
+// 		console.log("**** Not all ready!");
+// 		return false;
+// 	}else{
+// 		console.log("**** All ready!");
+// 		initGlobalHelpers();
+// 	}
+// 	// body...
+// }
+
+
+
+/* configuration for collections */
+// MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
+
+// console.log(">>>>> 'MyCollections' is defined here!");
 
 // MyCollections.Kitbags = new Mongo.Collection("kitbags");
 // MyCollections.Orgs    = new Mongo.Collection("orgs");
@@ -135,11 +180,13 @@ Template.hello.events({
 		},
 		// Takes an Organisation ID and responds with the value of the requested field for that organisation e.g. {{lookupOrg kitbagAssocOrg 'orgTitle'}}
 		lookupFieldFromOrg: function(orgId,requiredField){
+			console.log(">>> lookupFieldFromOrg("+orgId+","+requiredField+")");
 			// console.log(orgId,requiredField);
 			// var fieldObj = {};
 			// fieldObj[requiredField] = 1;
-			var localOrg = MyCollections["Orgs"].findOne({orgId: ""+orgId});
-			// console.log("returned org: ",localOrg);
+			// var localOrg = MyCollections["Orgs"].findOne({orgId: ""+orgId});
+			var localOrg = Orgs.findOne({orgId: ""+orgId});
+			console.log("returned org: ",localOrg);
 			return localOrg[requiredField];
 		},
 		// Takes a User ID and responds with the value of the requested field for that user e.g. {{lookupUser owner 'name'}}
@@ -166,7 +213,8 @@ Template.hello.events({
 		// Takes a kitbag ID and responds with the value of the requested field for that kitbag e.g. {{lookupKb orgAssocKitbags 'kitbagTitle'}}
 		lookupFieldFromKb: function(kitbagId,requiredField){
 			// console.log(kitbagId,requiredField);
-			var localKb = MyCollections["Kitbags"].findOne({kitbagId: ""+kitbagId});
+			// var localKb = MyCollections["Kitbags"].findOne({kitbagId: ""+kitbagId});
+			var localKb = Kitbags.findOne({kitbagId: ""+kitbagId});
 			// console.log("returned kitbag: ",localKb);
 			if (typeof localKb == "object"){
 				return localKb[requiredField];

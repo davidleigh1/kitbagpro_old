@@ -3,8 +3,8 @@ import './mainLayout.html';
 import { Meteor } from 'meteor/meteor';
 // import { ReactiveVar } from 'meteor/reactive-var';
 // import { ReactiveDict } from 'meteor/reactive-dict';
-import { Orgs } from '../../api/orgs/orgs.js';
-import { Kitbags } from '../../api/kitbags/kitbags.js';
+import { Orgs } from '/imports/api/orgs/orgs.js';
+import { Kitbags } from '/imports/api/kitbags/kitbags.js';
 import { Template } from 'meteor/templating';
 import { ActiveRoute } from 'meteor/zimme:active-route';
 import { FlowRouter } from 'meteor/kadira:flow-router';
@@ -12,17 +12,17 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 
 // import { insert } from '../../api/orgs/methods.js';
 
-import '../../ui/components/loading/loading.js';
+import '/imports/ui/components/loading/loading.js';
 
-import '../../ui/pages/startScreen/startScreen.html';
-import '../../ui/components/footer.html';
-import '../../ui/components/headerMenuItems.html';
-import '../../ui/components/navbarHeader.html';
-import '../../ui/components/navigation.html';
-import '../../ui/components/sidebarMenuItems.html';
+import '/imports/ui/pages/startScreen/startScreen.html';
+import '/imports/ui/components/footer.html';
+import '/imports/ui/components/headerMenuItems.html';
+import '/imports/ui/components/navbarHeader.html';
+import '/imports/ui/components/navigation.html';
+import '/imports/ui/components/sidebarMenuItems.html';
 // import '../../ui/components/mainLayout/headerMenuItems.html';
-import '../../ui/components/menus/menu.html';
-import '../../ui/components/menus/userMenu.html';
+import '/imports/ui/components/menus/menu.html';
+import '/imports/ui/components/menus/userMenu.html';
 
 
 const CONNECTION_ISSUE_TIMEOUT = 5000;
@@ -54,12 +54,12 @@ Template.mainLayout.onCreated(function mainLayoutOnCreated() {
 	// 	onError: function () { console.log("====>>>> onError", arguments); }
 	// });
 
-	const handle = Meteor.subscribe('orgs');
-	Tracker.autorun(() => {
-	  const isReady = handle.ready();
-	  var status =  isReady ? 'ready' : 'not ready';
-	  console.log("\nHandle for orgs is " + status + "\n\n");
-	})
+	// const handle = Meteor.subscribe('orgs');
+	// Tracker.autorun(() => {
+	//   const isReady = handle.ready();
+	//   var status =  isReady ? 'ready' : 'not ready';
+	//   console.log("\nHandle for orgs is " + status + "\n\n");
+	// })
 
 
 
@@ -74,7 +74,7 @@ Template.mainLayout.onCreated(function mainLayoutOnCreated() {
 	// this.subscribe('orgs.public');
 	// this.subscribe('orgs.private');
 
-	console.log( "MYCOLLECTIONS - AUTORUN: ", MyCollections["Orgs"].findOne({orgId: "122123eb85456a66"}) );
+	// console.log( "MYCOLLECTIONS - AUTORUN: ", Orgs.findOne({orgId: "122123eb85456a66"}) );
 
 	// this.state = new ReactiveDict();
 	// this.state.setDefault({

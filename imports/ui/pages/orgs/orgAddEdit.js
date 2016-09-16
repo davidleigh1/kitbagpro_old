@@ -1,4 +1,63 @@
+// import { Session } from 'meteor/session'
+
 import './orgAddEdit.html';
+
+import { Orgs } from '/imports/api/orgs/orgs.js';
+import { listOrgStatuses } from '/imports/api/orgs/orgs.js';
+
+
+Template.orgAddEdit.onCreated(function() {
+	console.log("Template.orgAddEdit.onCreated -------------------------------------- onCreated");
+
+// 	this.autorun(() => {
+//     	this.subscribe('Orgs');
+// 	});
+// });
+
+	// var handle2 = Meteor.subscribe('Orgs');
+
+	// this.autorun(() => {
+ //    	this.subscribe('Orgs');
+ //    	if ( handle2.ready() ){
+ //    		console.log("HANDLE2.READY!!!!!!!!!!!!!!!");
+ //    	}else{
+ //    		console.log("HANDLE2.NOT READY !!");
+ //    	}
+	// });
+
+	this.subscribe("orgs", {
+		onReady: function () { 
+
+			console.log("onReady And the Items actually Arrive", arguments); 
+
+			var oid = FlowRouter.getParam('_orgId');
+			var avoe = isAddViewOrEdit( FlowRouter.getRouteName() );
+			switch( avoe ) {
+				case "view":
+					console.log("Context VIEW - View Organisation Profile for: "+oid);
+					editOrg( oid );
+					break;
+				case "edit":
+					console.log("Context EDIT - Update Organisation Profile for: "+oid);
+					editOrg( oid );
+					break;
+				case "add":
+					console.log("Context ADD - Register New Organisation");
+					break;
+				default:
+					console.log("Context NOTFOUND - Register New Organisation");
+					return;
+			}
+
+		},
+		onError: function () { console.log("onError", arguments); }
+	});
+
+
+// var handle = Meteor.subscribe('posts');
+// Tracker.autorun(function() {
+});
+
 
 Template.orgAddEdit.onRendered(function(){
 
@@ -21,6 +80,8 @@ Template.orgAddEdit.onRendered(function(){
 	// MyCollections["Orgs"].findOne({orgId: ""+this.params.orgId});
 
 
+	console.log("Moved to onReady")
+/*
 	switch( avoe ) {
 		case "view":
 			console.log("Context VIEW - View Organisation Profile for: "+oid);
@@ -37,6 +98,7 @@ Template.orgAddEdit.onRendered(function(){
 			console.log("Context NOTFOUND - Register New Organisation");
 			return;
 	}
+*/
 
 
 
@@ -108,9 +170,9 @@ editOrg = function(thisOrgId,formId){
 	// MyCollections["Orgs"].findOne({orgId: ""+});
 
 	// myOrg = thisOrg;
-	myOrg = MyCollections["Orgs"].findOne({orgId: ""+thisOrgId});
-	testOrg = MyCollections["Orgs"].findOne({orgId: "12210deb6402efb6"});
-	console.log(">>>>>>======>>>>>> myOrg: ", testOrg);
+	myOrg = Orgs.findOne({orgId: ""+thisOrgId});
+	// testOrg = Orgs.findOne({orgId: "12210deb6402efb6"});
+	//console.log(">>>>>>======>>>>>> myOrg: ", thisOrgId);
 
 
 	var formFields = document.getElementById(formId).elements;
@@ -185,11 +247,12 @@ Template.orgAddEdit.helpers({
 		}
 	},
 	listOrgStatuses: function () {
+		console.log(listOrgStatuses);
 		return listOrgStatuses;
 	},
 	getSchemaVar: function (param) {
-		// console.log('getSchemaVar: ',param);
-		return MyCollections[param];
+		console.log('getSchemaVar: ',param,"\n\n\nTODO - No better way to do this?????\n\n\n");
+		return window[param];
 	}
 });
 
