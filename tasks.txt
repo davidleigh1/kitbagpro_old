@@ -1,11 +1,16 @@
 TODO:
 
 LIST FILTERS
-Remove "Organisations"/"Kitbags" header
-Only show "All Orgs / My Orgs" when user is Admin (and therefore has visiblity to non-associated Orgs)
-Filter to show only permitted Orgs (requires expanded sub-tasks)
-Allow SuperAdmins to see all Kitbags and Orgs
-Limit Kitbags and Orgs to those assigned or public
-Fix Sorting/Ordering
-Fix Hightlighting when Filtering
+[X] Remove "Organisations"/"Kitbags" header
+[X] Fix Hightlighting when Filtering
+[ ] Expand Kitbag Filter to include OrgTitle
+[ ] Expand Kitbag Filter to include BagID
+[ ] Expand Kitbag Filter to include BagSKU
+[ ] Add calculated field to keep reactive OrgTitle on Kitbag document (kitbagAssocOrgTitle)
+[ ] Change field name from kitbagAssocOrg to kitbagAssocOrgId
+[ ] Only show "All Orgs / My Orgs" when user is Admin (and therefore has visiblity to non-associated Orgs)
+[ ] Filter to show only permitted Orgs (requires expanded sub-tasks)
+[ ] Allow SuperAdmins to see all Kitbags and Orgs
+[ ] Limit Kitbags and Orgs to those assigned or public
+[ ] Fix Sorting/Ordering
  

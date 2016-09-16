@@ -70,21 +70,21 @@ Template.body.onRendered(function() {
 
 
 /*Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
+	// counter starts at 0
+	this.counter = new ReactiveVar(0);
 });
 
 Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
+	counter() {
+		return Template.instance().counter.get();
+	},
 });
 
 Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
+	'click button'(event, instance) {
+		// increment the counter when button is clicked
+		instance.counter.set(instance.counter.get() + 1);
+	},
 });*/
 
 
@@ -254,7 +254,7 @@ Template.hello.events({
 			if (typeof obj[key] == "object" && key == "orgAssocKitbags"){
 				var newkey = [];
 				$.each( obj[key] , function( key, value ) {
-				  // console.log( key + ": " + value );
+					// console.log( key + ": " + value );
 					var kbt = GlobalHelpers.lookupFieldFromKb( value ,"kitbagTitle");
 					newkey.push(kbt);
 				});
@@ -303,7 +303,7 @@ Template.hello.events({
 
 	Template.registerHelper('objectsFiltered',function(CollectionName){
 	// reactively return the objects who are older than the input value
-		console.log("objectsFiltered()", typeof filterVar );
+		// console.log("objectsFiltered()", typeof filterVar );
 		filterVar = Template.instance().filter.get();
 		console.log("filter:",CollectionName,filterVar,typeof filterVar);
 		// TODO: Make a better validation than this!
@@ -314,26 +314,55 @@ Template.hello.events({
 		// return Persons.find({sort: {"name": "asc"}});
 		}
 
+		// if (CollectionName == "Orgs"){
+		// 	var docFound = Orgs.find({
+		// 		orgTitle:{
+		// 			$regex: new RegExp(filterVar, "i")
+		// 		}
+		// 	});
+		// 	// },{sort: {"name": "asc"}});
+		// 	// console.log("docFound!",docFound);
+		// 	return docFound;	
+		// }
 		if (CollectionName == "Orgs"){
-			var docFound = Orgs.find({
-				orgTitle:{
-					$regex: new RegExp(filterVar, "i")
-				}
+			var docsFound = Orgs.find({
+				$or: [
+					{orgTitle: 	{ $regex: new RegExp(filterVar, "i") }},
+					{orgId: 	{ $regex: new RegExp(filterVar, "i") }}
+				]
 			});
-			// },{sort: {"name": "asc"}});
-			// console.log("docFound!",docFound);
-			return docFound;	
+			return docsFound;
 		}
+		// if (CollectionName == "Kitbags"){
+		// 	var docsFound = Kitbags.find({
+		// 		kitbagTitle:{
+		// 			$regex: new RegExp(filterVar, "i")
+		// 		}
+		// 	});
+		// 	return docsFound;
+		// }
 		if (CollectionName == "Kitbags"){
-			var docFound = Kitbags.find({
-				kitbagTitle:{
-					$regex: new RegExp(filterVar, "i")
-				}
+			var docsFound = Kitbags.find({
+				$or: [
+					// {expires: {$gte: new Date()}},
+					// {expires: null}
+					{kitbagTitle: 	{ $regex: new RegExp(filterVar, "i") }},
+					{kitbagId: 		{ $regex: new RegExp(filterVar, "i") }},
+					{kitbagSku: 	{ $regex: new RegExp(filterVar, "i") }}
+				]
 			});
-			// },{sort: {"name": "asc"}});
-			// console.log("docFound!",docFound);
-			return docFound;	
+			return docsFound;
 		}
+		// if (CollectionName == "Kitbags"){
+			
+		// 	// Returns any doc where there is a match in either collection
+		// 	kbArray = Kitbags.find({	kitbagTitle:{	$regex: new RegExp(filterVar, "i")	}	}).fetch();
+		// 	orgArray =	Orgs.find({		orgTitle:{		$regex: new RegExp(filterVar, "i")	}	}).fetch()
+		// 	mergedArray = kbArray.concat(orgArray);
+
+		// 	console.log("mergedArray: ",mergedArray);
+		// 	return mergedArray;
+		// }
 
 
 
