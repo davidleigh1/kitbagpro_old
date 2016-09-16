@@ -30,24 +30,42 @@ const CONNECTION_ISSUE_TIMEOUT = 5000;
 // A store which is local to this file?
 const showConnectionIssue = new ReactiveVar(false);
 
-Meteor.startup(() => {
-	// Only show the connection error box if it has been 5 seconds since
-	// the app started
-	setTimeout(() => {
-		// FIXME:
-		// Launch screen handle created in lib/router.js
-		// dataReadyHold.release();
+// Meteor.startup(() => {
+// 	// Only show the connection error box if it has been 5 seconds since
+// 	// the app started
+// 	setTimeout(() => {
+// 		// FIXME:
+// 		// Launch screen handle created in lib/router.js
+// 		// dataReadyHold.release();
 
-		// Show the connection error box
-		showConnectionIssue.set(true);
-	}, CONNECTION_ISSUE_TIMEOUT);
+// 		// Show the connection error box
+// 		showConnectionIssue.set(true);
+// 	}, CONNECTION_ISSUE_TIMEOUT);
 
+// });
+
+
+
+
+
+
+Template.mainLayout.onCreated(function(){
+  	var that = this;
+  		that.subscribe('kitbags');
+  		that.subscribe('orgs');
+  		// that.subscribe('companies');
+  		// that.subscribe('workjournals');
+  	that.autorun(function(){
+    		if (/*libProfilesHandle.ready() &&*/ that.subscriptionsReady()) {
+      //init data structures
+      console.log(" =========== READY NOW ================== ");
+    }
+  });
 });
 
+// Template.mainLayout.onCreated(function mainLayoutOnCreated() {
 
-Template.mainLayout.onCreated(function mainLayoutOnCreated() {
-
-	console.log("----->> Added Subscriptions");
+	// console.log("----->> Added Subscriptions");
 
 	// const handle = Meteor.subscribe("orgs", {
 	// 	onReady: function () { console.log("====>>>> onReady And the Items actually Arrive", arguments); },
@@ -68,8 +86,10 @@ Template.mainLayout.onCreated(function mainLayoutOnCreated() {
 	// });
 
 
-	Meteor.subscribe("kitbags");
-	Meteor.subscribe("userList");
+
+
+	//Meteor.subscribe("kitbags");
+	// Meteor.subscribe("userList");
 
 	// this.subscribe('orgs.public');
 	// this.subscribe('orgs.private');
@@ -81,7 +101,7 @@ Template.mainLayout.onCreated(function mainLayoutOnCreated() {
 	// 	menuOpen: false,
 	// 	userMenuOpen: false,
 	// });
-});
+// });
 
 
 /*

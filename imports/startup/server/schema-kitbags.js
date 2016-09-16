@@ -1,5 +1,8 @@
 console.log("RUNNING KitbagSchema");
 
+import { Kitbags } from '/imports/api/kitbags/kitbags.js';
+import { listKitbagStatuses } from '/imports/api/kitbags/kitbags.js';
+
 
 /*
 MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};

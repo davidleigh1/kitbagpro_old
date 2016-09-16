@@ -1,11 +1,12 @@
+import { ReactiveVar } from 'meteor/reactive-var';
+
 import './orgList.html';
 import './orgLine.js';
 
+import { Kitbags } from '/imports/api/kitbags/kitbags.js';
 import { Orgs } from '/imports/api/orgs/orgs.js';
 
-import '../../../ui/components/lists/listFilter.js';
-
-// objects = orgList = orgList
+import '/imports/ui/components/lists/listFilter.js';
 
 // on create, initialize our filter as a ReactiveVar
 // need to meteor add reactive-var to use this
@@ -15,44 +16,17 @@ Template.orgList.created = function(){
 	console.log("this.filter: "+this.filter);
 };
 
-
 // Template.orgList.helpers
 
 Template.orgList.helpers({
-//		orgs: function () {
-//			if (Session.get('hideFinished')) {
-//				return MyCollections["Orgs"].find({checked: {$ne: true}});
-//			} else {
-//				return MyCollections["Orgs"].find();
-//			}
-//		},
 	// value of the filter to initialize the HTML input
 	filter:function(){
 		return Template.instance().filter.get();
-	},
-	// reactively return the objects who are older than the input value
-	objectsFiltered:function(CollectionName){
-		filterVar = Template.instance().filter.get();
-		console.log("filter:",CollectionName,filterVar,typeof filterVar);
-		// TODO: Make a better validation than this!
-		// See: http://stackoverflow.com/questions/30314447 in place of .isNaN!
-		if (typeof filterVar == "undefined"){
-		// Return all!
-			filterVar = ".*";
-		// return Persons.find({sort: {"name": "asc"}});
-		}
-		var docFound = Orgs.find({
-			orgTitle:{
-				$regex: new RegExp(filterVar, "i")
-			}
-		});
-		// },{sort: {"name": "asc"}});
-		// console.log("docFound!",docFound);
-		return docFound;
 	}
 });
 
 // Template.orgList.events
+
 	// bind the value of the input to the underlying filter
 	Template.orgList.events({
 		"input .filterInput": function(event,template){
@@ -74,8 +48,8 @@ Template.orgList.helpers({
 				// $("ul.listOfObjects li").sort(sortList).appendTo('ul.listOfObjects');
 			// }
 			// Session.set("sortOrder", newValue);
+		},
+		filter:function(){
+			return Template.instance().filter.get();
 		}
 	});
-
-
-

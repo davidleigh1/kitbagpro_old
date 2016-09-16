@@ -7,6 +7,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 /* import './main.html'; */
 
 import { Orgs } from '/imports/api/orgs/orgs.js';
+import { Kitbags } from '/imports/api/kitbags/kitbags.js';
 // import { listOrgStatuses } from '/imports/api/orgs/orgs.js';
 
 
@@ -224,14 +225,23 @@ Template.hello.events({
 		}
 	};
 
-	Template.registerHelper('formatDate', function(timestamp) {
-		// console.log(timestamp);
+	Template.registerHelper('formatDate', function(timestamp, defaultText) {
+		// console.log("formatDate() "+timestamp, defaultText);
 		if (!timestamp || timestamp == "Unknown"){
-			return timestamp;
+			if (!defaultText) {
+				return timestamp;
+			}
+			return defaultText;
 		}
 		var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 		// TODO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
-		return timestamp.toLocaleDateString('en-GB') + " " + timestamp.toLocaleTimeString();
+		try {
+			return timestamp.toLocaleDateString('en-GB') + " " + timestamp.toLocaleTimeString();
+		} catch (err) {
+			// TODO: Replace with translatable string
+			console.log("Date error!\nReceived: "+timestamp+"\nError: "+err);
+			return Spacebars.SafeString("<div class='alert-danger'>Date Error</div>");
+		}
 		//return new Date(timestamp).toString('yyyy-MM-dd')
 	});
 
@@ -274,6 +284,63 @@ Template.hello.events({
 	});
 
 
+	Template.registerHelper('highlight',function(foundThis,searchString){
+		console.log("highlight",foundThis,filterVar);
+		re = new RegExp(filterVar, "i");
+		// http://stackoverflow.com/questions/2647867/
+		if ( filterVar == null || filterVar == "" || filterVar == ".*"  ) {
+			return foundThis;
+		} else {
+			highlighted = foundThis.replace(re, "<span class='filterHighlight'>$&</span>")
+			// Spacebars.SafeString() tells Handlebars that this string is presumed to be safe, and to use
+			// the riskier method of inserting the returned vales as HTML directly into the DOM rather than
+			// more safely (and by default) limiting the inserted values to be text only.
+			// http://stackoverflow.com/questions/23415182/
+			return Spacebars.SafeString(highlighted);
+		}
+	});
+
+
+	Template.registerHelper('objectsFiltered',function(CollectionName){
+	// reactively return the objects who are older than the input value
+		console.log("objectsFiltered()", typeof filterVar );
+		filterVar = Template.instance().filter.get();
+		console.log("filter:",CollectionName,filterVar,typeof filterVar);
+		// TODO: Make a better validation than this!
+		// See: http://stackoverflow.com/questions/30314447 in place of .isNaN!
+		if (typeof filterVar == "undefined"){
+		// Return all!
+			filterVar = ".*";
+		// return Persons.find({sort: {"name": "asc"}});
+		}
+
+		if (CollectionName == "Orgs"){
+			var docFound = Orgs.find({
+				orgTitle:{
+					$regex: new RegExp(filterVar, "i")
+				}
+			});
+			// },{sort: {"name": "asc"}});
+			// console.log("docFound!",docFound);
+			return docFound;	
+		}
+		if (CollectionName == "Kitbags"){
+			var docFound = Kitbags.find({
+				kitbagTitle:{
+					$regex: new RegExp(filterVar, "i")
+				}
+			});
+			// },{sort: {"name": "asc"}});
+			// console.log("docFound!",docFound);
+			return docFound;	
+		}
+
+
+
+	});
+
+	
+
 
 	Template.body.helpers({
 	//		orgs: function () {
@@ -291,6 +358,7 @@ Template.hello.events({
 		userId: function () {
 			return Meteor.userId();
 		}
+
 	}); //ends Template.body.helpers
 
 	Template.body.events({

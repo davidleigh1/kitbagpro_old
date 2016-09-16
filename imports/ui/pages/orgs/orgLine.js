@@ -10,21 +10,30 @@ Template.orgLine.helpers({
       if (!str) { return str }
       return str.toLowerCase();
     },
-    highlight: function(foundThis,searchString) {
-      // console.log("highlight",foundThis,filterVar);
-      re = new RegExp(filterVar, "i");
-      // http://stackoverflow.com/questions/2647867/
-      if ( filterVar == null || filterVar == "" || filterVar == ".*"  ) {
-        return foundThis;
-      } else {
-        highlighted = foundThis.replace(re, "<span class='filterHighlight'>$&</span>")
-        // Spacebars.SafeString() tells Handlebars that this string is presumed to be safe, and to use
-        // the riskier method of inserting the returned vales as HTML directly into the DOM rather than
-        // more safely (and by default) limiting the inserted values to be text only.
-        // http://stackoverflow.com/questions/23415182/
-        return Spacebars.SafeString(highlighted);
-      }
-    }
+	getOrgStatusTag: function () {
+		var labelClass, labelText;
+
+		switch(this.orgStatus) {
+			case "Active":
+				labelClass = "label-success";
+				labelText = "Active";
+				break;
+			case "Unlisted":
+				labelClass = "label-warning";
+				labelText = "Unlisted";
+				break;
+			case "Trashed":
+				labelClass = "label-default";
+				labelText = "Trashed";
+				break;
+			default:
+				labelClass = "label-danger";
+				labelText = "Unknown";
+			break;
+		}
+		//var tag = '<span class="label '+labelClass+'">'+labelText+'</span>';
+		return { 'labelClass': labelClass, 'labelText': labelText };
+	}
 });
 
 Template.orgLine.events({

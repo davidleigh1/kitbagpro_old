@@ -8,10 +8,10 @@ console.log("RUNNING server.index.js");
 // This defines a starting set of data to be loaded if the app is loaded with an empty db.
 // import '../imports/startup/server/fixtures.js';
 import './fixtures.js';
-// import '../imports/startup/server/schema-kitbags.js';
-// import './schema-kitbags.js';
-// import '../imports/startup/server/schema-orgs.js';
-// import './schema-orgs.js';
+// import '/imports/startup/server/schema-kitbags.js';
+import './schema-kitbags.js';
+// import '/imports/startup/server/schema-orgs.js';
+import './schema-orgs.js';
 
 /* 
 	// Not loaded... 

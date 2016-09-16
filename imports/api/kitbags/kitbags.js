@@ -7,7 +7,7 @@ import { Mongo } from 'meteor/mongo';
 // import incompleteCountDenormalizer from './incompleteCountDenormalizer.js';
 import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 // import { Kitbags } from '../kitbags/kitbags.js';
-import { Orgs } from '/imports/api/orgs/orgs.js';
+// import { Orgs } from '/imports/api/orgs/orgs.js';
 // import { Orgs } from '../orgs/orgs.js';
 
 // console.log(">>>>> 'MyCollections.Kitbags' is defined here!");

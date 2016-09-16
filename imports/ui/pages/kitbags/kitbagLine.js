@@ -19,7 +19,7 @@ Template.kitbagLine.helpers({
 		return this.owner == Meteor.userId();
 	},
 	isSuperAdmin: function () {
-		console.log("TODO: Return correct value for SuperAdmin");
+		// console.log("TODO: Return correct value for SuperAdmin");
 		return true;
 	},
 	changeKitbagStatus: function () {

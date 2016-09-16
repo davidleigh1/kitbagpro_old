@@ -1,5 +1,8 @@
 console.log("RUNNING OrgSchema");
 
+import { Orgs } from '/imports/api/orgs/orgs.js';
+import { listOrgStatuses } from '/imports/api/orgs/orgs.js';
+
 
 /*
 MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
