@@ -1,5 +1,14 @@
 TODO:
 
+ROUTING
+[ ] Fix default routing on localhost:3000 (i.e. home)
+
+PAGES
+[ ] Create dedicated /view page for kitbag
+[ ] Create dedicated /view page for org
+[ ] Autoform??
+[ ] Click Edit to go to /Edit page
+
 LIST FILTERS
 [X] Remove "Organisations"/"Kitbags" header
 [X] Fix Hightlighting when Filtering
@@ -15,4 +24,18 @@ LIST FILTERS
 [ ] Allow SuperAdmins to see all Kitbags and Orgs
 [ ] Limit Kitbags and Orgs to those assigned or public
 [ ] Fix Sorting/Ordering
+[ ] When filter is active - expose an [X] or [Clear Filter] button alongside (to the right) of filter clear
  
+SUBSCRIPTIONS  /  COLLECTIONS
+[ ] Calculated fields
+	[ ] OrgTitle (based on OrgID - update on name or ID change)
+	[ ] AssociatedKitbags (based on number of kitbags with this OrgID included in their AssocOrg field - update on change to AssocOrg field)
+[ ] Subscribe to only the minimum required fields
+[ ] Create additional Publishes with more limited scope
+
+USER MANAGEMENT
+[ ] Make list of users + passwords
+[ ] Create new login page/route
+
+ITEMS
+[ ] 
