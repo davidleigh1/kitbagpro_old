@@ -348,7 +348,8 @@ Template.hello.events({
 					// {expires: null}
 					{kitbagTitle: 	{ $regex: new RegExp(filterVar, "i") }},
 					{kitbagId: 		{ $regex: new RegExp(filterVar, "i") }},
-					{kitbagSku: 	{ $regex: new RegExp(filterVar, "i") }}
+					{kitbagSku: 	{ $regex: new RegExp(filterVar, "i") }},
+					{kitbagAssocOrgTitle: 	{ $regex: new RegExp(filterVar, "i") }}
 				]
 			});
 			return docsFound;

@@ -7,6 +7,8 @@ LIST FILTERS
 [ ] Expand Kitbag Filter to include BagID
 [ ] Expand Kitbag Filter to include BagSKU
 [ ] Add calculated field to keep reactive OrgTitle on Kitbag document (kitbagAssocOrgTitle)
+[X] Add AssocOrg to Kitbag record
+[X] Add AssocOrg to Kitbag record + Retrospectively
 [ ] Change field name from kitbagAssocOrg to kitbagAssocOrgId
 [ ] Only show "All Orgs / My Orgs" when user is Admin (and therefore has visiblity to non-associated Orgs)
 [ ] Filter to show only permitted Orgs (requires expanded sub-tasks)

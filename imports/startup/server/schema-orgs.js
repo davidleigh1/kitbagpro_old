@@ -38,12 +38,12 @@ let OrgSchema = new SimpleSchema({
 		type: String,
 		allowedValues: listOrgStatuses,
 		optional: true,
-		defaultValue: "Active",
+		// defaultValue: "Active",
 		autoValue: function () {
 			if (this.isSet == true){
 				return this.value;
 			} else {
-				return "Active";
+				return "Active"; /* This replaces the need for the defaultValue setting*/
 			}
 			// return (this.isSet == true) ? this.value : "Unlisted";
 		},

@@ -69,7 +69,7 @@ Template.kitbagAddEdit.events({
 
 
 		// Create and autopopulate the ID field for the getObjFromForm function to read
-		$("#kitbagId").val( GlobalHelpers.idGenerator("kb_") );
+		$("#kitbagId").val( GlobalHelpers.idGenerator(uniqueIds.kbPrefix) );
 
 		// Get kitbag details from form
 		var kbFormObj = getObjFromForm("add-edit-kitbag","add");
@@ -98,7 +98,7 @@ Template.kitbagAddEdit.events({
 		// Clear the input field which is not required when using non-CSS UI
 		$(".add-edit-kitbag")[0].reset();
 		// Close form
-		FlowRouter.go('/kitbag/'+kbFormObj.kitbagId);
+		FlowRouter.go('/bags/'+kbFormObj.kitbagId+'/view');
 		// $(".kitbagAddEdit").hide();
 		// Prevent the default page refresh which occurs when clicking submit
 		// return false;

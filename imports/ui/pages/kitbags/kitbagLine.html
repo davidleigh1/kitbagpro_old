@@ -20,18 +20,14 @@
 		<!-- /Top line -->
 		<!-- Bottom line -->
 		<div>
-			{{#unless kitbagAssocOrg}}
-				<span class="resNote">N/A</span>
+			{{#unless kitbagAssocOrgTitle}}
+				<a href="/orgs/{{kitbagAssocOrg}}/view">
+					<i>{{highlight kitbagAssocOrg}}</i>
+				</a>
 			{{else}}
-				<!-- {{kitbagAssocOrg}} -->
-				{{#if lookupOrgTitle kitbagAssocOrg 'orgTitle'}}
-					<!-- TODO: Add org/123456 page for each organisation -->
-					<a href="/orgs/{{kitbagAssocOrg}}/view">
-						{{lookupOrgTitle kitbagAssocOrg 'orgTitle'}}
-					</a>
-				{{else}}
-					<i>Not found (orgID: {{kitbagAssocOrg}})</i>
-				{{/if}}
+				<a href="/orgs/{{kitbagAssocOrg}}/view">
+					{{highlight kitbagAssocOrgTitle}}
+				</a>
 			{{/unless}}
 		</div>
 		<!-- /Bottom line -->
@@ -63,12 +59,27 @@
 		{{/unless}}
 	</td>
 
-	<!-- Created Date -->
+	<!-- Test of new kitbagAssocOrgTitle -->
+	
+	<td class="hidden-xs kbAssocOrgTitleCol">
+		{{#unless kitbagAssocOrgTitle}}
+			<a href="/orgs/{{kitbagAssocOrg}}/view">
+				<i>{{highlight kitbagAssocOrg}}</i>
+			</a>
+		{{else}}
+			<a href="/orgs/{{kitbagAssocOrg}}/view">
+				{{highlight kitbagAssocOrgTitle}}
+			</a>
+		{{/unless}}
+	</td>
+
+
+
+	<!-- Status -->
 
 	<td class="hidden-xs kbStatusCol">
 		<span class="label {{getKitbagStatusTag.labelClass}}">{{getKitbagStatusTag.labelText}}</span>
 	</td>
-
 
 	<!-- Kitbag ID -->
 

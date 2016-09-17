@@ -134,8 +134,14 @@ getObjFromForm = function(formId,addOrUpdate){
 				formObj[e.name] = e.value;
 			}
 
+			if ("kitbagAssocOrg" == e.name){
+				formObj.kitbagAssocOrgTitle = $("select[name=kitbagAssocOrg] option:selected").text().trim();
+			}
+
 		}
 	}
+
+
 	// Check to see if this is an add or edit form
 	if (formObj.createdAt == "") {
 		if (addOrUpdate == "add") {
