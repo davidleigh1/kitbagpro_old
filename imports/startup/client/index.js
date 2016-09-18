@@ -6,14 +6,58 @@ import { ReactiveVar } from 'meteor/reactive-var';
 
 /* import './main.html'; */
 
+import { Orgs } from '/imports/api/orgs/orgs.js';
+import { Kitbags } from '/imports/api/kitbags/kitbags.js';
+// import { listOrgStatuses } from '/imports/api/orgs/orgs.js';
+
+
 import './routes.js';
 
+
+Template.body.onRendered(function() {
+
+	const orgHandle = Meteor.subscribe('orgs');
+	Tracker.autorun(() => {
+		const isReady = orgHandle.ready();
+		var status =  isReady ? 'ready' : 'not ready';
+		console.log("**** Handle for orgs is " + status + "");
+		// if (status == "ready") { 
+		// 	allSubscriptionsReady("orgHandle"); 
+		// }
+	});
+
+	const kbHandle = Meteor.subscribe('kitbags');
+	Tracker.autorun(() => {
+		const isReady = kbHandle.ready();
+		var status =  isReady ? 'ready' : 'not ready';
+		console.log("**** Handle for kitbags is " + status + "");
+		// if (status == "ready") { 
+		// 	allSubscriptionsReady("kbHandle"); 
+		// }
+	});
+
+});
+
+// allSubscriptionsReady = function (handleName) {
+// 	console.log("\nallSubscriptionsReady:");
+// 	console.log("kbHandle.ready(): "+kbHandle.ready(),"orgHandle.ready(): "+orgHandle.ready());
+
+// 	if(kbHandle.ready() && orgHandle.ready()){
+// 		console.log("**** Not all ready!");
+// 		return false;
+// 	}else{
+// 		console.log("**** All ready!");
+// 		initGlobalHelpers();
+// 	}
+// 	// body...
+// }
+
+
+
 /* configuration for collections */
-MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
+// MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
 
-console.log(">>>>> 'MyCollections' is defined here!");
-
-
+// console.log(">>>>> 'MyCollections' is defined here!");
 
 // MyCollections.Kitbags = new Mongo.Collection("kitbags");
 // MyCollections.Orgs    = new Mongo.Collection("orgs");
@@ -26,21 +70,21 @@ console.log(">>>>> 'MyCollections' is defined here!");
 
 
 /*Template.hello.onCreated(function helloOnCreated() {
-  // counter starts at 0
-  this.counter = new ReactiveVar(0);
+	// counter starts at 0
+	this.counter = new ReactiveVar(0);
 });
 
 Template.hello.helpers({
-  counter() {
-    return Template.instance().counter.get();
-  },
+	counter() {
+		return Template.instance().counter.get();
+	},
 });
 
 Template.hello.events({
-  'click button'(event, instance) {
-    // increment the counter when button is clicked
-    instance.counter.set(instance.counter.get() + 1);
-  },
+	'click button'(event, instance) {
+		// increment the counter when button is clicked
+		instance.counter.set(instance.counter.get() + 1);
+	},
 });*/
 
 
@@ -96,6 +140,8 @@ Template.hello.events({
 		},
 		isValidId: function (id,typeOfId) {
 
+				// alert("Remove this function if not required!\nShould allow more flexible Org IDs")
+
 			if ( FlowRouter.getQueryParam("force") == "true" ) {
 				console.log("isValidId('"+id+"','"+typeOfId+"') - Alert: Overridden");
 				return true;
@@ -118,8 +164,8 @@ Template.hello.events({
 
 			/* Check if ID is a valid integer */
 			if ( /^\+?[0-9]+$/.test(id) == false ) {
-				console.log("isValidId('"+id+"','"+typeOfId+"') - Error: Value is not a valid number - might contain strings or spaces");
-				return false;
+				console.log("isValidId('"+id+"','"+typeOfId+"') - Warning: Value might not a valid '"+uniqueIds.uniqueIdLength+" ID'.  May contain letters or spaces");
+				// return false;
 			}
 
 			/* Check if ID has correct prefix and suffix */
@@ -135,11 +181,13 @@ Template.hello.events({
 		},
 		// Takes an Organisation ID and responds with the value of the requested field for that organisation e.g. {{lookupOrg kitbagAssocOrg 'orgTitle'}}
 		lookupFieldFromOrg: function(orgId,requiredField){
+			console.log(">>> lookupFieldFromOrg("+orgId+","+requiredField+")");
 			// console.log(orgId,requiredField);
 			// var fieldObj = {};
 			// fieldObj[requiredField] = 1;
-			var localOrg = MyCollections["Orgs"].findOne({orgId: ""+orgId});
-			// console.log("returned org: ",localOrg);
+			// var localOrg = MyCollections["Orgs"].findOne({orgId: ""+orgId});
+			var localOrg = Orgs.findOne({orgId: ""+orgId});
+			console.log("returned org: ",localOrg);
 			return localOrg[requiredField];
 		},
 		// Takes a User ID and responds with the value of the requested field for that user e.g. {{lookupUser owner 'name'}}
@@ -166,7 +214,8 @@ Template.hello.events({
 		// Takes a kitbag ID and responds with the value of the requested field for that kitbag e.g. {{lookupKb orgAssocKitbags 'kitbagTitle'}}
 		lookupFieldFromKb: function(kitbagId,requiredField){
 			// console.log(kitbagId,requiredField);
-			var localKb = MyCollections["Kitbags"].findOne({kitbagId: ""+kitbagId});
+			// var localKb = MyCollections["Kitbags"].findOne({kitbagId: ""+kitbagId});
+			var localKb = Kitbags.findOne({kitbagId: ""+kitbagId});
 			// console.log("returned kitbag: ",localKb);
 			if (typeof localKb == "object"){
 				return localKb[requiredField];
@@ -176,14 +225,23 @@ Template.hello.events({
 		}
 	};
 
-	Template.registerHelper('formatDate', function(timestamp) {
-		// console.log(timestamp);
+	Template.registerHelper('formatDate', function(timestamp, defaultText) {
+		// console.log("formatDate() "+timestamp, defaultText);
 		if (!timestamp || timestamp == "Unknown"){
-			return timestamp;
+			if (!defaultText) {
+				return timestamp;
+			}
+			return defaultText;
 		}
 		var monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 		// TODO: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
-		return timestamp.toLocaleDateString('en-GB') + " " + timestamp.toLocaleTimeString();
+		try {
+			return timestamp.toLocaleDateString('en-GB') + " " + timestamp.toLocaleTimeString();
+		} catch (err) {
+			// TODO: Replace with translatable string
+			console.log("Date error!\nReceived: "+timestamp+"\nError: "+err);
+			return Spacebars.SafeString("<div class='alert-danger'>Date Error</div>");
+		}
 		//return new Date(timestamp).toString('yyyy-MM-dd')
 	});
 
@@ -196,7 +254,7 @@ Template.hello.events({
 			if (typeof obj[key] == "object" && key == "orgAssocKitbags"){
 				var newkey = [];
 				$.each( obj[key] , function( key, value ) {
-				  // console.log( key + ": " + value );
+					// console.log( key + ": " + value );
 					var kbt = GlobalHelpers.lookupFieldFromKb( value ,"kitbagTitle");
 					newkey.push(kbt);
 				});
@@ -226,6 +284,93 @@ Template.hello.events({
 	});
 
 
+	Template.registerHelper('highlight',function(foundThis,searchString){
+		console.log("highlight",foundThis,filterVar);
+		re = new RegExp(filterVar, "i");
+		// http://stackoverflow.com/questions/2647867/
+		if ( filterVar == null || filterVar == "" || filterVar == ".*"  ) {
+			return foundThis;
+		} else {
+			highlighted = foundThis.replace(re, "<span class='filterHighlight'>$&</span>")
+			// Spacebars.SafeString() tells Handlebars that this string is presumed to be safe, and to use
+			// the riskier method of inserting the returned vales as HTML directly into the DOM rather than
+			// more safely (and by default) limiting the inserted values to be text only.
+			// http://stackoverflow.com/questions/23415182/
+			return Spacebars.SafeString(highlighted);
+		}
+	});
+
+
+	Template.registerHelper('objectsFiltered',function(CollectionName){
+	// reactively return the objects who are older than the input value
+		// console.log("objectsFiltered()", typeof filterVar );
+		filterVar = Template.instance().filter.get();
+		console.log("filter:",CollectionName,filterVar,typeof filterVar);
+		// TODO: Make a better validation than this!
+		// See: http://stackoverflow.com/questions/30314447 in place of .isNaN!
+		if (typeof filterVar == "undefined"){
+		// Return all!
+			filterVar = ".*";
+		// return Persons.find({sort: {"name": "asc"}});
+		}
+
+		// if (CollectionName == "Orgs"){
+		// 	var docFound = Orgs.find({
+		// 		orgTitle:{
+		// 			$regex: new RegExp(filterVar, "i")
+		// 		}
+		// 	});
+		// 	// },{sort: {"name": "asc"}});
+		// 	// console.log("docFound!",docFound);
+		// 	return docFound;	
+		// }
+		if (CollectionName == "Orgs"){
+			var docsFound = Orgs.find({
+				$or: [
+					{orgTitle: 	{ $regex: new RegExp(filterVar, "i") }},
+					{orgId: 	{ $regex: new RegExp(filterVar, "i") }}
+				]
+			});
+			return docsFound;
+		}
+		// if (CollectionName == "Kitbags"){
+		// 	var docsFound = Kitbags.find({
+		// 		kitbagTitle:{
+		// 			$regex: new RegExp(filterVar, "i")
+		// 		}
+		// 	});
+		// 	return docsFound;
+		// }
+		if (CollectionName == "Kitbags"){
+			var docsFound = Kitbags.find({
+				$or: [
+					// {expires: {$gte: new Date()}},
+					// {expires: null}
+					{kitbagTitle: 	{ $regex: new RegExp(filterVar, "i") }},
+					{kitbagId: 		{ $regex: new RegExp(filterVar, "i") }},
+					{kitbagSku: 	{ $regex: new RegExp(filterVar, "i") }},
+					{kitbagAssocOrgTitle: 	{ $regex: new RegExp(filterVar, "i") }}
+				]
+			});
+			return docsFound;
+		}
+		// if (CollectionName == "Kitbags"){
+			
+		// 	// Returns any doc where there is a match in either collection
+		// 	kbArray = Kitbags.find({	kitbagTitle:{	$regex: new RegExp(filterVar, "i")	}	}).fetch();
+		// 	orgArray =	Orgs.find({		orgTitle:{		$regex: new RegExp(filterVar, "i")	}	}).fetch()
+		// 	mergedArray = kbArray.concat(orgArray);
+
+		// 	console.log("mergedArray: ",mergedArray);
+		// 	return mergedArray;
+		// }
+
+
+
+	});
+
+	
+
 
 	Template.body.helpers({
 	//		orgs: function () {
@@ -243,6 +388,7 @@ Template.hello.events({
 		userId: function () {
 			return Meteor.userId();
 		}
+
 	}); //ends Template.body.helpers
 
 	Template.body.events({

@@ -3,8 +3,8 @@ import './mainLayout.html';
 import { Meteor } from 'meteor/meteor';
 // import { ReactiveVar } from 'meteor/reactive-var';
 // import { ReactiveDict } from 'meteor/reactive-dict';
-import { Orgs } from '../../api/orgs/orgs.js';
-import { Kitbags } from '../../api/kitbags/kitbags.js';
+import { Orgs } from '/imports/api/orgs/orgs.js';
+import { Kitbags } from '/imports/api/kitbags/kitbags.js';
 import { Template } from 'meteor/templating';
 import { ActiveRoute } from 'meteor/zimme:active-route';
 import { FlowRouter } from 'meteor/kadira:flow-router';
@@ -12,17 +12,17 @@ import { FlowRouter } from 'meteor/kadira:flow-router';
 
 // import { insert } from '../../api/orgs/methods.js';
 
-import '../components/loading/loading.js';
+import '/imports/ui/components/loading/loading.js';
 
-import '../../ui/pages/startScreen/startScreen.html';
-import '../../ui/components/footer.html';
-import '../../ui/components/headerMenuItems.html';
-import '../../ui/components/navbarHeader.html';
-import '../../ui/components/navigation.html';
-import '../../ui/components/sidebarMenuItems.html';
+import '/imports/ui/pages/startScreen/startScreen.html';
+import '/imports/ui/components/footer.html';
+import '/imports/ui/components/headerMenuItems.html';
+import '/imports/ui/components/navbarHeader.html';
+import '/imports/ui/components/navigation.html';
+import '/imports/ui/components/sidebarMenuItems.html';
 // import '../../ui/components/mainLayout/headerMenuItems.html';
-import '../../ui/components/menus/menu.html';
-import '../../ui/components/menus/userMenu.html';
+import '/imports/ui/components/menus/menu.html';
+import '/imports/ui/components/menus/userMenu.html';
 
 
 const CONNECTION_ISSUE_TIMEOUT = 5000;
@@ -30,37 +30,78 @@ const CONNECTION_ISSUE_TIMEOUT = 5000;
 // A store which is local to this file?
 const showConnectionIssue = new ReactiveVar(false);
 
-Meteor.startup(() => {
-	// Only show the connection error box if it has been 5 seconds since
-	// the app started
-	setTimeout(() => {
-		// FIXME:
-		// Launch screen handle created in lib/router.js
-		// dataReadyHold.release();
+// Meteor.startup(() => {
+// 	// Only show the connection error box if it has been 5 seconds since
+// 	// the app started
+// 	setTimeout(() => {
+// 		// FIXME:
+// 		// Launch screen handle created in lib/router.js
+// 		// dataReadyHold.release();
 
-		// Show the connection error box
-		showConnectionIssue.set(true);
-	}, CONNECTION_ISSUE_TIMEOUT);
+// 		// Show the connection error box
+// 		showConnectionIssue.set(true);
+// 	}, CONNECTION_ISSUE_TIMEOUT);
+
+// });
+
+
+
+
+
+
+Template.mainLayout.onCreated(function(){
+  	var that = this;
+  		that.subscribe('kitbags');
+  		that.subscribe('orgs');
+  		// that.subscribe('companies');
+  		// that.subscribe('workjournals');
+  	that.autorun(function(){
+    		if (/*libProfilesHandle.ready() &&*/ that.subscriptionsReady()) {
+      //init data structures
+      console.log(" =========== READY NOW ================== ");
+    }
+  });
 });
 
+// Template.mainLayout.onCreated(function mainLayoutOnCreated() {
 
-Template.mainLayout.onCreated(function mainLayoutOnCreated() {
+	// console.log("----->> Added Subscriptions");
 
-	console.log("----->> Added Subscriptions");
+	// const handle = Meteor.subscribe("orgs", {
+	// 	onReady: function () { console.log("====>>>> onReady And the Items actually Arrive", arguments); },
+	// 	onError: function () { console.log("====>>>> onError", arguments); }
+	// });
 
-	Meteor.subscribe("orgs");
-	Meteor.subscribe("kitbags");
-	Meteor.subscribe("userList");
+	// const handle = Meteor.subscribe('orgs');
+	// Tracker.autorun(() => {
+	//   const isReady = handle.ready();
+	//   var status =  isReady ? 'ready' : 'not ready';
+	//   console.log("\nHandle for orgs is " + status + "\n\n");
+	// })
 
-	this.subscribe('orgs.public');
-	this.subscribe('orgs.private');
+
+
+	// this.autorun(() => {
+	// 	this.subscribe('orgs');
+	// });
+
+
+
+
+	//Meteor.subscribe("kitbags");
+	// Meteor.subscribe("userList");
+
+	// this.subscribe('orgs.public');
+	// this.subscribe('orgs.private');
+
+	// console.log( "MYCOLLECTIONS - AUTORUN: ", Orgs.findOne({orgId: "122123eb85456a66"}) );
 
 	// this.state = new ReactiveDict();
 	// this.state.setDefault({
 	// 	menuOpen: false,
 	// 	userMenuOpen: false,
 	// });
-});
+// });
 
 
 /*

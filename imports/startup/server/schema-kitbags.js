@@ -1,5 +1,8 @@
 console.log("RUNNING KitbagSchema");
 
+import { Kitbags } from '/imports/api/kitbags/kitbags.js';
+import { listKitbagStatuses } from '/imports/api/kitbags/kitbags.js';
+
 
 /*
 MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
@@ -34,14 +37,14 @@ let KitbagSchema = new SimpleSchema({
 	},
 	"kitbagStatus": {
 		type: String,
-		allowedValues: MyCollections.listKitbagStatuses,
+		allowedValues: listKitbagStatuses,
 		optional: true,
-		defaultValue: "Active",
+		/*defaultValue: "Active",*/
 		autoValue: function () {
 			if (this.isSet == true){
 				return this.value;
 			} else {
-				return "Active";
+				return "Active"; /* This replaces the need for the defaultValue setting*/
 			}
 		},
 		label: "Kitbag Status"
@@ -65,7 +68,22 @@ let KitbagSchema = new SimpleSchema({
 	"kitbagAssocOrg": {
 		type: String,
 		optional: true,
-		label: "Associated Organisation"
+		label: "Associated Organisation ID"
+	},
+	"kitbagAssocOrgTitle": {
+		type: String,
+		label: "Associated Organisation Title",
+		// autoValue: function () {
+		// 	return GlobalHelpers.lookupFieldFromOrg(this.kitbagAssocOrg , 'orgTitle' )
+		// },
+/*		autoValue: function() {
+			var orgId = this.field("kitbagAssocOrg");
+			if (orgId.isSet) {
+				return orgId.value;
+			} else {
+				this.unset();
+			}
+		}*/
 	},
 //	"kitbagContactPerson": {
 //		type: String,
@@ -110,4 +128,4 @@ let KitbagSchema = new SimpleSchema({
 });
 
 // console.log(KitbagSchema);
-MyCollections.Kitbags.attachSchema( KitbagSchema );
+Kitbags.attachSchema( KitbagSchema );

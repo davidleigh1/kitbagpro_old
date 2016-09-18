@@ -4,7 +4,7 @@
 		<!-- input type="checkbox" checked="{{checked}}" class="toggle-checked" disabled="{{#unless isOwner}}disabled{{/unless}}"-->
 		<span class="text">
 			{{#if orgTitle}}
-				<a href="/orgView/{{orgId}}">{{highlight orgTitle}}</a>
+				<a href="/orgs/{{orgId}}/view">{{highlight orgTitle}}</a>
 			{{else}}
 				<i>Organisation name not found (OrgID: {{_id}})</i>
 			{{/if}}

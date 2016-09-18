@@ -1,5 +1,8 @@
 console.log("RUNNING OrgSchema");
 
+import { Orgs } from '/imports/api/orgs/orgs.js';
+import { listOrgStatuses } from '/imports/api/orgs/orgs.js';
+
 
 /*
 MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
@@ -33,14 +36,14 @@ let OrgSchema = new SimpleSchema({
 	},
 	"orgStatus": {
 		type: String,
-		allowedValues: MyCollections.listOrgStatuses,
+		allowedValues: listOrgStatuses,
 		optional: true,
-		defaultValue: "Active",
+		// defaultValue: "Active",
 		autoValue: function () {
 			if (this.isSet == true){
 				return this.value;
 			} else {
-				return "Active";
+				return "Active"; /* This replaces the need for the defaultValue setting*/
 			}
 			// return (this.isSet == true) ? this.value : "Unlisted";
 		},
@@ -105,4 +108,4 @@ let OrgSchema = new SimpleSchema({
 });
 
 // console.log(OrgSchema);
-MyCollections.Orgs.attachSchema( OrgSchema );
+Orgs.attachSchema( OrgSchema );

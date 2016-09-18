@@ -31,3 +31,4 @@ accounts-facebook		# Oauth User Integration with Facebook
 accounts-twitter		# Oauth User Integration with Twitter
 accounts-github			# Oauth User Integration with Github
 accounts-google			# Oauth User Integration with Google
+session                 # Client-side reactive dictionary for your app

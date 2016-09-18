@@ -1,0 +1,202 @@
+<template name="orgLine">
+
+	<tr data-orgtitle="{{toLower orgTitle}}" data-created="{{createdAt}}">
+
+	<!-- Small screens only! -->
+	<td class="visible-xs col-xs-3">
+		<!-- Top line -->
+		<div>
+			{{#unless orgTitle}}
+				<span class="resNote">Org not found (orgID: {{orgId}})</span>
+			{{else}}
+				<a href="/orgs/{{orgId}}/view">{{highlight orgTitle}}</a>
+			{{/unless}}
+		</div>
+		<!-- /Top line -->
+		<!-- Bottom line -->
+		<!--<div>
+			{{#unless kitbagAssocOrg}}
+				<span class="resNote">N/A</span>
+			{{else}}
+				{{#if lookupOrgTitle kitbagAssocOrg 'orgTitle'}}
+					<a href="/orgs/{{kitbagAssocOrg}}/view">
+						{{lookupOrgTitle kitbagAssocOrg 'orgTitle'}}
+					</a>
+				{{else}}
+					<i>Not found (orgID: {{kitbagAssocOrg}})</i>
+				{{/if}}
+			{{/unless}}
+		</div> -->
+		<!-- /Bottom line -->
+	</td>
+	<!-- /Small screens only! -->
+	<td class="hidden-xs orgTitleCol">
+		{{#unless orgTitle}}
+			<span class="resNote">'orgTitle' not found</span>
+		{{else}}
+			<a href="/orgs/{{orgId}}/view">{{highlight orgTitle}}</a>
+		{{/unless}}
+	</td>
+
+	<!-- Associated Organisation -->
+
+	<!-- <td class="hidden-xs kbAssocOrgCol">
+		{{#unless kitbagAssocOrg}}
+			<span class="resNote">N/A</span>
+		{{else}}
+			{{#if lookupOrgTitle kitbagAssocOrg 'orgTitle'}}
+				<a href="/orgs/{{kitbagAssocOrg}}/view">
+					{{lookupOrgTitle kitbagAssocOrg 'orgTitle'}}
+				</a>
+			{{else}}
+				<i>Not found (orgID: {{kitbagAssocOrg}})</i>
+			{{/if}}
+		{{/unless}}
+	</td> -->
+
+	<!-- Created Date -->
+
+	<td class="hidden-xs orgStatusCol">
+		<span class="label {{getOrgStatusTag.labelClass}}">{{getOrgStatusTag.labelText}}</span>
+	</td>
+
+
+	<!-- Kitbag ID -->
+
+	<td class="hidden-xs hidden-sm orgSkuCol">
+		<!-- // System (Custom ID) -->
+		{{#unless orgId}}
+			<span class="resNote">N/A</span>
+		{{else}}
+			{{highlight orgId}}
+		{{/unless}}
+		<!-- {{#unless kitbagSku}}
+			<span class="resNote"></span>
+		{{else}}
+			<br><small>({{kitbagSku}})</small>
+		{{/unless}} -->
+	</td>
+
+	<!-- Created Date -->
+
+	<td class="visible-lg orgCreatedAtCol">
+		{{#unless createdAt}}
+			<span class="resNote">N/A</span>
+		{{else}}
+			{{formatDate createdAt 'naa!'}}
+		{{/unless}}
+	</td>
+
+	<!-- Owner -->
+
+	<td class="hidden-xs hidden-sm hidden-md orgOwnerCol">
+		<!-- TODO: Look up user name rather than ID  -->
+		<!-- TODO: Link to User page  -->
+		<a href="/user/{{owner}}">{{owner}}</a>
+	</td>
+
+	<td class="hidden-xs hidden-sm hidden-md orgControlCol">
+		<div class="controlWrapper">
+			{{#if isOwner}}
+				<button class="toggle-private">
+					{{#if private}}
+						Private
+					{{else}}
+						Public
+					{{/if}}
+				</button>
+			{{/if}}
+			<button class="delete" data-org="{{orgId}}">Delete</button>
+			<button class="edit" data-org="{{orgId}}">Edit</button>
+			<button class="showDetail" data-org="{{orgId}}">Org Details</button>
+		</div>
+	</td>
+
+	<!-- Dropdown Menu -->
+
+	<td class="orgActionsCol col-sm-1 col-xs-9">
+		<!-- TODO: Change this to icons on narrow responsive views -->
+		<div class="pull-right">
+			<div class="btn-group">
+				<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+					Actions
+					<span class="caret"></span>
+				</button>
+				<ul class="dropdown-menu pull-right" role="menu">
+					<!-- Small screens only! -->
+					<li class="visible-xs">
+						<a class="viewOrgDetails" data-action="showOrgDetails" data-bag="{{kitbagId}}" href="#"><i class='fa fa-fw fa-list'></i> View Details</a>
+					</li>
+					<li class="visible-xs divider"></li>
+					<!-- /Small screens only! -->
+					<li>
+						<a class="edit" data-action="editOrgDetails" data-bag="{{kitbagId}}" href="#"><i class="fa fa-fw fa-pencil"></i> Edit</a>
+					</li>
+					{{#if isOwner}}
+						<li>
+							<a class="toggleStatus" data-action="toggleStatus" data-bag="{{kitbagId}}" href="#"><i class='fa fa-fw fa-{{changeKitbagStatus.icon}}'></i>
+								{{changeKitbagStatus.html}}
+							<!--{{#if ({{kitbagStatus}} == "Active")}}
+									Make Unlisted
+								{{else}}
+									Make Active
+								{{/if}} -->
+							</a>
+						</li>
+					{{/if}}
+					{{#if isOwner}}
+						<li class="divider"></li>
+						<li>
+							<a class="trash" data-action="trashOrg" data-bag="{{kitbagId}}" href="#" title="Available to Owners only"><i class="fa fa-fw fa-trash"></i> Trash</a>
+						</li>
+					{{/if}}
+					{{#if isSuperAdmin}}
+						<li class="divider"></li>
+						<li>
+							<a class="delete" data-action="deleteOrg" data-bag="{{kitbagId}}" href="#" title="Available to SuperAdmins only"><i class="fa fa-fw fa-ban"></i> Delete</a>
+						</li>
+					{{/if}}
+
+				</ul>
+				<!-- /dropdown menu -->
+			</div>
+			<!-- /button group which contains the dropdown -->
+
+			<!-- Show status below menu on small screens -->
+			<div class="visible-xs-block">
+				<span class="label {{getOrgStatusTag.labelClass}}">{{getOrgStatusTag.labelText}}</span>
+			</div>
+			<!-- /status label -->
+
+		</div>
+		<!-- <button class="edit" data-bag="{{kitbagId}}">Edit</button>
+		{{#if isOwner}}
+			<button class="toggle-private">
+				{{#if private}}
+					Prvt
+				{{else}}
+					Pub
+				{{/if}}
+			</button>
+		{{/if}}
+		{{#if isOwner}}
+			<button class="delete" data-bag="{{kitbagId}}">X</button>
+		{{/if}} -->
+	</td>
+
+</tr>
+
+
+</template>
+
+<!--
+createdAt : Wed Mar 16 2016 02:08:27 GMT+0200 (Jerusalem Standard Time)
+orgContactEmail : "contactus@icrc.org"
+orgContactPerson : "Redman Crossy"
+orgDesc : "The official mission statement says that: "The International Committee of the Red Cross (ICRC) is an impartial, neutral, and independent organization whose exclusively humanitarian mission is to protect the lives and dignity of victims of war and internal violence and to provide them with assistance."
+orgImgLarge : "https://www.icrc.org/sites/default/themes/icrc_theme/images/who-we-are/mandate-and-mission.jpg"
+orgImgSmall : "https://www.icrc.org/sites/default/themes/icrc_theme/images/en/icon-128.png"
+orgTitle : "International Red Cross"
+orgUrl : "https://www.icrc.org"
+owner : "v3TTtttNdEZZQP6TL"
+ -->

@@ -7,20 +7,21 @@ import { SimpleSchema } from 'meteor/aldeed:simple-schema';
 // import { DDPRateLimiter } from 'meteor/ddp-rate-limiter';
 // import { _ } from 'meteor/underscore';
 
-import { Kitbags } from './kitbags.js';
+import { Kitbags } from '/imports/api/kitbags/kitbags.js';
 
 
-Meteor.publish("kitbags",function() {
-	console.log('Publishing kitbags!');
-		return MyCollections["Kitbags"].find({
-			$or: [
-				// Or collection entry is NOT set to PRIVATE i.e. entry is PUBLIC
-				{ private: {$ne: true} },
-				// Or the owner of the entry is the current user -- regardless of the private setting
-				{ owner: this.userId }
-			]
-		});
-});
+
+// Meteor.publish("kitbags",function() {
+// 	console.log('Publishing kitbags!');
+// 		return Kitbags.find({
+// 			$or: [
+// 				// Or collection entry is NOT set to PRIVATE i.e. entry is PUBLIC
+// 				{ private: {$ne: true} },
+// 				// Or the owner of the entry is the current user -- regardless of the private setting
+// 				{ owner: this.userId }
+// 			]
+// 		});
+// });
 
 
 Meteor.methods({
@@ -33,19 +34,22 @@ Meteor.methods({
 
 		// We return the method in order to be able to passback and reuse the _id generated when the doc is created in the database
 		// http://stackoverflow.com/questions/16439055
-		var dbNewKB = MyCollections["Kitbags"].insert(kitbagObj);
+    // var dbNewKB = MyCollections["Kitbags"].insert(kitbagObj);
+		var dbNewKB = Kitbags.insert(kitbagObj);
 		// console.log(dbNewKB);
 		return dbNewKB;
 	},
 	updateKitbag: function(id,checked){
-		var res = MyCollections["Kitbags"].findOne(id);
+    // var res = MyCollections["Kitbags"].findOne(id);
+		var res = Kitbags.findOne(id);
 
 		if (res.owner !== Meteor.userId()){
 			//throw new Meteor.Error('You are not authorized to update items owned by other users (error code: 34.7)');
 			console.log('ERROR: You are not authorized to update items owned by other users [error code: 347]');
 			return false;
 		}else{
-			MyCollections["Kitbags"].update(id, { $set: {checked: checked}});
+      // MyCollections["Kitbags"].update(id, { $set: {checked: checked}});
+			Kitbags.update(id, { $set: {checked: checked}});
 		}
 	},
 	// Meteor.call("assignKBtoOrg", newKB.kitbagAssocOrg, newKB._id);
@@ -53,13 +57,14 @@ Meteor.methods({
 		// console.log("assignKBtoOrg adding bag: '"+bagId+"' to org: '"+orgId+"'");
 		// badInCode - MyCollections["Orgs"].update(orgId, { $push: { "orgAssocKitbags": bagId }});
 		// GoodInDBConsole - db.orgs.update({orgId:"org_be44df86cb2f"}, { $push: { orgAssocKitbags: "kb_ccaa81f04fc6" }});
-		MyCollections["Orgs"].update(
+		Orgs.update(
 			{ orgId: ""+orgId },
 			{ $push: { orgAssocKitbags: ""+bagId }}
 		);
 	},
 	deleteKitbag: function(id){
-		var res = MyCollections["Kitbags"].findOne(id);
+    // var res = MyCollections["Kitbags"].findOne(id);
+		var res = Kitbags.findOne(id);
 		console.log("res: ",res);
 
 		if (res.owner !== Meteor.userId()){
@@ -67,31 +72,38 @@ Meteor.methods({
 			console.log('ERROR: You are not authorized to delete items owned by other users [error code: 34.6]');
 			return false;
 		}else{
-			MyCollections["Kitbags"].remove(id);
+      // MyCollections["Kitbags"].remove(id);
+			Kitbags.remove(id);
 		}
 	},
 	setPrivateKitbag: function(id,private){
-		var res = MyCollections["Kitbags"].findOne(id);
+    // var res = MyCollections["Kitbags"].findOne(id);
+		var res = Kitbags.findOne(id);
 		console.log("setPrivateKitbag("+id,private+")");
 		console.log("res: ",res);
 
 		if (res.owner !== Meteor.userId()){
 			throw new Meteor.Error('ERROR: You are not authorized to change privacy for items owned by other users [error code: 34.5]');
 		}else{
-			MyCollections["Kitbags"].update(id, { $set: {private: private}});
-			console.log("Kitbag privacy set: ",MyCollections["Kitbags"].findOne(id));
+      // MyCollections["Kitbags"].update(id, { $set: {private: private}});
+			Kitbags.update(id, { $set: {private: private}});
+      // console.log("Kitbag privacy set: ",MyCollections["Kitbags"].findOne(id));
+			console.log("Kitbag privacy set: ",Kitbags.findOne(id));
 		}
 	},
 	setStatus: function(id,newStatus){
-		var res = MyCollections["Kitbags"].findOne(id);
+    // var res = MyCollections["Kitbags"].findOne(id);
+		var res = Kitbags.findOne(id);
 		console.log("setStatus("+id,newStatus+")");
 		console.log("res: ",res);
 
 		if (res.owner !== Meteor.userId()){
 			throw new Meteor.Error('ERROR: You are not authorized to change status for items owned by other users [error code: 34.6]');
 		}else{
-			MyCollections["Kitbags"].update(id, { $set: {kitbagStatus: newStatus}});
-			console.log("kitbagStatus set: ",MyCollections["Kitbags"].findOne(id));
+      // MyCollections["Kitbags"].update(id, { $set: {kitbagStatus: newStatus}});
+			Kitbags.update(id, { $set: {kitbagStatus: newStatus}});
+      // console.log("kitbagStatus set: ",MyCollections["Kitbags"].findOne(id));
+			console.log("kitbagStatus set: ",Kitbags.findOne(id));
 		}
 	}
 });

@@ -1,3 +1,12 @@
+import './listFilter.html';
+import './listSorter.html';
+import './listFilter.css';
+
+
+listFilter = function () {
+  /* Nothing here */
+};
+
 listSorter = function (thisObj,sortElem,sortField,sortOrder) {
   console.log(thisObj,sortElem,sortField,sortOrder);
   // listSorter("ul.listOfObjects","li","name","ztoa");
