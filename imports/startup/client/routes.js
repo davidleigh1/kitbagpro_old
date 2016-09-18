@@ -1,4 +1,4 @@
-console.log("Route: RUNNING clients.routes.js");
+// console.log("Route: RUNNING clients.routes.js");
 
 
 // # set up all routes in the app
@@ -28,8 +28,18 @@ FlowRouter.route("/", {
 
 
 // Import Loading component
-import '../../ui/components/loading/loading.js';
-FlowRouter.route("/loading",				{name:"loading",		action: function(params, queryParams) { console.log("Route: Loading... (Test 'Loading' template)",				params, queryParams);BlazeLayout.render("mainLayout", 	{mainContent: "app_loading",	/* mainNav: "navigation", */		/* mainFooter: "footer" */});}});
+import '/imports/ui/components/loading/loading.js';
+FlowRouter.route("/loading", {
+	name:"loading",
+	action: function(params, queryParams) {
+		console.log("Route: Loading... (Test 'Loading' template)", params, queryParams);
+		BlazeLayout.render("mainLayout", {
+			mainContent: "loading"
+			/* mainNav: "navigation", */
+			/* mainFooter: "footer" */
+		});
+	}
+});
 
 
 
@@ -128,12 +138,13 @@ FlowRouter.route("/settings",				{name:"mySettings",		action: function(params, q
 
 
 		/* ORGS VIEW */
-		orgsWithId.route("/:command", {
+		import '/imports/ui/pages/orgs/orgView.js';
+		orgsWithId.route("/view", {
 			name:"orgView",
 			action: function(params, queryParams) {
 				console.log("Route: Orgs > View (Org Profile View)", params, queryParams);
 				BlazeLayout.render("mainLayout", {
-					mainContent: "orgAddEdit"
+					mainContent: "orgView"
 				});
 			}
 		});
@@ -142,7 +153,7 @@ FlowRouter.route("/settings",				{name:"mySettings",		action: function(params, q
 		orgsWithId.route("/edit", {
 			name:"orgEdit",
 			action: function(params, queryParams) {
-				console.log("Route: Organizations > Edit (Org Profile Edit)", params, queryParams);
+				// console.log("Route: Organizations > Edit (Org Profile Edit)", params, queryParams);
 				BlazeLayout.render("mainLayout", {
 					mainContent: "orgAddEdit"
 				});
@@ -157,7 +168,7 @@ import '../../ui/pages/kitbags/kitbagList.js';
 FlowRouter.route("/bags/list", {
 	name:"kitbagList",
 	action: function(params, queryParams) {
-		console.log("Route: Kitbags > Kitbag List (Kitbag List)", params, queryParams);
+		// console.log("Route: Kitbags > Kitbag List (Kitbag List)", params, queryParams);
 		BlazeLayout.render("mainLayout", {
 			mainContent: "kitbagList",
 			/* mainNav: "navigation", */
@@ -169,7 +180,7 @@ import '../../ui/pages/kitbags/kitbagAddEdit.js';
 FlowRouter.route("/bags/create/:_orgId", {
 	name:"kitbagAdd ",
 	action: function(params, queryParams) {
-		console.log("Route: Kitbags > Create New Kitbag (Create New Kitbag )", params, queryParams);
+		// console.log("Route: Kitbags > Create New Kitbag (Create New Kitbag )", params, queryParams);
 		BlazeLayout.render("mainLayout", {
 			mainContent: "kitbagAddEdit",
 			/* mainNav: "navigation", */
@@ -187,7 +198,7 @@ import '../../ui/pages/notFound/routeNotFound.js';
 FlowRouter.route("/404", {
 	name:"404",
 	action: function(params, queryParams) {
-		console.log("Route: Page not known / not found!", params, queryParams);
+		// console.log("Route: Page not known / not found!", params, queryParams);
 		BlazeLayout.render("mainLayout", {
 			mainContent: "routeNotFound",
 			/* mainNav: "navigation", */
@@ -205,7 +216,7 @@ FlowRouter.notFound = {
 		// 	mainNav: "navigation",
 		// 	mainFooter: "footer"
 		// });
-		console.log("REDIRECTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+		// console.log("REDIRECTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 		// FlowRouter.redirect('/404?reqUrl='+FlowRouter.current().path+"&referrer="+document.referrer);
 		// FlowRouter.setQueryParams();
 		FlowRouter.go('/404',{},{ 
@@ -286,7 +297,7 @@ FlowRouter.route("/share", {name:"Share Bag Status",action: function(params, que
 FlowRouter.route("/status/(me)", {name:"My Status",action: function(params, queryParams) { console.log("Route: Home > User Status (My Status)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
 FlowRouter.route("/status/orgs/(myprimary)", {name:"Org Status",action: function(params, queryParams) { console.log("Route: Home > Org Status (Org Status)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
 FlowRouter.route("/status/system", {name:"System Status",action: function(params, queryParams) { console.log("Route: Home > System Status (System Status)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/users/:_userId", {name:"User Profile View",action: function(params, queryParams) { console.log("Route: Users > N/A (User Profile View)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
+FlowRouter.route("/users/:_userId/view", {name:"User Profile View",action: function(params, queryParams) { console.log("Route: Users > N/A (User Profile View)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
 FlowRouter.route("/users/:_userId/edit", {name:"User Profile Edit",action: function(params, queryParams) { console.log("Route: Users > N/A (User Profile Edit)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
 FlowRouter.route("/users/create/:_orgId", {name:"Create New Org User",action: function(params, queryParams) { console.log("Route: Users > Create User (Create New Org User)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
 FlowRouter.route("/users/create/new", {name:"Request New User Login",action: function(params, queryParams) { console.log("Route: Users > Create Non-Org User (Request New User Login)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});

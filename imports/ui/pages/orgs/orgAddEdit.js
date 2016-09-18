@@ -26,9 +26,9 @@ Template.orgAddEdit.onCreated(function() {
 	// });
 
 	this.subscribe("orgs", {
-		onReady: function () { 
+		onReady: function () {
 
-			console.log("onReady And the Items actually Arrive", arguments); 
+			console.log("onReady And the Items actually Arrive", arguments);
 
 			var oid = FlowRouter.getParam('_orgId');
 			var avoe = isAddViewOrEdit( FlowRouter.getRouteName() );
@@ -314,14 +314,15 @@ Template.orgAddEdit.events({
 		// $(".orgAddEdit").hide();
 		// Prevent the default page refresh which occurs when clicking submit
 		/* TODO - Should we wait for the callback event to confirm org was created successfully? */
-		//--- FlowRouter.go("/orgs/"+formObj.orgId+"/view", { _id: orgId });
+		FlowRouter.go("/orgs/"+formObj.orgId+"/view", { _id: orgId });
 		return false;
 	},
 	'click button.cancel': function(event) {
 		event.preventDefault();
 		$(".add-edit-org")[0].reset();
 		// $(".orgAddEdit").hide();
-		//--- FlowRouter.go("/orgs/"+formObj.orgId+"/view");
+		// FlowRouter.go("/orgs/"+formObj.orgId+"/view");
+		history.back();
 		// Prevent the default page refresh which occurs when clicking submit
 		return false;
 	}

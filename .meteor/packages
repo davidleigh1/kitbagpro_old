@@ -32,3 +32,4 @@ accounts-twitter		# Oauth User Integration with Twitter
 accounts-github			# Oauth User Integration with Github
 accounts-google			# Oauth User Integration with Google
 session                 # Client-side reactive dictionary for your app
+okgrow:router-autoscroll

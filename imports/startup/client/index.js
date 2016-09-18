@@ -20,7 +20,7 @@ Template.body.onRendered(function() {
 	Tracker.autorun(() => {
 		const isReady = orgHandle.ready();
 		var status =  isReady ? 'ready' : 'not ready';
-		console.log("**** Handle for orgs is " + status + "");
+		//console.log("**** Handle for orgs is " + status + "");
 		// if (status == "ready") { 
 		// 	allSubscriptionsReady("orgHandle"); 
 		// }
@@ -30,7 +30,7 @@ Template.body.onRendered(function() {
 	Tracker.autorun(() => {
 		const isReady = kbHandle.ready();
 		var status =  isReady ? 'ready' : 'not ready';
-		console.log("**** Handle for kitbags is " + status + "");
+		//console.log("**** Handle for kitbags is " + status + "");
 		// if (status == "ready") { 
 		// 	allSubscriptionsReady("kbHandle"); 
 		// }
@@ -39,14 +39,14 @@ Template.body.onRendered(function() {
 });
 
 // allSubscriptionsReady = function (handleName) {
-// 	console.log("\nallSubscriptionsReady:");
-// 	console.log("kbHandle.ready(): "+kbHandle.ready(),"orgHandle.ready(): "+orgHandle.ready());
+// 	//console.log("\nallSubscriptionsReady:");
+// 	//console.log("kbHandle.ready(): "+kbHandle.ready(),"orgHandle.ready(): "+orgHandle.ready());
 
 // 	if(kbHandle.ready() && orgHandle.ready()){
-// 		console.log("**** Not all ready!");
+// 		//console.log("**** Not all ready!");
 // 		return false;
 // 	}else{
-// 		console.log("**** All ready!");
+// 		//console.log("**** All ready!");
 // 		initGlobalHelpers();
 // 	}
 // 	// body...
@@ -57,7 +57,7 @@ Template.body.onRendered(function() {
 /* configuration for collections */
 // MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
 
-// console.log(">>>>> 'MyCollections' is defined here!");
+//console.log(">>>>> 'MyCollections' is defined here!");
 
 // MyCollections.Kitbags = new Mongo.Collection("kitbags");
 // MyCollections.Orgs    = new Mongo.Collection("orgs");
@@ -96,7 +96,7 @@ Template.hello.events({
 
 // if (Meteor.isClient) {
 
-	// console.log("Subscribing to collections");
+	//console.log("Subscribing to collections");
 /*
 	Meteor.subscribe("orgs");
 	Meteor.subscribe("kitbags");
@@ -105,7 +105,7 @@ Template.hello.events({
 
 
 	Meteor.startup(function() {
-		// console.log("Loading Google fonts");
+		//console.log("Loading Google fonts");
 		WebFontConfig = {
 			google: { families: [ 'Open+Sans:400,300,600,700:latin' ] }
 		};
@@ -124,7 +124,7 @@ Template.hello.events({
 		// http://stackoverflow.com/questions/105034/
 		// See: http://stackoverflow.com/questions/894860/ for ES6/ES2015, default parameters
 		idGenerator: function(prefix="", suffix="", reqLength=uniqueIds.uniqueIdLength){
-			// console.log('Global idGenerator ' , prefix , suffix , reqLength);
+			//console.log('Global idGenerator ' , prefix , suffix , reqLength);
 			var S4 = function() {
 				return (((1+Math.random())*0x10000)|0).toString(16).substring(1);
 			};
@@ -143,12 +143,12 @@ Template.hello.events({
 				// alert("Remove this function if not required!\nShould allow more flexible Org IDs")
 
 			if ( FlowRouter.getQueryParam("force") == "true" ) {
-				console.log("isValidId('"+id+"','"+typeOfId+"') - Alert: Overridden");
+				//console.log("isValidId('"+id+"','"+typeOfId+"') - Alert: Overridden");
 				return true;
 			}
 
 			if (!id || id == "" || !typeOfId || typeOfId == "") {
-				console.log("isValidId('"+id+"','"+typeOfId+"') - Error: Insufficient arguments provided");
+				//console.log("isValidId('"+id+"','"+typeOfId+"') - Error: Insufficient arguments provided");
 				return false;
 			}
 			// uniqueIds.orgPrefix      : "1221"
@@ -158,20 +158,20 @@ Template.hello.events({
 
 			/* Check if string of ID is required length */
 			if ( id.toString().length != uniqueIds.uniqueIdLength ) {
-				console.log("isValidId('"+id+"','"+typeOfId+"') - Error: Value is incorrect length. - expected '"+uniqueIds.uniqueIdLength+"' chars but got '"+id.toString().length+"'");
+				//console.log("isValidId('"+id+"','"+typeOfId+"') - Error: Value is incorrect length. - expected '"+uniqueIds.uniqueIdLength+"' chars but got '"+id.toString().length+"'");
 				return false;
 			}
 
 			/* Check if ID is a valid integer */
 			if ( /^\+?[0-9]+$/.test(id) == false ) {
-				console.log("isValidId('"+id+"','"+typeOfId+"') - Warning: Value might not a valid '"+uniqueIds.uniqueIdLength+" ID'.  May contain letters or spaces");
+				//console.log("isValidId('"+id+"','"+typeOfId+"') - Warning: Value might not a valid '"+uniqueIds.uniqueIdLength+" ID'.  May contain letters or spaces");
 				// return false;
 			}
 
 			/* Check if ID has correct prefix and suffix */
 			var prefixToCheck = (typeOfId == "org") ? uniqueIds.orgPrefix :  (typeOfId == "kb" || typeOfId == "kitbag") ? uniqueIds.kbPrefix : (typeOfId == "user") ? uniqueIds.userPrefix : false;			// uniqueIds.orgPrefix      : "1221"
 			if ( prefixToCheck != id.substr( 0 , prefixToCheck.length ) ) {
-				console.log("isValidId('"+id+"','"+typeOfId+"') - Error: Value does not have a valid prefix - expected '"+prefixToCheck+"' but found '"+id.substr( 0 , prefixToCheck.length )+"'");
+				//console.log("isValidId('"+id+"','"+typeOfId+"') - Error: Value does not have a valid prefix - expected '"+prefixToCheck+"' but found '"+id.substr( 0 , prefixToCheck.length )+"'");
 				return false;
 			}
 
@@ -181,25 +181,25 @@ Template.hello.events({
 		},
 		// Takes an Organisation ID and responds with the value of the requested field for that organisation e.g. {{lookupOrg kitbagAssocOrg 'orgTitle'}}
 		lookupFieldFromOrg: function(orgId,requiredField){
-			console.log(">>> lookupFieldFromOrg("+orgId+","+requiredField+")");
-			// console.log(orgId,requiredField);
+			//console.log(">>> lookupFieldFromOrg("+orgId+","+requiredField+")");
+			//console.log(orgId,requiredField);
 			// var fieldObj = {};
 			// fieldObj[requiredField] = 1;
 			// var localOrg = MyCollections["Orgs"].findOne({orgId: ""+orgId});
 			var localOrg = Orgs.findOne({orgId: ""+orgId});
-			console.log("returned org: ",localOrg);
+			//console.log("returned org: ",localOrg);
 			return localOrg[requiredField];
 		},
 		// Takes a User ID and responds with the value of the requested field for that user e.g. {{lookupUser owner 'name'}}
 		lookupNameFromUser: function(userId,requiredField){
-			// console.log(userId,requiredField);
+			console.log("lookupNameFromUser",userId,requiredField);
 			if (!userId || userId == "") {
 				console.log("lookupNameFromUser() - userId not provided");
 				return false;
 			}
 			if (requiredField == "name" || !requiredField) {
 				var userObj = Meteor.users.find().collection._docs._map[userId];
-				// console.log(userId,userObj);
+				//console.log(userId,userObj);
 				// User not found!
 				if ( jQuery.isEmptyObject(userObj) ){
 					var message = "Error: User '" + userId + "' not found";
@@ -213,10 +213,10 @@ Template.hello.events({
 		},
 		// Takes a kitbag ID and responds with the value of the requested field for that kitbag e.g. {{lookupKb orgAssocKitbags 'kitbagTitle'}}
 		lookupFieldFromKb: function(kitbagId,requiredField){
-			// console.log(kitbagId,requiredField);
+			//console.log(kitbagId,requiredField);
 			// var localKb = MyCollections["Kitbags"].findOne({kitbagId: ""+kitbagId});
 			var localKb = Kitbags.findOne({kitbagId: ""+kitbagId});
-			// console.log("returned kitbag: ",localKb);
+			//console.log("returned kitbag: ",localKb);
 			if (typeof localKb == "object"){
 				return localKb[requiredField];
 			} else {
@@ -226,7 +226,7 @@ Template.hello.events({
 	};
 
 	Template.registerHelper('formatDate', function(timestamp, defaultText) {
-		// console.log("formatDate() "+timestamp, defaultText);
+		//console.log("formatDate() "+timestamp, defaultText);
 		if (!timestamp || timestamp == "Unknown"){
 			if (!defaultText) {
 				return timestamp;
@@ -239,7 +239,7 @@ Template.hello.events({
 			return timestamp.toLocaleDateString('en-GB') + " " + timestamp.toLocaleTimeString();
 		} catch (err) {
 			// TODO: Replace with translatable string
-			console.log("Date error!\nReceived: "+timestamp+"\nError: "+err);
+			//console.log("Date error!\nReceived: "+timestamp+"\nError: "+err);
 			return Spacebars.SafeString("<div class='alert-danger'>Date Error</div>");
 		}
 		//return new Date(timestamp).toString('yyyy-MM-dd')
@@ -248,18 +248,18 @@ Template.hello.events({
 	// http://stackoverflow.com/questions/15035363
 	Template.registerHelper('arrayFromObj',function(obj){
 		result = [];
-		// console.log(obj);
+		//console.log(obj);
 		for (var key in obj){
 			// Map kitbag IDs to names
 			if (typeof obj[key] == "object" && key == "orgAssocKitbags"){
 				var newkey = [];
 				$.each( obj[key] , function( key, value ) {
-					// console.log( key + ": " + value );
+					//console.log( key + ": " + value );
 					var kbt = GlobalHelpers.lookupFieldFromKb( value ,"kitbagTitle");
 					newkey.push(kbt);
 				});
 				// var newKey = GlobalHelpers.lookupFieldFromKb(obj[key],"kitbagTitle");
-				// console.log("newKey: "+newkey);
+				//console.log("newKey: "+newkey);
 				result.push({
 					arrayObjName: key,
 					arrayObjValue: newkey
@@ -271,21 +271,21 @@ Template.hello.events({
 				});
 			}
 		}
-		// console.log(result);
+		//console.log(result);
 		return result;
 	});
 
 	Template.registerHelper('log',function(logTxt,showThis){
 		if (showThis == true){
-			console.log(logTxt,this);
+			//console.log(logTxt,this);
 		}else{
-			console.log(logTxt);
+			//console.log(logTxt);
 		}
 	});
 
 
 	Template.registerHelper('highlight',function(foundThis,searchString){
-		console.log("highlight",foundThis,filterVar);
+		//console.log("highlight",foundThis,filterVar);
 		re = new RegExp(filterVar, "i");
 		// http://stackoverflow.com/questions/2647867/
 		if ( filterVar == null || filterVar == "" || filterVar == ".*"  ) {
@@ -303,9 +303,9 @@ Template.hello.events({
 
 	Template.registerHelper('objectsFiltered',function(CollectionName){
 	// reactively return the objects who are older than the input value
-		// console.log("objectsFiltered()", typeof filterVar );
+		//console.log("objectsFiltered()", typeof filterVar );
 		filterVar = Template.instance().filter.get();
-		console.log("filter:",CollectionName,filterVar,typeof filterVar);
+		//console.log("filter:",CollectionName,filterVar,typeof filterVar);
 		// TODO: Make a better validation than this!
 		// See: http://stackoverflow.com/questions/30314447 in place of .isNaN!
 		if (typeof filterVar == "undefined"){
@@ -321,7 +321,7 @@ Template.hello.events({
 		// 		}
 		// 	});
 		// 	// },{sort: {"name": "asc"}});
-		// 	// console.log("docFound!",docFound);
+		// 	//console.log("docFound!",docFound);
 		// 	return docFound;	
 		// }
 		if (CollectionName == "Orgs"){
@@ -361,7 +361,7 @@ Template.hello.events({
 		// 	orgArray =	Orgs.find({		orgTitle:{		$regex: new RegExp(filterVar, "i")	}	}).fetch()
 		// 	mergedArray = kbArray.concat(orgArray);
 
-		// 	console.log("mergedArray: ",mergedArray);
+		// 	//console.log("mergedArray: ",mergedArray);
 		// 	return mergedArray;
 		// }
 

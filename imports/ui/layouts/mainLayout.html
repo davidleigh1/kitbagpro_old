@@ -8,11 +8,12 @@
 
 				{{#if Template.subscriptionsReady}}
 					{{>Template.dynamic template=mainContent}}
+					{{> footer}}
 				{{else}}
 					{{>loading}}
 				{{/if}}
 
-			{{> footer}}
+			
 			<!-- {{>Template.dynamic template=mainFooter}} -->
 			</div>
 			<!-- /.container-fluid -->

@@ -33,6 +33,26 @@ Template.orgLine.helpers({
 		}
 		//var tag = '<span class="label '+labelClass+'">'+labelText+'</span>';
 		return { 'labelClass': labelClass, 'labelText': labelText };
+	},
+	lookupUser: function (userId,reqField) {
+		console.log("lookupUser: ",userId);
+		var uname = GlobalHelpers.lookupNameFromUser(userId,reqField);
+		console.log("lookupUser: ",uname);
+		return uname;
+	},
+	userNameLookup: function (userId, paramRequired) {
+		var myUser = Meteor.users.findOne({_id: userId });
+		// Orgs.findOne({orgId: FlowRouter.getParam('_orgId') });
+		// console.log("myUser",myUser.profile.name);
+
+		var data = {};
+		data.uname = (myUser.profile.name)?myUser.profile.name:"Profile Name not found";
+		data.dbId  = userId;
+		data.apiId = (myUser.profile.externalId)?myUser.profile.externalId:"API-ID not found";
+		data.url   = "/users/"+userId+"/view";
+		data.html  = "<a href='"+data.url+"'>"+data.uname+"</a>";
+
+		return Spacebars.SafeString( data[paramRequired] );
 	}
 });
 

@@ -77,6 +77,7 @@ oauth@1.1.11
 oauth1@1.1.10
 oauth2@1.1.10
 observe-sequence@1.0.12
+okgrow:router-autoscroll@0.1.8
 ordered-dict@1.0.8
 promise@0.8.4
 raix:eventemitter@0.1.3

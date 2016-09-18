@@ -1,0 +1,124 @@
+_id						Username				Email 						Password			Service			Usertype
+TYPPFydjHWHAh8CT7 		passwordIsEmail 		user1@gmail.com				user1@gmail.com   	DB          	Not set
+ETyM7XzMjTkHpj8xP 		davidleigh1 			davidleigh1@gmail.com 		OAUTH				Github 			Not set
+N4y6P7KfrYybTjJMg		-						davidleigh1@gmail.com		OAUTH				Google 			Not set
+WxNFJFqZvJuqt7Rko		-						davidleigh1@gmail.com		OAUTH				Facebook		Not set
+
+
+
+
+
+
+{  
+   "_id":"TYPPFydjHWHAh8CT7",
+   "createdAt":   ISODate("2016-09-07T18:07:24.041   Z"),
+   "services":{  
+      "password":{  
+         "bcrypt":"$2a$10$zsHO7Foe1kKTJSlh5vZovO3.pZEltSrvc87VNh4IZwJX0aMHL7LQS"
+      },
+      "resume":{  
+         "loginTokens":[  
+
+         ]
+      }
+   },
+   "username":"passwordIsEmail",
+   "emails":[  
+      {  
+         "address":"user1@gmail.com",
+         "verified":false
+      }
+   ]
+}{  
+   "_id":"ETyM7XzMjTkHpj8xP",
+   "createdAt":   ISODate("2016-09-07T20:23:20.427   Z"),
+   "services":{  
+      "github":{  
+         "id":17789580,
+         "accessToken":"a19e64d7316493c1017793b5359b493aabf4fd57",
+         "email":"davidleigh1@gmail.com",
+         "username":"davidleigh1",
+         "emails":[  
+            {  
+               "email":"davidleigh1@gmail.com",
+               "primary":true,
+               "verified":true
+            },
+            {  
+               "email":"davidleigh1@users.noreply.github.com",
+               "primary":false,
+               "verified":true
+            }
+         ]
+      },
+      "resume":{  
+         "loginTokens":[  
+
+         ]
+      }
+   },
+   "profile":{  
+      "name":"David Leigh"
+   }
+}{  
+   "_id":"N4y6P7KfrYybTjJMg",
+   "createdAt":   ISODate("2016-09-07T20:24:02.390   Z"),
+   "services":{  
+      "google":{  
+         "accessToken":"ya29.Ci9XAyctdC9EchIguzuwdpWQuWp9lAQqR9O9aCb0g6DtvijQhyCTMSwbowKym1Vu1g",
+         "idToken":"eyJhbGciOiJSUzI1NiIsImtpZCI6Ijg0Y2M5MzNmMDM1YjYyNjllNjgzZWUyMTVlOGVhM2Q4MTE2NGIxODkifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXRfaGFzaCI6ImxDcEdSbUF6VXIzTG9YVjR3cjhtWnciLCJhdWQiOiIxMDE1NTk3MDI2NjI0LTVpYzdxcGk3NmM1azE4YnJkMmY0ZDQ2Mzg5MnE3N3UyLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTA1MTkzODE1NTc3MjQyMzU3NjA1IiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjEwMTU1OTcwMjY2MjQtNWljN3FwaTc2YzVrMThicmQyZjRkNDYzODkycTc3dTIuYXBwcy5nb29nbGV1c2VyY29udGVudC5jb20iLCJlbWFpbCI6ImRhdmlkbGVpZ2gxQGdtYWlsLmNvbSIsImlhdCI6MTQ3MzI3OTg0MSwiZXhwIjoxNDczMjgzNDQxfQ.i9NA8nhc8zM_FKEnM-Xyc6MizyI2bdD6BqSstsCJ7DfzU_PmamHi9tIzEc75NVtY-gc0VcTDJoBvk77rD5VexmoxlAEx-RA96HjvB3Q3QOIGl2RlT4_cElRvNq8QK2KyvWXYJsdH6yMzi6cw5GCoqBi5XyPEL8D4TES8CGfZbyreuE7oCoZ7ZBVo7n5mJ3eIujos4D5wDT_qu_aouji0CUzq1wdGfqQeIFudnYDWq0wXRTLQfB7363mLD4_CFDbV-C8SAT5eLjxKXdYme-59COhBMI4XdRsqpMJ7eiosRz0snRurHb7qDh8GIcjLQBudY6KGHMVCDc48-ElUFN6iNw",
+         "expiresAt":1473283441012,
+         "scope":[  
+            "https://www.googleapis.com/auth/userinfo.email",
+            "https://www.googleapis.com/auth/userinfo.profile"
+         ],
+         "id":"105193815577242357605",
+         "email":"davidleigh1@gmail.com",
+         "verified_email":true,
+         "name":"David Leigh",
+         "given_name":"David",
+         "family_name":"Leigh",
+         "picture":"https://lh3.googleusercontent.com/-11l4BEaYuaw/AAAAAAAAAAI/AAAAAAAACrY/rPYTvT-2n_o/photo.jpg",
+         "locale":"en-GB"
+      },
+      "resume":{  
+         "loginTokens":[  
+
+         ]
+      }
+   },
+   "profile":{  
+      "name":"David Leigh"
+   }
+}{  
+   "_id":"WxNFJFqZvJuqt7Rko",
+   "createdAt":   ISODate("2016-09-07T20:24:19.478   Z"),
+   "services":{  
+      "facebook":{  
+         "accessToken":"EAAGmlZAQE6pQBALYEKlnosL1a8GATGsUHO2hxxNVpjHT1VvIBqKa4iUUxvX6MThehCNwYzZBDKtKZAkhmtd7vQPBklmhk8SWiL7ZBPoesc5Q2ZA89S6Hr3rEdkafNOd2dInGPWBu6ZCTR9YtooZAQeRbs6hKoG25JQZD",
+         "expiresAt":1478463859034,
+         "id":"10153802079045067",
+         "email":"davidleigh1@gmail.com",
+         "name":"David Leigh",
+         "first_name":"David",
+         "last_name":"Leigh",
+         "link":"https://www.facebook.com/app_scoped_user_id/10153802079045067/",
+         "gender":"male",
+         "locale":"en_GB",
+         "age_range":{  
+            "min":21
+         }
+      },
+      "resume":{  
+         "loginTokens":[  
+            {  
+               "when":               ISODate("2016-09-07T20:24:19.483               Z"),
+               "hashedToken":"SwbnLBwSuX28y63PLub+rWtEi3rhau0YYWWuLh9sduE="
+            }
+         ]
+      }
+   },
+   "profile":{  
+      "name":"David Leigh"
+   }
+}

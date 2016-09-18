@@ -2,6 +2,7 @@ TODO:
 
 ROUTING
 [ ] Fix default routing on localhost:3000 (i.e. home)
+[X] Smaller loading spinner
 
 PAGES
 [ ] Create dedicated /view page for kitbag
@@ -33,9 +34,12 @@ SUBSCRIPTIONS  /  COLLECTIONS
 [ ] Subscribe to only the minimum required fields
 [ ] Create additional Publishes with more limited scope
 
-USER MANAGEMENT
+ADMIN/USER MANAGEMENT/PERMISSIONS
 [ ] Make list of users + passwords
 [ ] Create new login page/route
+[ ] System Info Panel on Orgs or Kitbag pages should be visible to Org Admins + Sys Admins only
+
+
 
 ITEMS
 [ ] 

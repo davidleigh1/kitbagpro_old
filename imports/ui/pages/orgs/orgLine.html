@@ -92,7 +92,12 @@
 	<td class="hidden-xs hidden-sm hidden-md orgOwnerCol">
 		<!-- TODO: Look up user name rather than ID  -->
 		<!-- TODO: Link to User page  -->
-		<a href="/user/{{owner}}">{{owner}}</a>
+		<!-- <a href="/user/{{owner}}/view">{{lookupUser owner}}</a> -->
+		{{#if userNameLookup owner "html"}}
+			{{userNameLookup owner "html"}}
+		{{else}}
+			{{owner}}<span class="subtitle">(User details not found)</span>
+		{{/if}}
 	</td>
 
 	<td class="hidden-xs hidden-sm hidden-md orgControlCol">
