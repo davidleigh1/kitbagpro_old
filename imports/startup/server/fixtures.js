@@ -10,4 +10,5 @@ import { Meteor } from 'meteor/meteor';
 // import { Lists } from '../../api/lists/lists.js';
 // import { Todos } from '../../api/todos/todos.js';
 import { Kitbags } from '../../api/kitbags/kitbags.js';
-import { Orgs } from '/imports/api/orgs/orgs.js';
+// import { Orgs } from '/imports/api/orgs/orgs.js';
+import { Orgs } from '/imports/startup/both/org-schema.js';

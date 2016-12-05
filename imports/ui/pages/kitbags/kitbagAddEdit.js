@@ -7,27 +7,46 @@ import { listKitbagStatuses } from '/imports/api/kitbags/kitbags.js';
 
 /* Orgs are required for the Org dropdown */
 /* TODO - Dropdown only shown if user is admin and/or is associated to more than one org  -  otherwise can only add a personal kitbag*/
-import { Orgs } from '/imports/api/orgs/orgs.js';
-import { listOrgStatuses } from '/imports/api/orgs/orgs.js';
+// import { Orgs } from '/imports/api/orgs/orgs.js';
+import { Orgs } from '/imports/startup/both/org-schema.js';
+// import { listOrgStatuses } from '/imports/api/orgs/orgs.js';
+import { appSettings } from '/imports/startup/both/sharedConstants.js';
 
 
+/* ONCREATED */
 
 Template.kitbagAddEdit.onCreated(function() {
 	console.log("Template.kitbagAddEdit.onCreated -------------------------------------- onCreated");
 
 	this.subscribe("kitbags", {
-		onReady: function () { 
+		onReady: function () {
 
-			console.log("onReady And the 'kitbags' Items actually Arrive", arguments); 
+			console.log("onReady And the 'kitbags' Items actually Arrive", arguments);
 		},
 		onError: function () { console.log("onError", arguments); }
 	});
 
 
-// var handle = Meteor.subscribe('posts');
-// Tracker.autorun(function() {
+	// var handle = Meteor.subscribe('posts');
+	// Tracker.autorun(function() {
 });
 
+
+/* ONRENDERED */
+
+Template.kitbagAddEdit.onRendered(function(){
+
+	/* NOTE - Only superAdmins should be able to select an organisation as all other users (i.e. orgAdmins) will be limited to creating users within their own org only  */
+	/* Use case - when clicking "new user" within an organisation, the organization dropdown should be pre-populated */
+	var thisOrg = FlowRouter.getParam("_orgId");
+	/* Check that the orgId value provided is found in the dropdown */
+	if ( jQuery("[name='kitbagAssocOrg']").find('option[value="'+thisOrg+'"]').length > 0 ) {
+		jQuery("[name='kitbagAssocOrg']").val( thisOrg );
+	} else {
+		console.log("userAdd.onRendered() - '_orgId' value provided '"+thisOrg+"' not found in Org dropdown");
+	}
+
+});
 
 
 // Template.kitbagAddEdit.helpers
@@ -80,9 +99,11 @@ Template.kitbagAddEdit.events({
 			Meteor.call("addKitbag", kbFormObj);
 			// Add kitbag ID to assocKitbags field of the record for the assocOrg
 			// We don't know if there is already a kitbag assocated with this Org
-			Meteor.call("assignKBtoOrg", kbFormObj.kitbagAssocOrg, kbFormObj.kitbagId);
+			Meteor.call("assignKBtoOrg", kbFormObj.kitbagId, kbFormObj.kitbagAssocOrg);
 		} else {
-			console.log('ERROR: getObjFromForm() failed to provide kbFormObj{}. DB insert action cancelled. Hint: Check getObjFromForm(); Missing bagName;  [error code: 0013]');
+			sAlert.error('<samp>getObjFromForm()</samp> failed to provide <samp>kbFormObj{}</samp> so the insert action was cancelled.<br>Hint: Check <samp>getObjFromForm()</samp>; Missing <samp>bagName</samp>; etc [error code: 0013.1]', {html: true,timeout: 10000,onRouteClose: false,position: 'top',});
+			console.log('ERROR: getObjFromForm() failed to provide kbFormObj{}. DB insert action cancelled. Hint: Check getObjFromForm(); Missing bagName;  [error code: 0013.1]');
+			return false;
 		}
 
 		/* TODO: Add notification for success or failure */
@@ -96,7 +117,7 @@ Template.kitbagAddEdit.events({
 
 
 		// Clear the input field which is not required when using non-CSS UI
-		$(".add-edit-kitbag")[0].reset();
+		jQuery(".add-edit-kitbag")[0].reset();
 		// Close form
 		FlowRouter.go('/bags/'+kbFormObj.kitbagId+'/view');
 		// $(".kitbagAddEdit").hide();

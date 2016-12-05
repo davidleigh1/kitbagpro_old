@@ -1,40 +1,43 @@
 <template name="orgLine">
 
-	<tr data-orgtitle="{{toLower orgTitle}}" data-created="{{createdAt}}">
+<tr data-sorttitle="{{toLower orgTitle}}" data-sortcreated="{{createdAt}}" data-sortkbcount="{{#if orgAssocKitbagCount }}{{orgAssocKitbagCount}}{{else}}0{{/if}}" data-sortupdated="{{createdAt}}" >
 
 	<!-- Small screens only! -->
 	<td class="visible-xs col-xs-3">
 		<!-- Top line -->
+		<a href="/orgs/{{orgId}}/view">
 		<div>
 			{{#unless orgTitle}}
 				<span class="resNote">Org not found (orgID: {{orgId}})</span>
 			{{else}}
-				<a href="/orgs/{{orgId}}/view">{{highlight orgTitle}}</a>
+				<a href="/orgs/{{orgId}}/view">{{highlight orgTitle filterVar suppressHightlight}} {{#if orgIsOfficial}}<span class="label label-official">Official</span>{{else}}<i class="fa fa-times text-muted" aria-hidden="true"></i>{{/if}}</a>
 			{{/unless}}
 		</div>
 		<!-- /Top line -->
 		<!-- Bottom line -->
-		<!--<div>
-			{{#unless kitbagAssocOrg}}
-				<span class="resNote">N/A</span>
-			{{else}}
-				{{#if lookupOrgTitle kitbagAssocOrg 'orgTitle'}}
-					<a href="/orgs/{{kitbagAssocOrg}}/view">
-						{{lookupOrgTitle kitbagAssocOrg 'orgTitle'}}
-					</a>
-				{{else}}
-					<i>Not found (orgID: {{kitbagAssocOrg}})</i>
-				{{/if}}
-			{{/unless}}
-		</div> -->
+		<div>
+			{{#if orgAssocKitbagCount }}
+					<!-- <a href="/bags/list?o={{orgId}}" class="orglistSubtitle make-block">{{plural orgAssocKitbagCount "kitbag" "kitbags"}}</a> -->
+					<span class="orglistSubtitle">{{plural orgAssocKitbagCount "kitbag" "kitbags"}}</span>
+			<!-- {{else}} -->
+			{{/if}}
+		</div>
 		<!-- /Bottom line -->
+		</a>
 	</td>
 	<!-- /Small screens only! -->
+
+
 	<td class="hidden-xs orgTitleCol">
 		{{#unless orgTitle}}
 			<span class="resNote">'orgTitle' not found</span>
 		{{else}}
-			<a href="/orgs/{{orgId}}/view">{{highlight orgTitle}}</a>
+			<a href="/orgs/{{orgId}}/view">{{highlight orgTitle filterVar suppressHightlight}}</a>
+			{{#if orgIsOfficial}}
+				<span class="official-line-wrapper cursor-help">
+					<i class="fa fa-certificate" aria-hidden="true" title="This is an Official organisation account for '{{orgTitle}}'"></i>
+				</span>
+			{{/if}}
 		{{/unless}}
 	</td>
 
@@ -54,31 +57,53 @@
 		{{/unless}}
 	</td> -->
 
-	<!-- Created Date -->
-
+	<!-- Org Status Tag -->
 	<td class="hidden-xs orgStatusCol">
-		<span class="label {{getOrgStatusTag.labelClass}}">{{getOrgStatusTag.labelText}}</span>
+		<span class="label {{gOrgStatusTag.labelClass}}">{{gOrgStatusTag.labelText}}</span>
 	</td>
 
 
-	<!-- Kitbag ID -->
+	<!-- Org Kitbag Count -->
+	<td class="hidden-xs orgAssocKitbagCountCol">
+		{{#if orgAssocKitbagCount }}
+			<a href="/bags/list?kitbagassocorg={{orgId}}" class="make-block">{{orgAssocKitbagCount}}</a>
+		{{else}}
+			0
+		{{/if}}
+	</td>
 
-	<td class="hidden-xs hidden-sm orgSkuCol">
+	<!-- Org Users Count -->
+	<!-- TODO: For production - the hyperlink should be for the valid value only -->
+	<td class="hidden-xs orgUsersCountCol">
+		<a href="/orgs/{{orgId}}/view#orgUserListPanel" class="make-block">
+		{{#if orgUsersCount }}
+			<a href="/orgs/{{orgId}}/view#orgUserListPanel" class="make-block">{{orgUsersCount}}</a>
+		{{else}}
+			??
+		{{/if}}
+		</a>
+	</td>
+
+
+	<!-- Org ID -->
+	<td class="hidden-xs hidden-sm hidden-md">
 		<!-- // System (Custom ID) -->
 		{{#unless orgId}}
 			<span class="resNote">N/A</span>
 		{{else}}
-			{{highlight orgId}}
+			<span title="DBID: {{_id}}" class="cursor-help">{{highlight orgId filterVar suppressHightlight}}</span>
 		{{/unless}}
-		<!-- {{#unless kitbagSku}}
-			<span class="resNote"></span>
-		{{else}}
-			<br><small>({{kitbagSku}})</small>
-		{{/unless}} -->
+	</td>
+
+
+	<!-- Org DB ID -->
+	<td class="hidden-xs hidden-sm hidden-md">
+		{{#if glb_userIsSuperAdmin}}
+			<span class="adminOnly">{{_id}}</span>
+		{{/if}}
 	</td>
 
 	<!-- Created Date -->
-
 	<td class="visible-lg orgCreatedAtCol">
 		{{#unless createdAt}}
 			<span class="resNote">N/A</span>
@@ -89,31 +114,31 @@
 
 	<!-- Owner -->
 
-	<td class="hidden-xs hidden-sm hidden-md orgOwnerCol">
-		<!-- TODO: Look up user name rather than ID  -->
-		<!-- TODO: Link to User page  -->
-		<!-- <a href="/user/{{owner}}/view">{{lookupUser owner}}</a> -->
+	<!-- 	<td class="hidden-xs hidden-sm hidden-md orgOwnerCol">
+		TODO: Look up user name rather than ID
+		TODO: Link to User page
+		<a href="/user/{{owner}}/view">{{lookupUser owner}}</a>
 		{{#if userNameLookup owner "html"}}
 			{{userNameLookup owner "html"}}
 		{{else}}
 			{{owner}}<span class="subtitle">(User details not found)</span>
 		{{/if}}
-	</td>
+	</td> -->
 
 	<td class="hidden-xs hidden-sm hidden-md orgControlCol">
 		<div class="controlWrapper">
-			{{#if isOwner}}
+			<!-- {{#if isOwner}}
 				<button class="toggle-private">
 					{{#if private}}
-						Private
+						<i class="fa fa-fw fa-user-secret" title="Private"></i>
 					{{else}}
-						Public
+						<i class="fa fa-fw fa-globe" title="Public"></i>
 					{{/if}}
 				</button>
-			{{/if}}
-			<button class="delete" data-org="{{orgId}}">Delete</button>
-			<button class="edit" data-org="{{orgId}}">Edit</button>
-			<button class="showDetail" data-org="{{orgId}}">Org Details</button>
+			{{/if}} -->
+			<button class="delete" data-org="{{orgId}}" title="Trash"><i class="fa fa-fw fa-trash"></i></button>
+			<button class="edit" data-org="{{orgId}}" title="Edit"><i class="fa fa-fw fa-pencil"></i></button>
+			<button class="showDetail" data-org="{{orgId}}" title="View"><i class="fa fa-fw fa-eye"></i></button>
 		</div>
 	</td>
 
@@ -130,35 +155,35 @@
 				<ul class="dropdown-menu pull-right" role="menu">
 					<!-- Small screens only! -->
 					<li class="visible-xs">
-						<a class="viewOrgDetails" data-action="showOrgDetails" data-bag="{{kitbagId}}" href="#"><i class='fa fa-fw fa-list'></i> View Details</a>
+						<a class="viewOrgDetails" data-action="showOrgDetails" data-org="{{orgId}}" href="#"><i class='fa fa-fw fa-list'></i> View Details</a>
 					</li>
 					<li class="visible-xs divider"></li>
 					<!-- /Small screens only! -->
 					<li>
-						<a class="edit" data-action="editOrgDetails" data-bag="{{kitbagId}}" href="#"><i class="fa fa-fw fa-pencil"></i> Edit</a>
+						<a class="edit" data-action="editOrgDetails" data-org="{{orgId}}" href="#"><i class="fa fa-fw fa-pencil"></i> Edit</a>
 					</li>
-					{{#if isOwner}}
+					{{#if glb_userIsSuperAdmin}}
 						<li>
-							<a class="toggleStatus" data-action="toggleStatus" data-bag="{{kitbagId}}" href="#"><i class='fa fa-fw fa-{{changeKitbagStatus.icon}}'></i>
-								{{changeKitbagStatus.html}}
+							<a class="toggleStatus" data-action="toggleStatus" data-org="{{orgId}}" href="#"><i class='fa fa-fw fa-{{changeOrgStatus.icon}}'></i>
+								{{> changeOrgStatus}}
 							<!--{{#if ({{kitbagStatus}} == "Active")}}
-									Make Unlisted
+									Make Hidden
 								{{else}}
 									Make Active
 								{{/if}} -->
 							</a>
 						</li>
 					{{/if}}
-					{{#if isOwner}}
+					{{#if glb_userIsSuperAdmin}}
 						<li class="divider"></li>
 						<li>
-							<a class="trash" data-action="trashOrg" data-bag="{{kitbagId}}" href="#" title="Available to Owners only"><i class="fa fa-fw fa-trash"></i> Trash</a>
+							<a class="trash" data-action="trashOrg" data-org="{{orgId}}" href="#" title="Available to Owners only"><i class="fa fa-fw fa-trash"></i> Trash</a>
 						</li>
 					{{/if}}
-					{{#if isSuperAdmin}}
+					{{#if glb_userIsSuperAdmin}}
 						<li class="divider"></li>
 						<li>
-							<a class="delete" data-action="deleteOrg" data-bag="{{kitbagId}}" href="#" title="Available to SuperAdmins only"><i class="fa fa-fw fa-ban"></i> Delete</a>
+							<a class="delete" data-action="deleteOrg" data-org="{{orgId}}" href="#" title="Available to SuperAdmins only"><i class="fa fa-fw fa-ban"></i> Delete</a>
 						</li>
 					{{/if}}
 

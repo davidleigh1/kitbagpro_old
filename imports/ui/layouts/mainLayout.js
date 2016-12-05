@@ -3,57 +3,39 @@ import './mainLayout.html';
 import { Meteor } from 'meteor/meteor';
 // import { ReactiveVar } from 'meteor/reactive-var';
 // import { ReactiveDict } from 'meteor/reactive-dict';
-import { Orgs } from '/imports/api/orgs/orgs.js';
+// import { Orgs } from '/imports/api/orgs/orgs.js';
+import { Orgs } from '/imports/startup/both/org-schema.js';
 import { Kitbags } from '/imports/api/kitbags/kitbags.js';
+import { Items } from '/imports/startup/both/item-schema.js';
+import { UserList } from '/imports/startup/both/user-schema.js';
+// import { Items } from '/imports/api/items/items.js';
+// import { Items } from '/both/newItems.js';
 import { Template } from 'meteor/templating';
 import { ActiveRoute } from 'meteor/zimme:active-route';
 import { FlowRouter } from 'meteor/kadira:flow-router';
 // import { TAPi18n } from 'meteor/tap:i18n';
+import { appSettings } from '/imports/startup/both/sharedConstants.js';
 
 // import { insert } from '../../api/orgs/methods.js';
 
 import '/imports/ui/components/loading/loading.js';
 
 import '/imports/ui/pages/startScreen/startScreen.html';
-import '/imports/ui/components/footer.html';
-import '/imports/ui/components/headerMenuItems.html';
-import '/imports/ui/components/navbarHeader.html';
-import '/imports/ui/components/navigation.html';
-import '/imports/ui/components/sidebarMenuItems.html';
+import '/imports/ui/components/globalFooter.html';
+import '/imports/ui/components/navigation.js';
+// import '/imports/ui/components/headerMenuItems.html';
+// import '/imports/ui/components/navbarHeader.html';
+// import '/imports/ui/components/sidebarMenuItems.html';
+// import '/imports/ui/components/menus/menu.html';
+// import '/imports/ui/components/menus/userMenu.html';
 // import '../../ui/components/mainLayout/headerMenuItems.html';
-import '/imports/ui/components/menus/menu.html';
-import '/imports/ui/components/menus/userMenu.html';
-
-
-const CONNECTION_ISSUE_TIMEOUT = 5000;
-
-// A store which is local to this file?
-const showConnectionIssue = new ReactiveVar(false);
-
-// Meteor.startup(() => {
-// 	// Only show the connection error box if it has been 5 seconds since
-// 	// the app started
-// 	setTimeout(() => {
-// 		// FIXME:
-// 		// Launch screen handle created in lib/router.js
-// 		// dataReadyHold.release();
-
-// 		// Show the connection error box
-// 		showConnectionIssue.set(true);
-// 	}, CONNECTION_ISSUE_TIMEOUT);
-
-// });
-
-
-
-
 
 
 Template.mainLayout.onCreated(function(){
   	var that = this;
   		that.subscribe('kitbags');
   		that.subscribe('orgs');
-  		// that.subscribe('companies');
+  		that.subscribe('items');
   		// that.subscribe('workjournals');
   	that.autorun(function(){
     		if (/*libProfilesHandle.ready() &&*/ that.subscriptionsReady()) {
@@ -61,137 +43,71 @@ Template.mainLayout.onCreated(function(){
       console.log(" =========== READY NOW ================== ");
     }
   });
+
+
+	/* REDIRECT USER WHEN PASSWORD IS CHANGED BY ADMIN */
+	// https://medium.com/@satyavh/using-flow-router-for-authentication-ba7bb2644f42#.tcxldclg2
+	// Tracker.autorun(() => {
+	// var lastUser = null;
+	// Tracker.autorun(function(){
+	// 	var userId = Meteor.userId();
+	// 	if ( !userId ){
+	// 		// if Session.get("loggedIn")
+	// 		// alert("logged out!");
+	// 		sAlert.warning("No Meteor.userId() found!");
+	// 		console.log("No Meteor.userId() found!");
+	//  	} else if (lastUser) {
+	// 		// FlowRouter.go('/sign-in');
+	//  		FlowRouter.redirect("/sign-in");
+	//  		console.log("Tracker.autorun detected change in Meteor.userId()",userId,lastUser);
+	//  		sAlert.warning('<samp>Tracker.autorun</samp> detected change in <samp>Meteor.userId()</samp>',{html:true});
+	//  	}
+	//  	lastUser = Meteor.user();
+
+	//  });
+
 });
 
-// Template.mainLayout.onCreated(function mainLayoutOnCreated() {
-
-	// console.log("----->> Added Subscriptions");
-
-	// const handle = Meteor.subscribe("orgs", {
-	// 	onReady: function () { console.log("====>>>> onReady And the Items actually Arrive", arguments); },
-	// 	onError: function () { console.log("====>>>> onError", arguments); }
-	// });
-
-	// const handle = Meteor.subscribe('orgs');
-	// Tracker.autorun(() => {
-	//   const isReady = handle.ready();
-	//   var status =  isReady ? 'ready' : 'not ready';
-	//   console.log("\nHandle for orgs is " + status + "\n\n");
-	// })
+// /* ================================================== */
+// /*
+// 	http://s-alert.meteorapp.com/
+// 	http://s-alert-demo.meteorapp.com/
+// */
+// /* ================================================== */
 
 
+// Meteor.startup(function () {
 
-	// this.autorun(() => {
-	// 	this.subscribe('orgs');
-	// });
+// 	console.log("sAlert.config() in mainLayout.js");
 
+//     sAlert.config({
+//         effect: 'stackslide',
+//         position: 'bottom',
+//         timeout: 5000,
+//         html: false,
+//         onRouteClose: true,
+//         stack: true,
+//         // or you can pass an object:
+//         // stack: {
+//         //     spacing: 10 // in px
+//         //     limit: 3 // when fourth alert appears all previous ones are cleared
+//         // }
+//         offset: 0, // in px - will be added to first alert (bottom or top - depends of the position in config)
+//         beep: false,
+//         // examples:
+//         // beep: '/beep.mp3'  // or you can pass an object:
+//         // beep: {
+//         //     info: '/beep-info.mp3',
+//         //     error: '/beep-error.mp3',
+//         //     success: '/beep-success.mp3',
+//         //     warning: '/beep-warning.mp3'
+//         // }
+//         onClose: _.noop //
+//         // examples:
+//         // onClose: function() {
+//         //     /* Code here will be executed once the alert closes. */
+//         // }
+//     });
 
-
-
-	//Meteor.subscribe("kitbags");
-	// Meteor.subscribe("userList");
-
-	// this.subscribe('orgs.public');
-	// this.subscribe('orgs.private');
-
-	// console.log( "MYCOLLECTIONS - AUTORUN: ", Orgs.findOne({orgId: "122123eb85456a66"}) );
-
-	// this.state = new ReactiveDict();
-	// this.state.setDefault({
-	// 	menuOpen: false,
-	// 	userMenuOpen: false,
-	// });
 // });
 
-
-/*
-Template.App_body.helpers({
-	menuOpen() {
-		const instance = Template.instance();
-		return instance.state.get('menuOpen') && 'menu-open';
-	},
-	cordova() {
-		return Meteor.isCordova && 'cordova';
-	},
-	emailLocalPart() {
-		const email = Meteor.user().emails[0].address;
-		return email.substring(0, email.indexOf('@'));
-	},
-	userMenuOpen() {
-		const instance = Template.instance();
-		return instance.state.get('userMenuOpen');
-	},
-	lists() {
-		return Lists.find({ $or: [
-			{ userId: { $exists: false } },
-			{ userId: Meteor.userId() },
-		] });
-	},
-	activeListClass(list) {
-		const active = ActiveRoute.name('Lists.show')
-			&& FlowRouter.getParam('_id') === list._id;
-
-		return active && 'active';
-	},
-	connected() {
-		if (showConnectionIssue.get()) {
-			return Meteor.status().connected;
-		}
-
-		return true;
-	},
-	templateGestures: {
-		'swipeleft .cordova'(event, instance) {
-			instance.state.set('menuOpen', false);
-		},
-		'swiperight .cordova'(event, instance) {
-			instance.state.set('menuOpen', true);
-		},
-	},
-});
-
-
-
-Template.App_body.events({
-	'click .js-menu'(event, instance) {
-		instance.state.set('menuOpen', !instance.state.get('menuOpen'));
-	},
-	'click .content-overlay'(event, instance) {
-		instance.state.set('menuOpen', false);
-		event.preventDefault();
-	},
-	'click .js-user-menu'(event, instance) {
-		instance.state.set('userMenuOpen', !instance.state.get('userMenuOpen'));
-		// stop the menu from closing
-		event.stopImmediatePropagation();
-	},
-	'click #menu a'(event, instance) {
-		instance.state.set('menuOpen', false);
-	},
-	'click .js-logout'() {
-		Meteor.logout();
-		// if we are on a private list, we'll need to go to a public one
-		if (ActiveRoute.name('Lists.show')) {
-			// TODO -- test this code path
-			const list = Lists.findOne(FlowRouter.getParam('_id'));
-			if (list.userId) {
-				FlowRouter.go('Lists.show', Lists.findOne({ userId: { $exists: false } }));
-			}
-		}
-	},
-	'click .js-new-list'() {
-		const listId = insert.call((err) => {
-			if (err) {
-				// At this point, we have already redirected to the new list page, but
-				// for some reason the list didn't get created. This should almost never
-				// happen, but it's good to handle it anyway.
-				FlowRouter.go('App.home');
-				alert(TAPi18n.__('Could not create list.')); // eslint-disable-line no-alert
-			}
-		});
-
-		FlowRouter.go('Lists.show', { _id: listId });
-	},
-});
-
-*/

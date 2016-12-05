@@ -12,16 +12,21 @@ import { AccountsTemplates } from 'meteor/useraccounts:core';
 */
 
 
+
+/* CONTENT PROTECTION - DISABLE THE FOLLOWING LINE TO REMOVE USER ACCOUNT / PASSWORD PROTECTION */
+FlowRouter.triggers.enter([AccountsTemplates.ensureSignedIn]);
+
 // Import to load these templates
 // import '../../ui/';
 import '../../ui/layouts/mainLayout.js';
 FlowRouter.route("/", {
 	name:"root",
 	action: function(params, queryParams) {
-		console.log("Route: Root", params, queryParams);
+		//console.log("Route: Root", params, queryParams);
 		BlazeLayout.render("mainLayout", {
-			/* mainNav: "navigation", */
-			/* mainFooter: "footer" */
+			main: "dashboard",
+			nav: "navigation",
+			footer: "globalFooter"
 		});
 	}
 });
@@ -32,11 +37,11 @@ import '/imports/ui/components/loading/loading.js';
 FlowRouter.route("/loading", {
 	name:"loading",
 	action: function(params, queryParams) {
-		console.log("Route: Loading... (Test 'Loading' template)", params, queryParams);
+		//console.log("Route: Loading... (Test 'Loading' template)", params, queryParams);
 		BlazeLayout.render("mainLayout", {
-			mainContent: "loading"
-			/* mainNav: "navigation", */
-			/* mainFooter: "footer" */
+			main: "loading",
+			nav: "navigation",
+			footer: "globalFooter"
 		});
 	}
 });
@@ -44,15 +49,59 @@ FlowRouter.route("/loading", {
 
 
 // Import Pages
-import '../../ui/pages/sbAdmin/sbAdmin.js';
-FlowRouter.route("/sbAdmin",				{name:"sbAdmin",		action: function(params, queryParams) { console.log("Route: Admin (sbAdmin)",									params, queryParams);BlazeLayout.render("mainLayout", 	{mainContent: "sbAdmin",		/* mainNav: "navigation", */		/* mainFooter: "footer" */});}});
-
-import '../../ui/pages/users/userList.js';
-FlowRouter.route("/users/list",				{name:"userList",		action: function(params, queryParams) { console.log("Route: Users > User List (User List)",					params, queryParams);BlazeLayout.render("mainLayout", 	{mainContent: "userList",		/* mainNav: "navigation", */		/* mainFooter: "footer" */});}});
-
+import '../../ui/pages/dashboard/dashboard.js';
+FlowRouter.route("/dashboard", {
+	name:"dashboard",
+	action: function(params, queryParams) {
+		/*console.log("Route: Admin (dashboard)", params, queryParams);*/
+		BlazeLayout.render("mainLayout", {
+			main: "dashboard",
+			nav: "navigation",
+			footer: "globalFooter"
+		});
+	}
+});
 
 import '../../ui/pages/settings/settings.js';
-FlowRouter.route("/settings",				{name:"mySettings",		action: function(params, queryParams) { console.log("Route: Profile > Settings (My Settings)",					params, queryParams);BlazeLayout.render("mainLayout", 	{mainContent: "settings",		/* mainNav: "navigation", */		/* mainFooter: "footer" */});}});
+FlowRouter.route("/settings", {
+	name:"mySettings",
+	action: function(params, queryParams) {
+		/*console.log("Route: Profile > Settings (My Settings)", params, queryParams);*/
+		BlazeLayout.render("mainLayout",{
+			main: "settings",
+			nav: "navigation",
+			footer: "globalFooter"
+		});
+	}
+});
+
+import '../../ui/pages/about/about.js';
+FlowRouter.route("/about", {
+	name:"about",
+	// triggersEnter: [AccountsTemplates.ensureSignedIn],  // ROUTE LEVEL PROTECTION
+	action: function(params, queryParams) {
+		/*console.log("Route: Profile > about (About KitbagPro", params, queryParams);*/
+		BlazeLayout.render("mainLayout",{
+			main: "about",
+			nav: "navigation",
+			footer: "globalFooter"
+		});
+	}
+});
+
+import '../../ui/pages/debug/debug.js';
+FlowRouter.route("/debug", {
+	name:"debug",
+	// triggersEnter: [AccountsTemplates.ensureSignedIn],  // ROUTE LEVEL PROTECTION
+	action: function(params, queryParams) {
+		BlazeLayout.render("mainLayout",{
+			main: "debug",
+			nav: "navigation",
+			footer: "globalFooter"
+		});
+	}
+});
+
 
 
 
@@ -64,31 +113,50 @@ FlowRouter.route("/settings",				{name:"mySettings",		action: function(params, q
 		prefix: '/orgs',
 		name: 'orgs',
 		triggersEnter: [function(context, redirect) {
-			console.log('Route: Running /orgs GROUP triggers');
+			//console.log('Route: Running /orgs GROUP triggers');
 		}]
 	});
 
 
-			import '../../ui/pages/orgs/orgAddEdit.js';
+			// import '../../ui/pages/orgs/orgAddEdit.js';
+			// /* ORGS ADD */
+			// orgsRoutes.route("/create", {
+			// 	name:"orgAdd",
+			// 	action: function(params, queryParams) {
+			// 		//console.log("Route: Orgs > Create Org (Create New Org)", params, queryParams);
+			// 		BlazeLayout.render("mainLayout", {
+			// 			main: "orgAddEdit",
+			// 			nav: "navigation",
+			// 			footer: "globalFooter"
+			// 		});
+			// 	}
+			// });
+
+			import '../../ui/pages/orgs/orgAdd.js';
 			/* ORGS ADD */
-			orgsRoutes.route("/create", {
-				name:"orgAdd",
+			FlowRouter.route("/orgs/create/", {
+				name: "orgAdd",
 				action: function(params, queryParams) {
-					console.log("Route: Orgs > Create Org (Create New Org)", params, queryParams);
 					BlazeLayout.render("mainLayout", {
-						mainContent: "orgAddEdit"
+						main: "orgAdd",
+						nav: "navigation",
+						footer: "globalFooter"
 					});
 				}
 			});
+
+
 
 			import '../../ui/pages/orgs/orgList.js';
 			/* ORGS LIST */
 			orgsRoutes.route("/list", {
 				name:"orgList",
 				action: function(params, queryParams) {
-					console.log("Route: Organizations > Org List (Org List)", params, queryParams);
+					//console.log("Route: Organizations > Org List (Org List)", params, queryParams);
 					BlazeLayout.render("mainLayout", {
-						mainContent: "orgList"
+						main: "orgList",
+						nav: "navigation",
+						footer: "globalFooter"
 					});
 				}
 			});
@@ -132,7 +200,7 @@ FlowRouter.route("/settings",				{name:"mySettings",		action: function(params, q
 		prefix: '/:_orgId',
 		name: 'NEW2_orgsWithId',
 		triggersEnter: [function(context, redirect) {
-			console.log('Route: Running /orgs/:_id GROUP triggers <<--------------------');
+			//console.log('Route: Running /orgs/:_id GROUP triggers <<--------------------');
 		}]
 	});
 
@@ -142,20 +210,48 @@ FlowRouter.route("/settings",				{name:"mySettings",		action: function(params, q
 		orgsWithId.route("/view", {
 			name:"orgView",
 			action: function(params, queryParams) {
-				console.log("Route: Orgs > View (Org Profile View)", params, queryParams);
+				//console.log("Route: Orgs > View (Org Profile View)", params, queryParams);
 				BlazeLayout.render("mainLayout", {
-					mainContent: "orgView"
+					main: "orgView",
+					nav: "navigation",
+					footer: "globalFooter"
 				});
 			}
 		});
 
 		/* ORGS EDIT */
-		orgsWithId.route("/edit", {
-			name:"orgEdit",
+		// orgsWithId.route("/edit", {
+		// 	name:"orgEdit",
+		// 	action: function(params, queryParams) {
+		// 		// console.log("Route: Organizations > Edit (Org Profile Edit)", params, queryParams);
+		// 		BlazeLayout.render("mainLayout", {
+		// 			main: "orgAddEdit",
+		// 			nav: "navigation",
+		// 			footer: "globalFooter"
+		// 		});
+		// 	}
+		// });
+		import '../../ui/pages/orgs/orgEdit.js';
+		FlowRouter.route("/orgs/:_orgId/edit", {
+			name: "orgEdit",
 			action: function(params, queryParams) {
-				// console.log("Route: Organizations > Edit (Org Profile Edit)", params, queryParams);
+				/*console.log("Route: Equipment > N/A (Item Edit)", params, queryParams);*/
 				BlazeLayout.render("mainLayout", {
-					mainContent: "orgAddEdit"
+					main: "orgEdit",
+					nav: "navigation",
+					footer: "globalFooter"
+				});
+			}
+		});
+		import '../../ui/pages/orgs/orgDuplicate.js';
+		FlowRouter.route("/orgs/:_orgId/duplicate", {
+			name: "orgDuplicate",
+			action: function(params, queryParams) {
+				/*console.log("Route: Equipment > N/A (Item Edit)", params, queryParams);*/
+				BlazeLayout.render("mainLayout", {
+					main: "orgDuplicate",
+					nav: "navigation",
+					footer: "globalFooter"
 				});
 			}
 		});
@@ -170,24 +266,87 @@ FlowRouter.route("/bags/list", {
 	action: function(params, queryParams) {
 		// console.log("Route: Kitbags > Kitbag List (Kitbag List)", params, queryParams);
 		BlazeLayout.render("mainLayout", {
-			mainContent: "kitbagList",
-			/* mainNav: "navigation", */
-			/* mainFooter: "footer" */
+			main: "kitbagList",
+			nav: "navigation",
+			footer: "globalFooter"
 		});
 	}
 });
 import '../../ui/pages/kitbags/kitbagAddEdit.js';
 FlowRouter.route("/bags/create/:_orgId", {
-	name:"kitbagAdd ",
+	name:"kitbagAdd",
 	action: function(params, queryParams) {
 		// console.log("Route: Kitbags > Create New Kitbag (Create New Kitbag )", params, queryParams);
 		BlazeLayout.render("mainLayout", {
-			mainContent: "kitbagAddEdit",
-			/* mainNav: "navigation", */
-			/* mainFooter: "footer" */
+			main: "kitbagAddEdit",
+			nav: "navigation",
+			footer: "globalFooter"
 		});
 	}
 });
+
+
+
+
+/*----------------------------------------*/
+/*-------------  I T E M S   -------------*/
+/*----------------------------------------*/
+
+
+
+
+import '../../ui/pages/items/itemList.js';
+FlowRouter.route("/items/list", {
+	name: "itemList",
+	action: function(params, queryParams) {
+		/*console.log("Route: Equipment > List of Items (Item List)", params, queryParams);*/
+		BlazeLayout.render("mainLayout", {
+			main: "itemList",
+			nav: "navigation",
+			footer: "globalFooter"
+		});
+	}
+});
+import '../../ui/pages/items/itemView.js';
+FlowRouter.route("/items/:_itemId/view", {
+	name: "itemView",
+	action: function(params, queryParams) {
+		/*console.log("Route: Equipment > N/A (Item View)", params, queryParams);*/
+		BlazeLayout.render("mainLayout", {
+			main: "itemView",
+			nav: "navigation",
+			footer: "globalFooter"
+		});
+	}
+});
+import '../../ui/pages/items/itemEdit.js';
+FlowRouter.route("/items/:_itemId/edit", {
+	name: "itemEdit",
+	action: function(params, queryParams) {
+		/*console.log("Route: Equipment > N/A (Item Edit)", params, queryParams);*/
+		BlazeLayout.render("mainLayout", {
+			main: "itemEdit",
+			nav: "navigation",
+			footer: "globalFooter"
+		});
+	}
+});
+import '../../ui/pages/items/itemAdd.js';
+FlowRouter.route("/items/create/:_kitbagId", { // NOTE - We have the kitbag ID here in the URL to enable us to assign this new item automatically to a predefined kitbag
+	name: "itemAdd",
+	action: function(params, queryParams) {
+		/*console.log("Route: Equipment > N/A (Create New Item)", params, queryParams);*/
+		BlazeLayout.render("mainLayout", {
+			main: "itemAdd",
+			nav: "navigation",
+			footer: "globalFooter"
+		});
+	}
+});
+
+
+
+
 
 
 
@@ -200,9 +359,10 @@ FlowRouter.route("/404", {
 	action: function(params, queryParams) {
 		// console.log("Route: Page not known / not found!", params, queryParams);
 		BlazeLayout.render("mainLayout", {
-			mainContent: "routeNotFound",
-			/* mainNav: "navigation", */
-			/* mainFooter: "footer" */ });
+			main: "routeNotFound",
+			nav: "navigation",
+			footer: "globalFooter"
+		});
 	}
 });
 
@@ -212,14 +372,14 @@ FlowRouter.notFound = {
 	name: "notFound",
 	action(params, queryParams) {
 		// BlazeLayout.render('mainLayout', {
-		// 	mainContent: 'routeNotFound',
-		// 	mainNav: "navigation",
-		// 	mainFooter: "footer"
+		// 	main: 'routeNotFound',
+		// 	nav: "navigation",
+		// 	footer: "globalFooter"
 		// });
 		// console.log("REDIRECTING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
 		// FlowRouter.redirect('/404?reqUrl='+FlowRouter.current().path+"&referrer="+document.referrer);
 		// FlowRouter.setQueryParams();
-		FlowRouter.go('/404',{},{ 
+		FlowRouter.go('/404',{},{
 			requestedUrl: FlowRouter.current().path,
 			referrerUrl: document.referrer
 		});
@@ -267,51 +427,116 @@ Router.route('/', {
 // FlowRouter.route('/', {
 // 	name: 'home',
 // 	action: function(params, queryParams) {
-// 		console.log("Route: This is the home page!", params, queryParams);
+// 		//console.log("Route: This is the home page!", params, queryParams);
 // 		BlazeLayout.render("mainLayout", {
-// 			mainContent: "startScreen",
-// 			mainNav: "navigation",
-// 			/* mainFooter: "footer" */
+// 			main: "startScreen",
+// 			nav: "navigation",
+// 			/* footer: "globalFooter" */
 // 		});
 // 	}
 // });
 
+/* USER MANAGEMENT + USER PROFILE */
+
+import '/imports/ui/pages/users/userList.js';
+FlowRouter.route("/users/list", {
+	name:"userList",
+	action: function(params, queryParams) {
+		/*console.log("Route: Users > User List (User List)", params, queryParams);*/
+		BlazeLayout.render("mainLayout", {
+			main: "userList",
+			nav: "navigation",
+			footer: "globalFooter"
+		});
+	}
+});
+
+import '/imports/ui/pages/users/userView.js';
+FlowRouter.route("/users/:_userId/view", {
+	name:"userView",
+	action: function(params, queryParams) {
+		/*console.log("Route: Users > N/A (User Profile View)", params, queryParams);*/
+		BlazeLayout.render("mainLayout", {
+		main: "userView",
+		nav: "navigation",
+		footer: "globalFooter"
+		});
+	}
+});
+
+import '/imports/ui/pages/users/userEdit.js';
+FlowRouter.route("/users/:_userId/edit", {
+	name:"userEdit",
+	action: function(params, queryParams) {
+		/*console.log("Route: Users > N/A (User Profile Edit)", params, queryParams);*/
+		BlazeLayout.render("mainLayout", {
+		main: "userEdit",
+		nav: "navigation",
+		footer: "globalFooter"
+		});
+	}
+});
+import '/imports/ui/pages/users/userAdd.js';
+FlowRouter.route("/users/create/:_orgId", {
+	name:"userAdd",
+	action: function(params, queryParams) {
+		/*console.log("Route: Users > Create User (Create New Org User)", params, queryParams);*/
+		BlazeLayout.render("mainLayout", {
+		main: "userAdd",
+		nav: "navigation",
+		footer: "globalFooter"
+		});
+	}
+});
+// FlowRouter.route("/users/create/new", {
+// 	name:"Request New User Login",
+// 	action: function(params, queryParams) {
+// 		/*console.log("Route: Users > Create Non-Org User (Request New User Login)", params, queryParams);*/
+// 		BlazeLayout.render("mainLayout", {
+// 		main: "startScreen",
+// 		nav: "navigation",
+// 		footer: "globalFooter"
+// 		});
+// 	}
+// });
+// FlowRouter.route("/users/list/edit", {
+// 	name:"User Bulk Edit",
+// 	action: function(params, queryParams) {
+// 		/*console.log("Route: Users > N/A (User Bulk Edit)", params, queryParams);*/
+// 		BlazeLayout.render("mainLayout", {
+// 		main: "startScreen",
+// 		nav: "navigation",
+// 		footer: "globalFooter"
+// 		});
+// 	}
+// });
 
 /* PHASE TWO */
 
-FlowRouter.route("/", {name:"home",action: function(params, queryParams) { console.log("Route: Home > Start (Splash Screen)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/bags/:_bagId", {name:"Kitbag Profile View",action: function(params, queryParams) { console.log("Route: Kitbags > N/A (Kitbag Profile View)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/bags/:_bagId/edit", {name:"Kitbag Profile Edit",action: function(params, queryParams) { console.log("Route: Kitbags > N/A (Kitbag Profile Edit)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/cart/in", {name:"Checkin",action: function(params, queryParams) { console.log("Route: My Gear > Checkin (Checkin)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/cart/out", {name:"Checkout",action: function(params, queryParams) { console.log("Route: My Gear > Checkout (Checkout)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/inbox", {name:"Notifications / Inbox",action: function(params, queryParams) { console.log("Route: Notifications > Inbox (Notifications / Inbox)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/items/<itemId>", {name:"Item View",action: function(params, queryParams) { console.log("Route: Equipment > N/A (Item View)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/items/<itemId>/edit", {name:"Item Edit",action: function(params, queryParams) { console.log("Route: Equipment > N/A (Item Edit)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/items/create/:_orgId", {name:"Create New Item",action: function(params, queryParams) { console.log("Route: Equipment > N/A (Create New Item)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/items/list", {name:"Item List",action: function(params, queryParams) { console.log("Route: Equipment > List of Items (Item List)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/quick/in", {name:"Quick Checkin",action: function(params, queryParams) { console.log("Route: My Gear > Quick Checkin (Quick Checkin)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/quick/out", {name:"Quick Checkout",action: function(params, queryParams) { console.log("Route: My Gear > Quick Checkout (Quick Checkout)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/review", {name:"Bag Check",action: function(params, queryParams) { console.log("Route: Actions > Check Kitbag (Bag Check)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/review/history", {name:"Bag Check History",action: function(params, queryParams) { console.log("Route: Kitbag > Bag History (Bag Check History)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/share", {name:"Share Bag Status",action: function(params, queryParams) { console.log("Route: Actions > Share Bag Status (Share Bag Status)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/status/(me)", {name:"My Status",action: function(params, queryParams) { console.log("Route: Home > User Status (My Status)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/status/orgs/(myprimary)", {name:"Org Status",action: function(params, queryParams) { console.log("Route: Home > Org Status (Org Status)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/status/system", {name:"System Status",action: function(params, queryParams) { console.log("Route: Home > System Status (System Status)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/users/:_userId/view", {name:"User Profile View",action: function(params, queryParams) { console.log("Route: Users > N/A (User Profile View)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/users/:_userId/edit", {name:"User Profile Edit",action: function(params, queryParams) { console.log("Route: Users > N/A (User Profile Edit)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/users/create/:_orgId", {name:"Create New Org User",action: function(params, queryParams) { console.log("Route: Users > Create User (Create New Org User)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/users/create/new", {name:"Request New User Login",action: function(params, queryParams) { console.log("Route: Users > Create Non-Org User (Request New User Login)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route("/users/list/edit", {name:"User Bulk Edit",action: function(params, queryParams) { console.log("Route: Users > N/A (User Bulk Edit)", params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "startScreen", /* mainNav: "navigation", *//* mainFooter: "footer" */});}});
+// FlowRouter.route("/", {name:"home",action: function(params, queryParams) { /*console.log("Route: Home > Start (Splash Screen)", params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "startScreen", nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route("/bags/:_bagId", {name:"Kitbag Profile View",action: function(params, queryParams) { /*console.log("Route: Kitbags > N/A (Kitbag Profile View)", params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "startScreen", nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route("/bags/:_bagId/edit", {name:"Kitbag Profile Edit",action: function(params, queryParams) { /*console.log("Route: Kitbags > N/A (Kitbag Profile Edit)", params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "startScreen", nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route("/cart/in", {name:"Checkin",action: function(params, queryParams) { /*console.log("Route: My Gear > Checkin (Checkin)", params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "startScreen", nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route("/cart/out", {name:"Checkout",action: function(params, queryParams) { /*console.log("Route: My Gear > Checkout (Checkout)", params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "startScreen", nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route("/inbox", {name:"Notifications / Inbox",action: function(params, queryParams) { /*console.log("Route: Notifications > Inbox (Notifications / Inbox)", params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "startScreen", nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route("/quick/in", {name:"Quick Checkin",action: function(params, queryParams) { /*console.log("Route: My Gear > Quick Checkin (Quick Checkin)", params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "startScreen", nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route("/quick/out", {name:"Quick Checkout",action: function(params, queryParams) { /*console.log("Route: My Gear > Quick Checkout (Quick Checkout)", params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "startScreen", nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route("/review", {name:"Bag Check",action: function(params, queryParams) { /*console.log("Route: Actions > Check Kitbag (Bag Check)", params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "startScreen", nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route("/review/history", {name:"Bag Check History",action: function(params, queryParams) { /*console.log("Route: Kitbag > Bag History (Bag Check History)", params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "startScreen", nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route("/share", {name:"Share Bag Status",action: function(params, queryParams) { /*console.log("Route: Actions > Share Bag Status (Share Bag Status)", params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "startScreen", nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route("/status/(me)", {name:"My Status",action: function(params, queryParams) { /*console.log("Route: Home > User Status (My Status)", params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "startScreen", nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route("/status/orgs/(myprimary)", {name:"Org Status",action: function(params, queryParams) { /*console.log("Route: Home > Org Status (Org Status)", params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "startScreen", nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route("/status/system", {name:"System Status",action: function(params, queryParams) { /*console.log("Route: Home > System Status (System Status)", params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "startScreen", nav: "navigation",/* footer: "globalFooter" */});}});
 
 /* THEME CONTENT */
 
-FlowRouter.route('/charts', 			{name:"charts",				action: function(params, queryParams) { console.log("Route: charts", 			params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "charts", 			/* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route('/tables', 			{name:"tables",				action: function(params, queryParams) { console.log("Route: tables", 			params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "tables", 			/* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route('/forms', 				{name:"forms",				action: function(params, queryParams) { console.log("Route: forms", 			params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "forms", 			/* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route('/bootstrapElements', 	{name:"bootstrapElements",	action: function(params, queryParams) { console.log("Route: bootstrapElements",params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "bootstrapElements",/* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route('/bootstrapGrid', 		{name:"bootstrapGrid",		action: function(params, queryParams) { console.log("Route: bootstrapGrid", 	params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "bootstrapGrid", 	/* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route('/blankPage', 			{name:"blankPage",			action: function(params, queryParams) { console.log("Route: blankPage", 		params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "blankPage", 		/* mainNav: "navigation", *//* mainFooter: "footer" */});}});
-FlowRouter.route('/indexRTL', 			{name:"indexRTL",			action: function(params, queryParams) { console.log("Route: indexRTL", 		params, queryParams);BlazeLayout.render("mainLayout", {mainContent: "indexRTL", 		/* mainNav: "navigation", *//* mainFooter: "footer" */});}});
+FlowRouter.route('/charts', 			{name:"charts",				action: function(params, queryParams) { /*console.log("Route: charts", 			params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "charts", 			nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route('/tables', 			{name:"tables",				action: function(params, queryParams) { /*console.log("Route: tables", 			params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "tables", 			nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route('/forms', 				{name:"forms",				action: function(params, queryParams) { /*console.log("Route: forms", 			params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "forms", 			nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route('/bootstrapElements', 	{name:"bootstrapElements",	action: function(params, queryParams) { /*console.log("Route: bootstrapElements",params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "bootstrapElements",nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route('/bootstrapGrid', 		{name:"bootstrapGrid",		action: function(params, queryParams) { /*console.log("Route: bootstrapGrid", 	params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "bootstrapGrid", 	nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route('/blankPage', 			{name:"blankPage",			action: function(params, queryParams) { /*console.log("Route: blankPage", 		params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "blankPage", 		nav: "navigation",/* footer: "globalFooter" */});}});
+FlowRouter.route('/indexRTL', 			{name:"indexRTL",			action: function(params, queryParams) { /*console.log("Route: indexRTL", 		params, queryParams);*/ BlazeLayout.render("mainLayout", {main: "indexRTL", 		nav: "navigation",/* footer: "globalFooter" */});}});
 
 
 /*
@@ -351,23 +576,23 @@ Router.route('/users', {
 Router.route('/settings');
 // SB-Admin Routes
 Router.route('/admin', {
-	name: 'sbAdmin',
-	template: 'sbAdmin'
+	name: 'dashboard',
+	template: 'dashboard'
 });
 
 
 Router.route('/kitbag/:someParameter', {
 	data: function(){
-		console.log("Route: This is an kitbag page.",this.params.someParameter);
+		//console.log("Route: This is an kitbag page.",this.params.someParameter);
 	}
 });
 // Router.route('/orgView/:orgId', {
 // 	data: function(){
-// 		console.log("Route: This is an organisation page.",this.params.someParameter);
+// 		//console.log("Route: This is an organisation page.",this.params.someParameter);
 // 	}
 // });
 Router.route('/orgView/:orgId', function () {
-	console.log("Route: This is an organisation page.",this.params);
+	//console.log("Route: This is an organisation page.",this.params);
 	this.render('orgView', {
 		data: function () {
 			//return Posts.findOne({orgId: this.params.orgId});
@@ -377,3 +602,64 @@ Router.route('/orgView/:orgId', function () {
 });
 
 */
+
+import '/imports/ui/layouts/fullPage.js';
+import '/imports/ui/pages/account/myCustomFullPageAtForm.js';
+import '/imports/ui/pages/account/customAtForm.js';
+
+// import '/imports/ui/pages/account/login.js';
+// FlowRouter.route("/login", {
+// 	name:"login",
+// 	action: function(params, queryParams) {
+// 		//console.log("Route: Root", params, queryParams);
+// 		BlazeLayout.render("fullPage", {
+// 			main: "login"
+// 		});
+// 	}
+// });
+
+FlowRouter.route("/logout", {
+	name:"logout",
+	action: function(params, queryParams) {
+		console.log("Route: logout", params, queryParams);
+		BlazeLayout.render("fullPage", {
+			main: "myCustomFullPageAtForm"
+		});
+	}
+});
+
+FlowRouter.triggers.exit( [ exitSignInFunction ], {
+	only: [
+		'atSignIn'
+		]
+});
+
+function exitSignInFunction() {
+	// console.log( "Exiting route: " + FlowRouter.getRouteName() );
+	cyclebackgrounds_abortTimer();
+}
+
+
+
+FlowRouter.route('/sign-out', {
+  name: 'sign-out',
+	triggersEnter: [function(context, redirect) {
+		AccountsTemplates.logout();
+		FlowRouter.go('/');
+	}]
+  // 	onBeforeAction: function () {
+  //   AccountsTemplates.logout();
+  //   FlowRouter.go('/');
+  //   //this.next(); //this line causes 'sign-out template not found error
+  // }
+});
+
+
+
+// //Routes
+// AccountsTemplates.configureRoute('changePwd');
+// AccountsTemplates.configureRoute('forgotPwd');
+// AccountsTemplates.configureRoute('resetPwd');
+// AccountsTemplates.configureRoute('signIn');
+// AccountsTemplates.configureRoute('signUp');
+// AccountsTemplates.configureRoute('verifyEmail');

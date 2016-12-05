@@ -29,7 +29,7 @@
 						<a class="trash" data-action="trashOrg" data-org="{{orgId}}" href="#" title="Available to Owners only"><i class="fa fa-fw fa-trash"></i> Trash</a>
 					</li>
 				{{/if}}
-				{{#if isSuperAdmin}}
+				{{#if glb_userIsSuperAdmin}}
 					<li class="divider"></li>
 					<li>
 						<a class="delete" data-action="deleteOrg" data-org="{{orgId}}" href="#" title="Available to SuperAdmins only"><i class="fa fa-fw fa-ban"></i> Delete</a>

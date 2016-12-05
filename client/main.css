@@ -31,6 +31,27 @@ span.detailVal
     color: #aaa;
 }
 
+/* ADMIN ONLY */
+
+.adminOnly {
+	/* background-color: rgba(154, 205, 50, 0.1) !important; */
+    /* border-color: rgba(154, 205, 50, 0.1) !important; */
+    /* border-width: 2px !important; */
+    /* border-style: dotted !important; */
+    /* margin: 5px 0 !important; */
+    /* padding: 5px 10px; */
+    /* border-radius: 4px; */
+    color: #5cb85c;
+    background-color: rgba(0,128,0,0.05);
+}
+
+.todo {
+	background-color: rgba(255, 255, 0, 0.1) !important;
+	color: #c7254e !important;
+}
+
+
+
 /*
 .screen-wrapper {
 	margin: 5px;
@@ -65,25 +86,6 @@ span.detailVal
 }
 */
 
-/* FILTER / SORT */
-
-.listFilter {
-		float: left;
-		display: inline-block;
-}
-
-.listSorter {
-		float: right;
-		display: inline-block;
-}
-
-.filterField {
-		display: inline-block;
-		min-width: 100%;
-		padding: 10px;
-		font-size: 1em;
-		margin: 15px 0;
-}
 
 /* CSS declarations go here
 
@@ -173,6 +175,18 @@ li.checked .text {
 
 */
 
+.time-date {
+	cursor: help;
+}
+
+.cursor-help {
+	cursor: help;
+}
+
+.cursor-pointer {
+	cursor: pointer;
+}
+
 .resNote {
 	/* font-size: x-small; */
 	color: grey;
@@ -192,22 +206,22 @@ span.label {
 
 /* New Org */
 
-form label {
+/*form label {
 		width: 20%;
 		display: inline-block;
-}
-.formline {
+}*/
+.addEditFormline {
 		margin: 15px 10px;
 }
 
-.formline input[type="text"],input[type="email"],input[type="url"] {
+.addEditFormline input[type="text"], .addEditFormline input[type="email"], .addEditFormline input[type="url"] {
 		display: inline-block;
 		width: 70%;
 		padding: 10px;
 		font-size: 1em;
 }
 
-.formline select {
+.addEditFormline select {
 		display: inline-block;
 		width: 70%;
 		padding: 10px;
@@ -215,14 +229,14 @@ form label {
 		box-sizing: content-box;
 }
 
-.formline textarea {
+.addEditFormline textarea {
 		width: 70%;
 		padding: 10px;
 		font-size: 1em;
 		height: 100px;
 }
 
-.formline .subtitle {
+.addEditFormline .subtitle {
 		color: gray;
 		display: block;
 		font-size: 0.8em;
@@ -292,17 +306,7 @@ h1 .subtitle {
 	display: none;
 }*/
 
-/* ADMIN ONLY */
 
-.adminOnly {
-		background-color: rgba(154, 205, 50, 0.1) !important;
-		border-color: rgba(154, 205, 50, 0.1) !important;
-		border-width: 2px;
-		border-style: dotted;
-}
-span.adminOnly {
-		padding: 5px 10px !important;
-}
 
 
 /* ORG LIST */
@@ -319,7 +323,7 @@ span.adminOnly {
 
 
 .controlWrapper {
-	zoom: 0.8;
+	/*zoom: 0.8;*/
 /* 	float: right; */
 /* 	margin-right: 15px */
 }

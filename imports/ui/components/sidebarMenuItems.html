@@ -4,37 +4,51 @@
 <!-- These collapse to the responsive navigation menu on small screens -->
 <div class="collapse navbar-collapse navbar-ex1-collapse" id="#navbar-ex1-collapse">
 	<ul class="nav navbar-nav side-nav">
+
+		<!--
 		<li class="{{ isActiveRoute 'startScreen' }}">
 			<a href="/loading"><i class="fa fa-fw fa-youtube-play"></i> Start</a>
-		</li>
-		<li class="{{ isActiveRoute 'sbAdmin' }}">
-			<a href="/sbAdmin"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+		</li> -->
+		<li class="{{ isActiveRoute 'dashboard' }}">
+			<a href="/dashboard"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
 		</li>
 
-		<!-- <li class="menu-option active button_kitbagList" data-toggle=".kitbagList"> -->
-		<li class="{{ isActiveRoute 'kitbagList' }}">
-			<a href="/bags/list"><i class="fa fa-fw fa-briefcase"></i> Browse Kitbags</a>
-		</li>
-		<!-- <li class="menu-option active button_newKitbag" data-toggle=".kitbagAddEdit"> -->
-		<li class="{{ isActiveRoute 'kitbagAdd' }}">
-			<a href="/bags/create/:_orgId"><i class="fa fa-fw fa-plus-circle"></i> Add Kitbag</a>
-		</li>
-		<!-- <li class="menu-option active button_orgList superAdmin" data-toggle=".orgList"> -->
+		<!-- ORGANISATIONS -->
 		<li class="{{ isActiveRoute 'orgList' }}">
-			<a href="/orgs/list"><i class="fa fa-fw fa-building"></i> Browse Organisations</a>
+			<a href="/orgs/list"><i class="fa fa-fw fa-building"></i> Organisations</a>
 		</li>
-		<!-- <li class="menu-option active button_newOrg" data-toggle=".orgAddEdit"> -->
-		<li class="{{ isActiveRoute 'orgAdd' }}">
-			<a href="/orgs/create"><i class="fa fa-fw fa-plus-circle"></i> Add Organisation</a>
+		<li class="sub-item {{ isActiveRoute 'orgAdd' }}">
+			<a href="/orgs/create"><i class="fa fa-fw fa-plus"></i> Add Organisation</a>
 		</li>
-		<!-- <li class="menu-option active button_settings" data-toggle=".settings"> -->
+		<!-- /ORGANISATIONS -->
+
+		<!-- KITBAGS -->
+		<li class="{{ isActiveRoute 'kitbagList' }}">
+			<a href="/bags/list"><i class="fa fa-fw fa-medkit"></i> Kitbags</a>
+		</li>
+		<li class="sub-item {{ isActiveRoute 'kitbagAdd' }}">
+			<a href="/bags/create/:_orgId"><i class="fa fa-fw fa-plus"></i> Add Kitbag</a>
+		</li>
+		<!-- /KITBAGS -->
+
+		<!-- ITEMS -->
+		<li class="{{ isActiveRoute 'itemList' }}">
+			<a href="/items/list"><i class="fa fa-fw fa-stethoscope"></i> Items</a>
+		</li>
+		<li class="sub-item {{ isActiveRoute 'itemAdd' }}">
+			<a href="/items/create/:_orgId"><i class="fa fa-fw fa-plus"></i> Add Item</a>
+		</li>
+		<!-- /ITEMS -->
+
+
+
 		<li class="{{ isActiveRoute 'mySettings' }}">
-			<a href="/settings"><i class="fa fa-fw fa-cogs"></i> User Settings</a>
+			<a href="/settings"><i class="fa fa-fw fa-cogs"></i> Settings</a>
 		</li>
-		{{#if currentUser}}
-			<!-- <li class="menu-option active button_users adminOnly" data-toggle=".users"> -->
-			<li class="{{ isActiveRoute 'usersList' }}">
-				<a href="/users/list"><i class="fa fa-fw fa-users"></i> Browse Users <br><small>(Admins Only)</small></a>
+
+		{{#if glb_userIsSuperAdmin}}
+			<li class="{{ isActiveRoute 'usersList' }} adminOnly">
+				<a href="/users/list"><i class="fa fa-fw fa-users"></i> Users</a>
 			</li>
 		{{/if}}
 
@@ -65,6 +79,23 @@
 					<a href="/indexRTL"><i class="fa fa-fw fa-dashboard"></i> עברית</a>
 				</li>
 			</ul>
+		</li>
+		<!-- <li class="menu-option active button_settings" data-toggle=".settings"> -->
+		<li class="{{ isActiveRoute 'about' }}">
+			<a href="/about"><i class="fa fa-fw fa-info-circle"></i> About</a>
+		</li>
+<!-- 		<li class="{{ isActiveRoute 'login' }}">
+			<a href="/login"><i class="fa fa-fw fa-sign-in"></i> Login</a>
+		</li> -->
+		<li>
+			<div style="width: 190px;font-size: 80%;padding: 10px 15px;margin: 10px;border: 1px dotted gray;    background-color: wheat;">
+				{{currentUser.getDisplayName}}<br>
+				{{currentUser.username}}<br>
+				{{currentUser.getEmail}}<br>
+				{{lookupFieldFromOrg currentUser.profile.userAssocOrg 'orgTitle'}}<br>
+				{{currentUser.getType.label}} ({{currentUser.getType.value}})<br>
+				{{currentUser.getUserId}} ({{currentUser._id}})
+			</div>
 		</li>
 	</ul>
 </div>

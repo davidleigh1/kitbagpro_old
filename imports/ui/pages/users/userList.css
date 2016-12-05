@@ -1,12 +1,12 @@
 /* USER LIST */
 
+/*
 .userline.header {
 	font-weight: bold;
 	border-bottom: 2px solid gray;
 }
 
 .userline {
-	/*background-color: yellow;*/
 	min-height: 12px;
 	font-size: 0.6em;
 	border-bottom: 1px dotted gray;
@@ -42,14 +42,15 @@
 
 .userline > span {
 		display: inline-block;
-		/*background-color: orange;*/
 		padding: 4px;
 		margin: 1px;
 		vertical-align: top;
 }
 
+*/
 .currentUser {
 	background-color: rgba(255, 255, 0, 0.2);
 	color:brown;
 	font-weight: bold
 }
+

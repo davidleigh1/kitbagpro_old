@@ -16,8 +16,12 @@ console.log(">>>>> 'Kitbags' is defined here!");
 // MyCollections = ( typeof MyCollections != "undefined" && typeof MyCollections == "object" ) ? MyCollections : {};
 
 // export const MyCollections.Kitbags = new Mongo.Collection("kitbags");
-// MyCollections.listKitbagStatuses = ["Active","Unlisted","Trashed"];
+// MyCollections.listKitbagStatuses = ["Active","Hidden","Trashed"];
 
 export const Kitbags            = new Mongo.Collection("kitbags");
-export const listKitbagStatuses = ["Active","Unlisted","Trashed"];
+export const listKitbagStatuses = ["Active","Hidden","Trashed"];
+
+// Kitbags.before.insert(function (userId, doc) {
+//   doc.newCreatedAt = Date.now();
+// });
 

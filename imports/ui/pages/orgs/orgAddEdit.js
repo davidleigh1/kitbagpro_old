@@ -2,8 +2,10 @@
 
 import './orgAddEdit.html';
 
-import { Orgs } from '/imports/api/orgs/orgs.js';
-import { listOrgStatuses } from '/imports/api/orgs/orgs.js';
+// import { Orgs } from '/imports/api/orgs/orgs.js';
+import { Orgs } from '/imports/startup/both/org-schema.js';
+// import { listOrgStatuses } from '/imports/api/orgs/orgs.js';
+import { appSettings } from '/imports/startup/both/sharedConstants.js';
 
 
 Template.orgAddEdit.onCreated(function() {
@@ -19,33 +21,33 @@ Template.orgAddEdit.onCreated(function() {
 	// this.autorun(() => {
  //    	this.subscribe('Orgs');
  //    	if ( handle2.ready() ){
- //    		console.log("HANDLE2.READY!!!!!!!!!!!!!!!");
+ //    		//console.log("HANDLE2.READY!!!!!!!!!!!!!!!");
  //    	}else{
- //    		console.log("HANDLE2.NOT READY !!");
+ //    		//console.log("HANDLE2.NOT READY !!");
  //    	}
 	// });
 
 	this.subscribe("orgs", {
 		onReady: function () {
 
-			console.log("onReady And the Items actually Arrive", arguments);
+			//console.log("onReady And the Items actually Arrive", arguments);
 
 			var oid = FlowRouter.getParam('_orgId');
 			var avoe = isAddViewOrEdit( FlowRouter.getRouteName() );
 			switch( avoe ) {
 				case "view":
-					console.log("Context VIEW - View Organisation Profile for: "+oid);
+					//console.log("Context VIEW - View Organisation Profile for: "+oid);
 					editOrg( oid );
 					break;
 				case "edit":
-					console.log("Context EDIT - Update Organisation Profile for: "+oid);
+					//console.log("Context EDIT - Update Organisation Profile for: "+oid);
 					editOrg( oid );
 					break;
 				case "add":
-					console.log("Context ADD - Register New Organisation");
+					//console.log("Context ADD - Register New Organisation");
 					break;
 				default:
-					console.log("Context NOTFOUND - Register New Organisation");
+					//console.log("Context NOTFOUND - Register New Organisation");
 					return;
 			}
 
@@ -64,12 +66,12 @@ Template.orgAddEdit.onRendered(function(){
 	// TODO: THIS IS UGLY! Need to find a way to check against a route name not template name
 	// http://stackoverflow.com/questions/31006474/meteor-onrendered-doesnt-get-fired-again-after-second-render-iron-route
 
-	console.log("---------------------------------------------------------");
-	console.log("FlowRouter: ",FlowRouter);
-	console.log("getRouteName: " + FlowRouter.getRouteName());
-	console.log("getParam: " + FlowRouter.getParam('_orgId'));
-	console.log("getQueryParam: " + FlowRouter.getQueryParam());
-	console.log("---------------------------------------------------------");
+	//console.log("---------------------------------------------------------");
+	//console.log("FlowRouter: ",FlowRouter);
+	//console.log("getRouteName: " + FlowRouter.getRouteName());
+	//console.log("getParam: " + FlowRouter.getParam('_orgId'));
+	//console.log("getQueryParam: " + FlowRouter.getQueryParam());
+	//console.log("---------------------------------------------------------");
 
 	var rn = FlowRouter.getRouteName();
 	var oid = FlowRouter.getParam('_orgId');
@@ -80,22 +82,22 @@ Template.orgAddEdit.onRendered(function(){
 	// MyCollections["Orgs"].findOne({orgId: ""+this.params.orgId});
 
 
-	console.log("Moved to onReady")
+	//console.log("Moved to onReady")
 /*
 	switch( avoe ) {
 		case "view":
-			console.log("Context VIEW - View Organisation Profile for: "+oid);
+			//console.log("Context VIEW - View Organisation Profile for: "+oid);
 			editOrg( oid );
 			break;
 		case "edit":
-			console.log("Context EDIT - Update Organisation Profile for: "+oid);
+			//console.log("Context EDIT - Update Organisation Profile for: "+oid);
 			editOrg( oid );
 			break;
 		case "add":
-			console.log("Context ADD - Register New Organisation");
+			//console.log("Context ADD - Register New Organisation");
 			break;
 		default:
-			console.log("Context NOTFOUND - Register New Organisation");
+			//console.log("Context NOTFOUND - Register New Organisation");
 			return;
 	}
 */
@@ -117,7 +119,7 @@ isAddViewOrEdit = function (routeName) {
 };
 
 getObjFromForm = function(formId,addOrUpdate){
-	console.log('fn getObjFromForm');
+	//console.log('fn getObjFromForm');
 	var fields = document.getElementById(formId).elements;
 	formObj = {};
 
@@ -157,10 +159,10 @@ getObjFromForm = function(formId,addOrUpdate){
 
 	// Validation
 	if((typeof formObj.orgTitle != "undefined" && formObj.orgTitle == "") || (typeof formObj.kitbagTitle != "undefined" && formObj.kitbagTitle == "")){
-		console.log('Failed validation!',formObj);
+		//console.log('Failed validation!',formObj);
 		return false;
 	}else{
-		console.log('Passed validation!',formObj);
+		//console.log('Passed validation!',formObj);
 		return formObj;
 	}
 };
@@ -171,7 +173,7 @@ editOrg = function(thisOrgId,formId){
 
 	var formId = (typeof formId !== "undefined") ? formId : "add-edit-org";
 
-	console.log('fn getObjFromForm',' thisOrgId:'+thisOrgId,' formId:'+formId);
+	//console.log('fn getObjFromForm',' thisOrgId:'+thisOrgId,' formId:'+formId);
 
 	// MyCollections["Orgs"].findOne({orgId: ""+});
 
@@ -182,10 +184,10 @@ editOrg = function(thisOrgId,formId){
 
 
 	var formFields = document.getElementById(formId).elements;
-	console.log(formFields);
+	//console.log(formFields);
 
-	console.log("Org found: ",myOrg);
-	console.log("Form found: ",formFields);
+	//console.log("Org found: ",myOrg);
+	//console.log("Form found: ",formFields);
 
 	//formObj = {};
 
@@ -253,12 +255,16 @@ Template.orgAddEdit.helpers({
 		}
 	},
 	listOrgStatuses: function () {
-		console.log(listOrgStatuses);
+		//console.log(listOrgStatuses);
 		return listOrgStatuses;
 	},
 	getSchemaVar: function (param) {
-		console.log('getSchemaVar: ',param,"\n\n\nTODO - No better way to do this?????\n\n\n");
+		//console.log('getSchemaVar: ',param,"\n\n\nTODO - No better way to do this?????\n\n\n");
 		return window[param];
+	},
+	usernameString: function () {
+		userStr = (Meteor.user())?"Meteor.user().profile.name":"Unknown or Guest User" + " (_id: " + Meteor.userId() + ")";
+		return userStr;
 	}
 });
 
@@ -277,7 +283,7 @@ Template.orgAddEdit.events({
 
 		// CHECK TO SEE IF THIS FORM REQUIRES AN ADD OR AN UPDATE - CHECK FOR AN EXISTING ID
 		if ( $("#orgId").val() == false ) {
-			// console.log('cside - orgID value not found!');
+			console.log('cside - orgID value not found!');
 			// An OrgID was *not* found in the form so assume this is a new Org
 			$("#orgId").val( GlobalHelpers.idGenerator(uniqueIds.orgPrefix) );
 			formObj = getObjFromForm("add-edit-org","add");
@@ -289,10 +295,11 @@ Template.orgAddEdit.events({
 			}
 			// outcome = Meteor.call("addOrg", getObjFromForm("add-edit-org","add") );
 		} else {
-			// console.log('cside - true!');
+			console.log('cside - true!');
 			// An OrgID *was* found in the form so assume this is an edit to an existing Org
 			// TODO - Catch a case where there is an ID in the form but it's not found in the DB.  This could happen as we have multiple users who could affect this object at any time.
 			formObj = getObjFromForm("add-edit-org","update");
+			console.log(">>>> formObj:",formObj);
 			if (typeof formObj == "object") {
 				Meteor.call("updateOrg", formObj );
 			} else {

@@ -9,7 +9,7 @@ import { Meteor } from 'meteor/meteor';
 
 
 import './pageHeader.html';
-import './menus/menu.js';
+// import './menus/menu.js';
 // import './pageTitle.js';
 
 
@@ -22,6 +22,6 @@ Template.pageHeader.helpers({
 		return "I am  a subtitle";
 	},
 	faIcon2: function (attr) {
-		return "fa-user";
+		return "fa-user-md";
 	}
 });

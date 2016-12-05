@@ -1,20 +1,12 @@
-// Template.navbarHeader.onRendered(function(){
-
-// 	$(document).on('click','.navbar-collapse.in',function(e) {
-// 		if( $(e.target).is('a') && $(e.target).attr('class') != 'dropdown-toggle' ) {
-// 			$(this).collapse('hide');
-// 		}
-// 	});
-
-// });
+import './sidebarMenuItems.html';
 
 Template.sidebarMenuItems.helpers({
 	activeIfTemplateIs: function (template) {
-		/*var currentRoute = FlowRouter.current();*/
-		var currentRoute = FlowRouter.getRouteName();
-		//console.log("currentRoute: ",template,currentRoute.lookupTemplate());
-		return currentRoute &&
-			template.toLowerCase() === currentRoute.toLowerCase() ? 'active' : '';
+		/*var gCurrentRoute = FlowRouter.current();*/
+		var gCurrentRoute = FlowRouter.getRouteName();
+		//console.log("gCurrentRoute: ",template,gCurrentRoute.lookupTemplate());
+		return gCurrentRoute &&
+			template.toLowerCase() === gCurrentRoute.toLowerCase() ? 'active' : '';
 	}
 });
 

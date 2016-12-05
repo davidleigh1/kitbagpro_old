@@ -7,43 +7,38 @@ import { Meteor } from 'meteor/meteor';
 // import { FlowRouter } from 'meteor/kadira:flow-router';
 // import { TAPi18n } from 'meteor/tap:i18n';
 
-
+import './userLogo.html';
 import './userList.html';
 import './userList.css';
 import './userLine.js';
 
-if (Meteor.isClient) {
+/* ONRENDERED */
 
-	// Template.myTemplateName.helpers
-
-	Template.userList.helpers({
-		users: function () {
-			// return Users.find();
-			return Meteor.users.find();
-		}
-	});
-
-	// Template.myTemplateName.events
-
-
-};
-
-if (Meteor.isServer) {
-	// http://stackoverflow.com/questions/30961418/displaying-all-users-in-meteor
-	Meteor.publish("userList", function () {
-		return Meteor.users.find({}, {
-			fields: {
-				username: 1,
-				emails: 1,
-				profile: 1,
-				createdAt: 1,
-				services: 1,
-				'type': 1
-			}
-		});
-    })
-};
-
-Meteor.methods({
-	// None currently defined
+Template.userList.onRendered(function(){
+	jQuery(".userFilterRow").hide();
 });
+
+
+/* HELPERS */
+
+Template.userList.helpers({
+});
+
+
+
+
+/* EVENTS */
+
+Template.userList.events({
+	'click #toggleUserFilter': function(event) {
+		event.preventDefault();
+		jQuery(".userFilterRow").toggle();
+		jQuery("#userListFilter").focus();
+	},
+	'click button.cancel': function(event) {
+		event.preventDefault();
+		alert('cancel button!');
+	}
+});
+
+

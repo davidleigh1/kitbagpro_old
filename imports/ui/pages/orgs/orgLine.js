@@ -1,38 +1,21 @@
 import './orgLine.html';
+import './orgLine.css';
+import './changeOrgStatus.html';
+
+// import { Orgs } from '/imports/api/orgs/orgs.js';
+import { Orgs } from '/imports/startup/both/org-schema.js';
+
+
+
+trashOrg = function (clickObj) {
+	// console.log('deleteKb: ',clickObj);
+	Meteor.call("setOrgStatus",clickObj.orgObj._id, "Trashed");
+};
+
 
 Template.orgLine.helpers({
 	isOwner: function () {
 		return this.owner == Meteor.userId();
-	},
-    // TODO: Make this global!
-    toLower: function (str) {
-      // console.log(str,str.toLowerCase());
-      if (!str) { return str }
-      return str.toLowerCase();
-    },
-	getOrgStatusTag: function () {
-		var labelClass, labelText;
-
-		switch(this.orgStatus) {
-			case "Active":
-				labelClass = "label-success";
-				labelText = "Active";
-				break;
-			case "Unlisted":
-				labelClass = "label-warning";
-				labelText = "Unlisted";
-				break;
-			case "Trashed":
-				labelClass = "label-default";
-				labelText = "Trashed";
-				break;
-			default:
-				labelClass = "label-danger";
-				labelText = "Unknown";
-			break;
-		}
-		//var tag = '<span class="label '+labelClass+'">'+labelText+'</span>';
-		return { 'labelClass': labelClass, 'labelText': labelText };
 	},
 	lookupUser: function (userId,reqField) {
 		console.log("lookupUser: ",userId);
@@ -43,14 +26,14 @@ Template.orgLine.helpers({
 	userNameLookup: function (userId, paramRequired) {
 		var myUser = Meteor.users.findOne({_id: userId });
 		// Orgs.findOne({orgId: FlowRouter.getParam('_orgId') });
-		// console.log("myUser",myUser.profile.name);
+		// console.log("myUser",myUser.profile.displayName);
 
 		var data = {};
-		data.uname = (myUser.profile.name)?myUser.profile.name:"Profile Name not found";
+		data.uname = (myUser && myUser.getDisplayName)?myUser.getDisplayName:(myUser && myUser.username)?myUser.username:"("+userId+")";
 		data.dbId  = userId;
-		data.apiId = (myUser.profile.externalId)?myUser.profile.externalId:"API-ID not found";
+		data.apiId = (myUser && myUser.profile.userId)?myUser.profile.userId:"API-ID not found";
 		data.url   = "/users/"+userId+"/view";
-		data.html  = "<a href='"+data.url+"'>"+data.uname+"</a>";
+		data.html  = "<a href='"+data.url+"' title='DBID: "+userId+"'>"+data.uname+"</a>";
 
 		return Spacebars.SafeString( data[paramRequired] );
 	}
@@ -61,8 +44,7 @@ Template.orgLine.events({
 		// et = event.target;
 		// console.log(et);
 		// $( et.parentElement.parentElement ).children( '.orgDetails' ).toggle();
-		var o = $(event.target).data("org");
-		FlowRouter.go("/orgs/"+o+"/view");
+		FlowRouter.go("/orgs/"+this._id+"/view");
 		// $(".objView-"+o).toggle();
 	},
 	'click .edit': function(event) {
@@ -74,7 +56,7 @@ Template.orgLine.events({
 		// $('.orgAddEdit').toggle();
 		// var findOne = {orgId:event.target.dataset.org};
 		// var formId = "add-edit-org";
-		FlowRouter.go("/orgs/"+event.target.dataset.org+"/edit");
+		FlowRouter.go("/orgs/"+this._id+"/edit");
 		// editOrg(findOne,formId);
 	},
 	'click .toggle-checked': function(event) {
@@ -82,11 +64,35 @@ Template.orgLine.events({
 		Meteor.call("updateOrg",this._id,!this.checked);
 	},
 	'click .delete': function(event) {
-		Meteor.call("deleteOrg",this._id);
+
+		event.preventDefault();
+		globalfn_deleteOrg( this, Meteor.userId(), "/orgs/list" );
+
+		// var areYouSure = "Are you sure you want to permanently delete org '"+this.orgTitle+"'?\n\n>> There is no way back! <<\n\nSuggestion: Click 'Cancel' and then 'Trash' it instead...\n"
+		// if ( confirm(areYouSure) ) {
+		// 	Meteor.call("deleteOrg",this._id);
+		// 	// history.go(-1);
+		// } else {
+		// 	return false;
+		// }
+
 	},
 	'click .toggle-private': function(event){
 		Meteor.call("setPrivateOrg",this._id, !this.private);
+	},
+	'click .dropdown-menu a': function(event) {
+		event.preventDefault();
+		// console.log('a click: ',this,$(event.target).data('action'));
+		var clickObj = {
+			action: $(event.target).data('action'),
+			orgId: $(event.target).data('org'),
+			orgObj: this
+		};
+		if (typeof clickObj.action == "string" && typeof window[clickObj.action] == "function" ){
+			window[$(event.target).data('action')](clickObj);
+		} else {
+			console.log("Error: 'action' function was not found (code: 0147)");
+		};
 	}
 });
-
 

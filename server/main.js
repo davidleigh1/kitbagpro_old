@@ -7,4 +7,6 @@
 import '/imports/startup/server';
 import '/imports/startup/both';
 
-import '/imports/api/orgs/orgs.js';
+import '/imports/api/admin/admin.js';
+// import '/imports/api/orgs/orgs.js';
+import '/imports/startup/both/org-schema.js';
